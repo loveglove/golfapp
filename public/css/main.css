@@ -1,0 +1,206 @@
+html {
+        height: 200px;
+    overflow-y: scroll !important; /* has to be scroll, not auto */
+   -webkit-overflow-scrolling: touch !important;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-weight: 100;
+    font-family: 'Lato';
+
+}
+
+.parent{
+    display: table;
+}
+.child{
+     display: table-cell;   
+}
+
+.container {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.content {
+    text-align: center;
+    display: inline-block;
+}
+
+.title {
+    font-size: 40px;
+}
+.avatar{
+    border-radius: 50% 50%;
+    /*vertical-align: bottom;*/
+}
+
+
+.team-score{
+    color:#62BE5C; 
+}
+.center{
+    text-align: center;
+}
+.green-text{
+    color:#62BE5C; 
+}
+.slate-text{
+    color:#85b6b0 !important;
+}
+.red-text{
+    color:#ef5d69;
+}
+
+/* green bootstrap button*/
+
+.btn-green { 
+  color: #ffffff; 
+  background-color: #62BE5C; 
+/*  border-color: #FFFFFF; */
+} 
+ 
+.btn-green:hover, 
+.btn-green:focus, 
+.btn-green:active, 
+.btn-green.active, 
+.open .dropdown-toggle.btn-green { 
+  color: #ffffff !important; 
+  background-color: #459F40; 
+/*  border-color: #FFFFFF; */
+} 
+ 
+.btn-green:active, 
+.btn-green.active, 
+.open .dropdown-toggle.btn-green { 
+  background-image: none; 
+} 
+ 
+.btn-green.disabled, 
+.btn-green[disabled], 
+fieldset[disabled] .btn-green, 
+.btn-green.disabled:hover, 
+.btn-green[disabled]:hover, 
+fieldset[disabled] .btn-green:hover, 
+.btn-green.disabled:focus, 
+.btn-green[disabled]:focus, 
+fieldset[disabled] .btn-green:focus, 
+.btn-green.disabled:active, 
+.btn-green[disabled]:active, 
+fieldset[disabled] .btn-green:active, 
+.btn-green.disabled.active, 
+.btn-green[disabled].active, 
+fieldset[disabled] .btn-green.active { 
+  background-color: #62BE5C; 
+  border-color: #FFFFFF; 
+} 
+ 
+.btn-green .badge { 
+  color: #62BE5C; 
+  background-color: #ffffff; 
+}
+
+.image-shadow{
+    -webkit-box-shadow: -2px 10px 37px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: -2px 10px 37px 0px rgba(0,0,0,0.75);
+box-shadow: -2px 10px 37px 0px rgba(0,0,0,0.75);
+}
+
+.image-border{
+    border:2px solid #333333;
+}
+
+.fc-header{
+/*    border:1px solid red;*/
+    padding-top: 10px;
+    padding-right:10px;
+    font-size: 30px;
+    -webkit-animation-delay: 1s; /* Chrome, Safari, Opera */
+    animation-delay: 1s;
+    color:#676A6C;
+}
+
+.fc-font{
+    font-family: 'blackswordregular';
+}
+
+.avatar-menu{
+    -webkit-animation-delay: 0.2s; /* Chrome, Safari, Opera */
+    animation-delay: 0.2s;
+}
+
+.loginscreen{
+    -webkit-animation-delay: 0.5s; /* Chrome, Safari, Opera */
+    animation-delay: 0.5s;
+    -webkit-animation-duration: 5s; /* Chrome, Safari, Opera */
+    animation-duration: 5s;
+}
+
+
+/***** SCORE CARD *****/
+.holeimage-sm{
+    padding:5px;
+    height:250px;
+}
+
+.knob-container{
+    padding:10px;
+    width:100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.label-container{
+    margin-bottom: 10px;
+}
+
+.hole-info{
+    margin-top:5px;
+    padding:6px; 
+    border-radius:2px; 
+    font-size:14px;
+}
+
+.red-bg{
+    background-color: #62BE5C; 
+    color:white;
+}
+
+.beige-bg{
+    background-color: #ddd2b8; 
+    color:#555; 
+}
+
+.blue-bg{
+    background-color: #1a75ff;
+    color:white; 
+}
+
+.white-bg{
+    border:1px solid silver;
+    background-color: white; 
+    color:black;
+}
+
+.green-bg{
+    background-color: #62BE5C; 
+    color:white;
+}
+.silver-bg{
+    background-color: silver; 
+    color:white;
+}
+
+.row-dull{
+    background-color:#f2f2f2;
+}
+
+/*MAP*/
+
+
+
+
+
