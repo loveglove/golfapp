@@ -159,6 +159,7 @@
         <div class="ibox-content">
             <h3><i class="fa fa-bullseye"></i> Score </h3>
             <div class="form-group">
+            {{ Form::open(array('route' => 'update_score', 'class' => 'form')) }}
                 {{ Form::select('team', $teams, null, ['class' => 'form-control', 'placeholder' => 'Team..']) }}
                 <br/>
                 <div class="row">

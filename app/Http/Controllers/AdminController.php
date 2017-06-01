@@ -131,13 +131,13 @@ class AdminController extends Controller
     public function updateScore(Request $request)
     {
         $tour = Session::get('tournament')->id;
-        $id = Request::input('team');
+        $team_id = Request::input('team');
         $hole = Request::input('hole');
         $value = Request::input('value');
-        DB::table('scores')->where('id_team','=',$id)
-        ->where('id_tour', '=', $tour)
-        ->where('hole', '=', $hole)
-        ->update(['score' => $value]);
+        DB::table('scores')->where('id_team','=',$team_id)
+            ->where('id_tour', '=', $tour)
+            ->where('hole', '=', $hole)
+            ->update(['score' => $value]);
         return $this->getAdminView();
     }
 

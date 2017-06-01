@@ -44,5 +44,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongsTo(Team::team);
     }
 
+    public function isAdmin()
+    {
+        return $this->admin;
+    }
 
 }

@@ -125,10 +125,10 @@
                     title: parts[3],
                     icon: icon
                 });
-
+ 
                 // add player content window
                 marker.info = new google.maps.InfoWindow({
-                    content: '<img src="' +parts[2]+'" alt="team img" /><br>' + parts[3] 
+                    content: '<img src="'+parts[2]+'" alt="team img" /><br>'+parts[3] 
                 });
 
                 google.maps.event.addListener(marker, 'click', function() {
@@ -354,6 +354,7 @@
         };
 
         function connectMQTT(){
+            console.log("Attempting MQTT connection...");
             var options = {
                 timeout: 3,
                 cleanSession: false,

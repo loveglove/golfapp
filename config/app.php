@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://fisherclassic.com'),
+    'url' => env('APP_URL', 'https://fisherclassic.com'),
 
     /*
     |--------------------------------------------------------------------------

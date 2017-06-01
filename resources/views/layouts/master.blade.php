@@ -98,7 +98,7 @@
                 <li id="menu-logout">
                     <a href="logout"><i class="fa fa-sign-out"></i> <span class="nav-label">Log Out</span></a>
                 </li>
-                 @if(Auth::user()->getId() == 1)
+                 @if(Auth::user()->isAdmin())
                     <li id="menu-admin">
                         <a href="admin"><i class="fa fa-gears green-text"></i> <span class="nav-label">Admin</span></a>
                     </li>
@@ -163,7 +163,7 @@
             </div>     
             <div class="modal-body dropdown-alerts">
                 <div class="text-center link-block">
-                    <a href="notifications.html">
+                    <a href="#">
                         <strong>See All Alerts</strong>
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -180,7 +180,7 @@
             <strong>{{ Auth::user()->name }}</strong>
         </div>
         <div>
-            Fisher Classic &copy; 2016
+            M.Glover &copy; 2017
         </div>
       </div>
     
@@ -196,38 +196,38 @@
 <script>
 
 
-        var menuState = false;
-        $('.nav-btn').click(function(){ 
-        menuState = !menuState;
-        if(menuState){
-            $('.menu-button').removeClass("fa-chevron-right");
-            $('.menu-button').addClass("fa-chevron-left");
-            getScore();
-        } else {
-            $('.menu-button').removeClass("fa-chevron-left");
-            $('.menu-button').addClass("fa-chevron-right");
-        }
-        setTimeout(function() {
-            $('.team-score h1').toggleClass("animated tada", function(){
-            $(this).remove();
-            });
-        },1000);
-        });      
+         var menuState = false;
+         $('.nav-btn').click(function(){ 
+            menuState = !menuState;
+            if(menuState){
+               $('.menu-button').removeClass("fa-chevron-right");
+               $('.menu-button').addClass("fa-chevron-left");
+               getScore();
+            }else{
+               $('.menu-button').removeClass("fa-chevron-left");
+               $('.menu-button').addClass("fa-chevron-right");
+            }
+            setTimeout(function() {
+               $('.team-score h1').toggleClass("animated tada", function(){
+                  $(this).remove();
+               });
+            },1000);
+         });      
 
         $(document).ready(function(){
 
             var page = '<?php echo $page ?>';
             switch(page) {
-                case "course": $("#menu-course").addClass("active");
-                    break;
-                case "standings": $("#menu-standings").addClass("active");
-                    break;
-                case "map": $("#menu-map").addClass("active");
-                    break;
-                case "stats": $("#menu-stats").addClass("active");
-                    break;
-                case "settings": $("#menu-settings").addClass("active");
-                    break;
+               case "course": $("#menu-course").addClass("active");
+                  break;
+               case "standings": $("#menu-standings").addClass("active");
+                  break;
+               case "map": $("#menu-map").addClass("active");
+                  break;
+               case "stats": $("#menu-stats").addClass("active");
+                  break;
+               case "settings": $("#menu-settings").addClass("active");
+                  break;
             }
 
             $.ajaxSetup({
@@ -240,10 +240,10 @@
             $("#notify-count").html(count);
         })
 
-        function getScore(){
-          $.ajax({
-              url: 'getScore',
-              type: "GET",
+      function getScore(){
+         $.ajax({
+            url: 'getScore',
+            type: "GET",
               success: function(data){
               	if(data > 0){
                 	$(".team-score h1").html("+" + data);
@@ -252,31 +252,31 @@
             	} else {
             		$(".team-score h1").html("E");
             	}
-              },
-              error: function(error){
-                console.log(error);
-              }
-          });      
-        }
+            },
+            error: function(error){
+               console.log(error);
+            }
+         });      
+      }
 
-        function openNotifications(){
-          $(".dropdown-alerts").empty();
-          for(var i=0, len=localStorage.length; i<len; i++) {
+      function openNotifications(){
+         $(".dropdown-alerts").empty();
+         for(var i=0, len=localStorage.length; i<len; i++) {
             var key = localStorage.key(i);
             var value = localStorage[key];
             if(key != "notifycount"){
-              notifyData = value.split('|');
-              var alert = '<div>' + notifyData[0] + '<span class="pull-right text-muted small slate-text" style="padding-top:2px;">' + moment(notifyData[1]).fromNow() + '</span></div><hr/>';
-              $(".dropdown-alerts").append(alert);
+               notifyData = value.split('|');
+               var alert = '<div>' + notifyData[0] + '<span class="pull-right text-muted small slate-text" style="padding-top:2px;">' + moment(notifyData[1]).fromNow() + '</span></div><hr/>';
+               $(".dropdown-alerts").append(alert);
             }
-          }
+         }
          $("#notify-modal").modal("show");
-        }
+      }
 
-        $('#notify-modal').on('hidden.bs.modal', function () {
-            localStorage.clear();
-            $("#notify-count").empty();
-        })
+     $('#notify-modal').on('hidden.bs.modal', function () {
+         localStorage.clear();
+         $("#notify-count").empty();
+     })
 
      </script>
 
