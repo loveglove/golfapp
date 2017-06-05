@@ -426,9 +426,7 @@
  
         var userID = '<?php echo $userID ?>';
         var userAvatar = '<?php echo $userAvatar ?>';
-        var wsbroker = "mqtt.apengage.io";
-        var wsport = 9001;
-        var client = new Paho.MQTT.Client(wsbroker, wsport, "fc_client_" + userID);
+        var client = new Paho.MQTT.Client("mqtt.apengage.io", Number(8083), "/wss", "fc_client_" + userID);
 
         client.onConnectionLost = function (responseObject) {
             console.log("MQTT Connection Lost: " + responseObject.errorMessage);
@@ -462,6 +460,7 @@
                 cleanSession: false,
                 userName: "apengage", 
 		        password: "webpass",
+		        useSSL: true,
                 onSuccess: function () {
                     console.log("MQTT Connection Success!");
                     client.subscribe('fc/notify/score', { qos: 1 });
