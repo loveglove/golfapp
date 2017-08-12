@@ -92,6 +92,23 @@
 	<br/>
   	<div class="row">
   		
+  		@if($tournament->id == 1)
+  			<div class="col-xs-6 animated fadeInDown">
+  				<h3>{{ $tournament->name }}</h3>
+  			</div>
+  			<div class="col-xs-6 align-right" style="padding-top: 4px;">
+  				<a href="/standings" class=""> Back to Live Standings <i class="fa fa-forward"></i></a>
+  			</div>
+  		@else
+			<div class="col-xs-6 animated fadeInDown">
+  				<h3>{{ $tournament->name }}</h3>
+  			</div>
+  			<div class="col-xs-6 align-right" style="padding-top: 4px;">
+  				<a href="/lastyear" class=""> View Last Years Standings <i class="fa fa-backward"></i></a>
+  			</div>
+  		@endif
+  		<br/>
+  		<br/>
   		<div class="col-md-6 col-lg-8">
 	  		<div class="ibox float-e-margins">
 	            <div class="ibox-content">
@@ -359,6 +376,8 @@
 	        </div>
 	    </div>
 
+	    
+
 	</div>
 </div>
 
@@ -430,7 +449,7 @@
 
         client.onConnectionLost = function (responseObject) {
             console.log("MQTT Connection Lost: " + responseObject.errorMessage);
-			 connectMQTT();
+			connectMQTT();
         };
 
         client.onMessageArrived = function (message) {
@@ -456,18 +475,18 @@
 
         function connectMQTT(){
             var options = {
-                timeout: 3,
+                timeout: 10,
                 cleanSession: false,
                 userName: "apengage", 
 		        password: "webpass",
 		        useSSL: true,
                 onSuccess: function () {
                     console.log("MQTT Connection Success!");
-                    client.subscribe('fc/notify/score', { qos: 1 });
-                    client.subscribe('fc/selfcheck/' + userID, { qos: 1 });
-                    message = new Paho.MQTT.Message("getting old messages...");
-                    message.destinationName = "fc/selfcheck/" + userID; 
-                    client.send(message);
+                    // client.subscribe('fc/notify/score', { qos: 1 });
+                    // client.subscribe('fc/selfcheck/' + userID, { qos: 1 });
+                    // message = new Paho.MQTT.Message("getting old messages...");
+                    // message.destinationName = "fc/selfcheck/" + userID; 
+                    // client.send(message);
                 },
                 onFailure: function (message) {
                     console.log("MQTT Connection Failed: " + message.errorMessage);

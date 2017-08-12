@@ -16,7 +16,7 @@
                     <div class="form-group">
                         {!! Form::text('teamname', null, ['class' => 'form-control', 'placeholder' => 'Enter new team...']) !!}
                         <br/>
-                        {{Form::button('<i class="fa fa-user"></i><i class="fa fa-user"></i> Create Team', array('type' => 'submit', 'class' => 'btn btn-primary block full-width m-b dim'))}}
+                        {{Form::button('<i class="fa fa-user"></i> Create Team', array('type' => 'submit', 'class' => 'btn btn-primary block full-width m-b dim'))}}
                     </div>      
                     {!! Form::close() !!}
                     <br/>
@@ -24,7 +24,7 @@
                     <div class="form-group">
                         {!! Form::select('team', $teams, null, ['class' => 'form-control', 'placeholder' => 'Join existing team...']) !!}
                         <br/>
-                        {{Form::button('<i class="fa fa-user"></i> Join Team', array('type' => 'submit', 'class' => 'btn btn-primary block full-width m-b dim'))}}
+                        {{Form::button('<i class="fa fa-user"></i><i class="fa fa-user"></i> Join Team', array('type' => 'submit', 'class' => 'btn btn-primary block full-width m-b dim'))}}
                     </div>      
                     {!! Form::close() !!}
 

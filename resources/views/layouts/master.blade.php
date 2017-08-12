@@ -89,8 +89,8 @@
                 <li id="menu-standings">
                     <a href="standings"><i class="fa fa-trophy"></i> <span class="nav-label">Standings</span></a>
                 </li>
-                <li id="menu-map">
-                    <a href="map"><i class="fa fa-globe"></i> <span class="nav-label">Map</span></a>
+                <li id="menu-map" style="text-align: center;">
+                    <a href="map"><i class="fa fa-map-marker"></i> <span class="nav-label">Map</span></a>
                 </li>
                 <li id="menu-stats">
                     <a href="analytics"><i class="fa fa-bar-chart"></i> <span class="nav-label">Stats</span></a>

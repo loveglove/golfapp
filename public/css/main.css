@@ -13,6 +13,17 @@ body {
 
 }
 
+.tb1{
+    border:1px solid red !important;
+}
+.tb2{
+    border:2px solid blue !important;
+}
+
+.align-right{
+    text-align: right;
+}
+
 .parent{
     display: table;
 }
@@ -196,6 +207,21 @@ box-shadow: -2px 10px 37px 0px rgba(0,0,0,0.75);
 
 .row-dull{
     background-color:#f2f2f2;
+}
+
+
+@keyframes animatedBackground {
+    from { background-position: 0 0; }
+    to { background-position: 100% 0; }
+}
+
+.animate-area   { 
+/*    width: 560px; 
+    height: 400px; */
+    background-image: url('images/grass.png');
+    background-position: 0px 0px;
+    background-repeat: repeat-x;
+    animation: animatedBackground 40s linear infinite;
 }
 
 /*MAP*/

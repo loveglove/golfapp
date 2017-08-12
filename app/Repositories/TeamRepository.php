@@ -65,8 +65,8 @@ class TeamRepository
 
     public function getCompleted($team_id)
     {
-        $id_tour = Session::get('tournament')->id;
-        return Score::where('id_team', '=', $team_id)->where('id_tour','=',$id_tour)->get();
+        // $id_tour = Session::get('tournament')->id;
+        return Score::where('id_team', '=', $team_id)->get();
     }
 
     public function getMatchups()

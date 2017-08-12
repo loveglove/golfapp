@@ -600,6 +600,7 @@
         	console.log("Attempting MQTT connection...")
             var options = {
                 cleanSession: false,
+                useSSL: false,
                 userName: 'apengage',
                 password: 'webpass',
                 useSSL: true,

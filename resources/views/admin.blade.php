@@ -149,8 +149,7 @@
                         </tr>
                     @endforeach
                     </tbody>
-                    </table>
-                </div>
+                </table>
             </div>
         </div>
     </div>

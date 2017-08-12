@@ -42,6 +42,7 @@ Route::get('/standings', 'StandingsController@getStandings');
 Route::get('/getScoreCard', 'StandingsController@getScoreCard');
 Route::get('/leaderboard', 'PublicController@getPublicBoard');
 Route::get('/getScoreCardPublic', 'PublicController@getScoreCard');
+Route::get('/lastyear', 'StandingsController@getStandings');
 
 // Map Routes
 Route::get('map',['as' => 'map', 'uses' => 'MapController@getMapView']);

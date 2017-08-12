@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Team;
 use App\Score;
+use App\Tournament;
 use Request;
 use Input;
 use Session;
@@ -38,53 +39,62 @@ class StandingsController extends Controller
      */
     public function getStandings(Request $request)
     {
-        $type = Session::get('tournament')->type;
+        $URLpath = Request::getPathInfo();
+        $tournament = null;
+        $type = null;
+
+        if($URLpath == "/lastyear"){
+            $tournament = Tournament::find(1);
+            $type = "traditional";
+        }else{
+            $tournament = Session::get('tournament');
+            $type = Session::get('tournament')->type; 
+        }
+            
         switch($type){
-                case 'traditional':
-                    $tournament = Session::get('tournament');
-                    return view('traditional', [
-                        'standings' => $this->standings->getLeaderboard($tournament->id),
-                    ]);
-                break;
 
-                case 'skins':
-                    $tournament = Session::get('tournament');
-                    $allmatchups = $this->team->getMatchups();
-                    $standings = array();
-                    foreach($allmatchups as $matchup){
-                        $result = $this->standings->getSkinsBoard($matchup->id_team1, $matchup->id_team2, $tournament->id);
-                        array_push($standings, $result);
-                    }  
-                    return view('skins', [
-                        'standings' => $standings
-                    ]);
-                break;
+            case 'traditional':
+                return view('traditional', [
+                    'standings' => $this->standings->getLeaderboard($tournament->id),
+                    'tournament' => $tournament,
+                ]);
+            break;
 
-                case 'stroke':
-                    $tournament = Session::get('tournament');
-                    $allmatchups = $this->team->getMatchups();
-                    $standings = array();
-                    foreach($allmatchups as $matchup){
-                        $result = $this->standings->getStrokeBoard($matchup->id_team1, $matchup->id_team2, $tournament->id);
-                        array_push($standings, $result);
-                    }
-                    return view('stroke', [
-                        'standings' => $standings
-                    ]);
-                break;
+            case 'skins':
+                $allmatchups = $this->team->getMatchups();
+                $standings = array();
+                foreach($allmatchups as $matchup){
+                    $result = $this->standings->getSkinsBoard($matchup->id_team1, $matchup->id_team2, $tournament->id);
+                    array_push($standings, $result);
+                }  
+                return view('skins', [
+                    'standings' => $standings
+                ]);
+            break;
 
-                case 'match':
-                    $tournament = Session::get('tournament');
-                    $allmatchups = $this->team->getMatchups();
-                    $standings = array();
-                    foreach($allmatchups as $matchup){
-                        $result = $this->standings->getMatchBoard($matchup->id_team1, $matchup->id_team2, $tournament->id);
-                        array_push($standings, $result);
-                    }
-                    return view('match', [
-                        'standings' => $standings
-                    ]);
-                break;
+            case 'stroke':
+                $allmatchups = $this->team->getMatchups();
+                $standings = array();
+                foreach($allmatchups as $matchup){
+                    $result = $this->standings->getStrokeBoard($matchup->id_team1, $matchup->id_team2, $tournament->id);
+                    array_push($standings, $result);
+                }
+                return view('stroke', [
+                    'standings' => $standings
+                ]);
+            break;
+
+            case 'match':
+                $allmatchups = $this->team->getMatchups();
+                $standings = array();
+                foreach($allmatchups as $matchup){
+                    $result = $this->standings->getMatchBoard($matchup->id_team1, $matchup->id_team2, $tournament->id);
+                    array_push($standings, $result);
+                }
+                return view('match', [
+                    'standings' => $standings
+                ]);
+            break;
 
         }
 

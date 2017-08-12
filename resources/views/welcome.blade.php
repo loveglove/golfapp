@@ -6,11 +6,10 @@
         <title>Fisher Classic</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
         <link href="{{{ asset('/css/main.css') }}}" rel="stylesheet">
         <link href="{{{ asset('/theme/css/bootstrap.css') }}}" rel="stylesheet">
         <link href="{{{ asset('/theme/font-awesome/css/font-awesome.css') }}}" rel="stylesheet">
-        <link href="{{{ asset('/theme/css/animate.css') }}}" rel="stylesheet">
+<!--         <link href="{{{ asset('/theme/css/animate.css') }}}" rel="stylesheet"> -->
         <link href="{{{ asset('/theme/css/style.css') }}}" rel="stylesheet">
         <link href="{{{ asset('/fonts/blacksword/stylesheet.css') }}}" rel="stylesheet">
         <link href="{{{ asset('/addtohomescreen/style/addtohomescreen.css') }}}" rel="stylesheet" type="text/css" >
@@ -39,21 +38,61 @@
 
     </head>
 
-        <body class="gray-bg" ontouchstart="">
+    <style>
 
-            <div class="middle-box text-center loginscreen animated fadeIn" style="margin-top:10%;">
+        @keyframes animatedBackground {
+            from { background-position: 0 0; }
+            to { background-position: 100% 0; }
+        }
+        .header-area{
+          /*  border:1px solid red;*/
+            position:absolute;
+            top:0;
+            left:0;
+            width: 100%; 
+            height:100px;
+            background-color: transparent;
+            background-image: url('images/clouds.png');
+            background-position: bottom;
+            background-repeat: repeat-x;
+            background-size: contain;
+            animation: animatedBackground 10s linear infinite;
+            z-index:-1;
+        }
+
+        .footer-area{
+          /*  border:1px solid red;*/
+            position:absolute;
+            bottom:0;
+            left:0;
+            width: 100%; 
+            height:100px;
+            background-color: transparent;
+            background-image: url('images/golf-ball-grass.png');
+            background-position: bottom;
+            background-repeat: repeat-x;
+            background-size: contain;
+            z-index:-1;
+        }
+
+    </style>
+
+        <body class="gray-bg" ontouchstart="">
+         <!--    <div class="header-area"></div> -->
+            <div class="middle-box text-center loginscreen" style="margin-top:5%;">
                 <div>
                     <div>
                         <a href="leaderboard" ><h1 class="logo-name fc-font" style="font-size:135px;">FC</h1></a>
                     </div>
                     <h3 class="fc-font" style="font-size:40px;">Fisher Classic</h3>
-                    <p>The 2016 annual Fisher Classic golf tournament. Login with facebook to enter.
+                    <p>The 2017 annual Fisher Classic golf tournament. Login with facebook to enter.
                     </p>
                     <a href="auth/facebook" class="form-group"><button type="submit" class="btn btn-primary block full-width m-b dim"><i class="fa fa-facebook"></i>  Login with facebook</button></a>
 
-                    <p class="m-t"> <small>Developed by Matt Glover &copy; 2016<br/>All Rights Reserved</small> </p>
+                    <p class="m-t"> <small>Developed by Matt Glover &copy; 2017<br/>All Rights Reserved</small> </p>
                 </div>
             </div>
+            <div class="footer-area"></div>
 
         </body>
 
