@@ -76,4 +76,53 @@ class TeamRepository
         return Matchup::where('id_tour','=', $tournament->id)->get();
 
     }
+
+    public function getStatistics()
+    {
+        $team = $this->getTeam();
+        $scores = Score::where('id_team', $team->id)->get();
+        
+        $holeinones = 0;
+        $albatrosses = 0;
+        $eagles = 0;
+        $birdies = 0;
+        $pars = 0;
+        $bogeys = 0;
+        $doublebogeys = 0;
+
+        foreach($scores as $score)
+        {
+            $v = $score->score;
+            $p = $score->par;
+            
+            if($v == 1){
+                $holeinones++;
+            }elseif($v == ($p - 3) && !(($p - 3) == 1)){
+                $albatrosses++;
+            }elseif($v == ($p - 2) && !(($p - 2) == 1)){
+                $eagles++;
+            }elseif($v == ($p - 1)){
+                $birdies++;
+            }elseif($v == $p){
+                $pars++;
+            }elseif($v == ($p + 1)){
+                $bogeys++;
+            }elseif($v == ($p + 2)){
+                $doublebogeys++;
+            }
+        }
+
+        $statistics = [
+            'holeinones'=>$holeinones,
+            'albatrosses'=>$albatrosses,
+            'eagles'=>$eagles,
+            'birdies'=>$birdies,
+            'pars'=>$pars,
+            'bogeys'=>$bogeys,
+            'doublebogeys'=>$doublebogeys
+        ];
+
+        return $statistics;
+
+    }
 }

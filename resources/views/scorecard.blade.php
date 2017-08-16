@@ -573,7 +573,9 @@
 
         client.onConnectionLost = function (responseObject) {
             console.log("MQTT Connection Lost: " + responseObject.errorMessage);
-			connectMQTT();
+			setTimeout(function(){
+				connectMQTT();
+			},1000);
         };
 
         client.onMessageArrived = function (message) {
@@ -599,6 +601,7 @@
         function connectMQTT(){
         	console.log("Attempting MQTT connection...")
             var options = {
+            	timeout: 20,
                 cleanSession: false,
                 useSSL: false,
                 userName: 'apengage',
@@ -607,14 +610,16 @@
                 onSuccess: function () {
                     console.log("MQTT Connection Success!");
                     client.subscribe('fc/notify/score', { qos: 1 });
-                    client.subscribe('fc/selfcheck/' + userID, { qos: 1 });
-                    message = new Paho.MQTT.Message("getting old messages...");
-                    message.destinationName = "fc/selfcheck/" + userID; 
-                    client.send(message);
+                    // client.subscribe('fc/selfcheck/' + userID, { qos: 1 });
+                    // message = new Paho.MQTT.Message("getting old messages...");
+                    // message.destinationName = "fc/selfcheck/" + userID; 
+                    // client.send(message);
                 },
                 onFailure: function (message) {
                     console.log("MQTT Connection Failed: " + message.errorMessage);
-					 connectMQTT();
+					setTimeout(function(){
+						connectMQTT();
+					},1000);
                 }
             };
             client.connect(options);

@@ -116,7 +116,7 @@
   </div>
   <!-- ******** TOP NAV ******** -->
     <div id="page-wrapper" class="gray-bg">
-      <div class="row border-bottom" style="position:fixed; z-index:999; width:100%;">
+      <div class="row border-bottom" style="position:fixed; z-index:99999; width:100%;">
         <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <a class="navbar-minimalize minimalize-styl-2 btn btn-green nav-btn" href="#"><i class="fa fa-chevron-right menu-button"></i> </a>

@@ -96,14 +96,14 @@
   			<div class="col-xs-6 animated fadeInDown">
   				<h3>{{ $tournament->name }}</h3>
   			</div>
-  			<div class="col-xs-6 align-right" style="padding-top: 4px;">
+  			<div class="col-xs-6 align-right animated fadeInDown" style="padding-top: 4px;">
   				<a href="/standings" class=""> Back to Live Standings <i class="fa fa-forward"></i></a>
   			</div>
   		@else
 			<div class="col-xs-6 animated fadeInDown">
   				<h3>{{ $tournament->name }}</h3>
   			</div>
-  			<div class="col-xs-6 align-right" style="padding-top: 4px;">
+  			<div class="col-xs-6 align-right animated fadeInDown" style="padding-top: 4px;">
   				<a href="/lastyear" class=""> View Last Years Standings <i class="fa fa-backward"></i></a>
   			</div>
   		@endif
@@ -449,7 +449,9 @@
 
         client.onConnectionLost = function (responseObject) {
             console.log("MQTT Connection Lost: " + responseObject.errorMessage);
-			connectMQTT();
+			setTimeout(function(){
+				connectMQTT();
+			},1000);
         };
 
         client.onMessageArrived = function (message) {
@@ -475,14 +477,14 @@
 
         function connectMQTT(){
             var options = {
-                timeout: 10,
+                timeout: 20,
                 cleanSession: false,
                 userName: "apengage", 
 		        password: "webpass",
 		        useSSL: true,
                 onSuccess: function () {
                     console.log("MQTT Connection Success!");
-                    // client.subscribe('fc/notify/score', { qos: 1 });
+                    client.subscribe('fc/notify/score', { qos: 1 });
                     // client.subscribe('fc/selfcheck/' + userID, { qos: 1 });
                     // message = new Paho.MQTT.Message("getting old messages...");
                     // message.destinationName = "fc/selfcheck/" + userID; 
@@ -490,7 +492,9 @@
                 },
                 onFailure: function (message) {
                     console.log("MQTT Connection Failed: " + message.errorMessage);
-					 connectMQTT();
+					setTimeout(function(){
+						connectMQTT();
+					},1000);
                 }
             };
             client.connect(options);

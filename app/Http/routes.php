@@ -48,15 +48,8 @@ Route::get('/lastyear', 'StandingsController@getStandings');
 Route::get('map',['as' => 'map', 'uses' => 'MapController@getMapView']);
 
 // Analytics Routes
-Route::get('/analytics', function () {
-    return view('analytics');
-});
+Route::get('/analytics', 'AnalyticsController@show');
 
-
-// Frozen butcher Routes
-Route::get('/frozenbutcher', function () {
-    return view('frozenbutcher');
-});
 
 // Admin Routes
 Route::get('admin',['as' => 'admin', 'uses' => 'AdminController@getAdminView']);

@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'CreateMatchups' => $baseDir . '/database/migrations/2016_07_14_205141_create_matchups.php',
     'CreateMatchupsMigration' => $baseDir . '/database/migrations/2016_07_14_204836_create_matchups_migration.php',
+    'CreateNotificationsTable' => $baseDir . '/database/migrations/2017_08_16_033838_create_notifications_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateScoresTable' => $baseDir . '/database/migrations/2016_06_17_193030_create_scores_table.php',
     'CreateTeamsTable' => $baseDir . '/database/migrations/2016_06_17_202136_create_teams_table.php',
