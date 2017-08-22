@@ -332,7 +332,12 @@
 			    dataType: "json",
 			    data: {'hole': hole, 'score':score, 'par':par, '_token': $('input[name=_token]').val()},
 			    success: function(data){
-			    	swal("Saved", "Your score has been entered for hole #" + hole, "success");
+			    	swal({
+			    		title: "Saved", 
+			    		text: "Your score has been entered for hole #" + hole, 
+			    		type: "success",
+			    		timer: 3000
+			    	});
 					currentHole = parseInt(hole) + 1;
 					if(currentHole == 19){
 						swal("Congratulations", "You have completed the tournament", "success");
@@ -390,7 +395,7 @@
         		// check if there's a streak
         		else if(back_1 < 0 && back_2 < 0 && back_3 < 0 && back_4 < 0){
         			// console.log("massive streak");
-        			publishMSG('fa-smile-o', teamName + " are in there <b>HAPPY</b> place");
+        			publishMSG('fa-smile-o', teamName + " are in there <b>Happy</b> place");
         		}else if (back_1 < 0 && back_2 < 0 && back_3 < 0){
         			// console.log("heavy streak");
         			publishMSG('fa-bolt', teamName + " have found the <b>sweet</b> spot");
@@ -459,14 +464,6 @@
 
 			if(navigator.geolocation)
 			{
-				// navigator.geolocation.getCurrentPosition(function(position) {
-				// 	var myLat = position.coords.latitude;
-				// 	var myLon = position.coords.longitude;
-				// 	var pinLat = $("#pinLat" + currentHole).val();
-				// 	var pinLon = $("#pinLon" + currentHole).val();
-				// 	calculateDistance(myLat, myLon, pinLat, pinLon);
-				// });
-
 				navigator.geolocation.watchPosition(
 					function(position) {
 						var hole = 1;
@@ -505,8 +502,7 @@
 		  	var a = 
 		    	Math.sin(dLat/2) * Math.sin(dLat/2) +
 		    	Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
-		    	Math.sin(dLon/2) * Math.sin(dLon/2)
-		    	; 
+		    	Math.sin(dLon/2) * Math.sin(dLon/2); 
 		  	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
 		  	var km = R * c; // Distance in km
 		  	var yd = Math.round(km/0.0009144);

@@ -63,10 +63,28 @@ class TeamRepository
 
     }
 
+    public function getScoreAny($team_id, $tour_id)
+    {
+        $scoreTotal = DB::table('scores')->where('id_team','=', $team_id)->where('id_tour','=', $tour_id)->sum('score');
+        $parTotal = DB::table('scores')->where('id_team','=', $team_id)->where('id_tour','=', $tour_id)->sum('par');
+        return $scoreTotal - $parTotal;
+    }
+
     public function getCompleted($team_id)
     {
         // $id_tour = Session::get('tournament')->id;
         return Score::where('id_team', '=', $team_id)->get();
+    }
+
+    public function getCompletedValues($team_id)
+    {
+        $values = array();
+        $scores = Score::where('id_team', '=', $team_id)->get();
+        foreach($scores  as $s)
+        {
+            array_push($values, $s->score);
+        }
+        return $values;
     }
 
     public function getMatchups()
@@ -124,5 +142,18 @@ class TeamRepository
 
         return $statistics;
 
+    }
+
+    public function getTourAverage()
+    {
+        $scores = array();
+        $tournament = Session::get('tournament');
+        $teams = $this->getAllTeams();
+        foreach($teams as $team)
+        {
+            $score = $this->getScoreAny($team->id, $tournament->id);
+            array_push($scores, intval($score));
+        }
+        return ceil(array_sum($scores) / count($scores));
     }
 }

@@ -36,4 +36,33 @@ class StandingsRepository
     {
         return DB::select('call getStrokeBoard(?,?,?)', array($team1, $team2, $tour));
     }
+
+    public function getHoleAverage($tour, $holes)
+    {
+        $averages = array();
+        for($x = 1; $x <= $holes; $x++)
+        {
+            $result = DB::select(DB::raw("SELECT AVG(score) AS hole_avg FROM scores WHERE hole = '".$x."' AND id_tour = '".$tour."'"));
+
+            array_push($averages, intval(round($result[0]->hole_avg)));
+            
+        } 
+        return $averages;
+
+    }
+
+
+    public function getScoreAverage($tour)
+    {
+        $averages = array();
+        for($x = 1; $x <= $holes; $x++)
+        {
+            $result = DB::select(DB::raw("SELECT AVG(score) AS hole_avg FROM scores WHERE hole = '".$x."' AND id_tour = '".$tour."'"));
+
+            array_push($averages, intval(round($result[0]->hole_avg)));
+            
+        } 
+        return $averages;
+
+    }
 }

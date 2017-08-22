@@ -22,13 +22,13 @@
 		color: rgba(98,190,92,1);
 		text-align: left;
 		font-weight: 500;
-		font-size: 14px;
+		font-size: 15px;
 	}
 	.touravg{
 		color: rgba(170,170,170,1);
 		text-align: right;
 		font-weight: 500;
-		font-size: 14px;
+		font-size: 15px;
 	}
 
 </style>
@@ -44,7 +44,7 @@
 					<label class="label label-custom" style="background-color:#33cccc;">{{ $statistics['holeinones'] }}</label> Hole In Ones 
 				</div>
 				<div class="col-xs-3">
-					<span class="pie">{{ $statistics['holeinones'] }},18</span>
+					<span class="pie">{{ $statistics['holeinones'] }},{{ count($myscores) }}</span>
 				</div>
 			</div>
 		@endif
@@ -55,7 +55,7 @@
 					<label class="label label-custom" style="background-color:#33cccc;">{{ $statistics['albatrosses'] }}</label> Albatrosses
 				</div> 
 				<div class="col-xs-3">
-					<span class="pie">{{ $statistics['albatrosses'] }},18</span>
+					<span class="pie">{{ $statistics['albatrosses'] }},{{ count($myscores) }}</span>
 				</div>
 			</div>
 		@endif
@@ -66,7 +66,7 @@
 					<label class="label label-custom" style="background-color:#33cccc;">{{ $statistics['eagles'] }}</label> Eagles
 				</div>
 				<div class="col-xs-3">
-				 	<span class="pie">{{ $statistics['eagles'] }},18</span>
+				 	<span class="pie">{{ $statistics['eagles'] }},{{ count($myscores) }}</span>
 				</div>
 			</div>
 		@endif
@@ -77,7 +77,7 @@
 					<label class="label label-custom" style="background-color:#54bc75;">{{ $statistics['birdies'] }}</label> Birdies 
 				</div>
 				<div class="col-xs-3">
-					<span class="pie">{{ $statistics['birdies'] }},18</span>
+					<span class="pie">{{ $statistics['birdies'] }},{{ count($myscores) }}</span>
 				</div>
 			</div>
 		@endif
@@ -88,7 +88,7 @@
 					<label class="label label-custom" style="background-color:#89C558;">{{ $statistics['pars'] }}</label> Pars
 				</div>  
 				<div class="col-xs-3">
-					<span class="pie">{{ $statistics['pars'] }},18</span>
+					<span class="pie">{{ $statistics['pars'] }},{{ count($myscores) }}</span>
 				</div>
 			</div>
 		@endif
@@ -99,7 +99,7 @@
 					<label class="label label-custom" style="background-color:#B9CC54;">{{ $statistics['bogeys'] }}</label> Bogeys 
 				</div>
 				<div class="col-xs-3">
-					<span class="pie">{{ $statistics['bogeys'] }},18</span>
+					<span class="pie">{{ $statistics['bogeys'] }},{{ count($myscores) }}</span>
 				</div>
 			</div>
 		@endif
@@ -110,7 +110,7 @@
 					<label class="label label-custom" style="background-color:#D4B64F;">{{ $statistics['doublebogeys'] }}</label> Doubles 
 				</div>
 				<div class="col-xs-3">
-					<span class="pie">{{ $statistics['doublebogeys'] }},18</span>
+					<span class="pie">{{ $statistics['doublebogeys'] }},{{ count($myscores) }}</span>
 				</div>
 			</div>
 		@endif
@@ -135,6 +135,28 @@
         </div>
     </div>
 
+    <div class="row">
+		<div class="col-xs-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+	                <div class="row">
+	   					<div class="col-xs-7"><h2>Average Team <br/> Score Currently:</h2></div>
+	   					<div class="col-xs-5">
+	   						<span style="font-size:48px; float:right;">
+		                    	@if($avgscore < 0)
+		                    		<i class="fa fa-level-down green-text"></i>&nbsp{{ $avgscore }}
+		                    	@elseif($avgscore > 0)
+		                    		<i class="fa fa-level-up red-text"></i>&nbsp+{{ $avgscore }}
+		                    	@else($avgscore == 0)
+		                    		<i class="fa fa-minus"></i>&nbspE
+		                    	@endif
+	   					</div>
+	                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 
@@ -145,14 +167,23 @@
 <script src="{{{ asset('/theme/js/plugins/chartJs/Chart.min.js') }}}"></script>
 <script>
 
+	var myscore = [<?php echo '"'.implode('","',  $myscores ).'"' ?>];
+	var averages = [<?php echo '"'.implode('","',  $averages ).'"' ?>];
+
+	var labelvals = [];
+
 	$(document).ready(function(){
 		
 		$("span.pie").peity("pie", {
         	fill: ['#62BE5C', '#d7d7d7', '#ffffff']
     	});
 
+		for(i = 0; i < myscore.length; i++){
+		   	labelvals.push("Hole #" + (i + 1));
+		} 
+
     	var radarData = {
-	        labels: ["Hole #1", "Hole #2", "Hole #3", "Hole #4", "Hole #5", "Hole #6", "Hole #7", "Hole #8", "Hole #9", "Hole #10", "Hole #11", "Hole #12", "Hole #13", "Hole #14","Hole #15", "Hole #16", "Hole #17", "Hole #18",],
+	        labels: labelvals,
 	        datasets: [
 	            {
 	                label: "My Score",
@@ -162,7 +193,7 @@
 	                pointStrokeColor: "#fff",
 	                pointHighlightFill: "#fff",
 	                pointHighlightStroke: "rgba(170,170,170,1)",
-	                data: [3, 3, 4, 6, 5, 3, 4, 5, 6, 5, 3, 4, 3, 2, 3, 4, 4, 5]
+	                data: myscore
 	            },
 	            {
 	                label: "Tournament Average",
@@ -172,7 +203,7 @@
 	                pointStrokeColor: "#fff",
 	                pointHighlightFill: "#fff",
 	                pointHighlightStroke: "rgba(98,190,92,1)",
-	                data: [4, 3, 4, 5, 3, 4, 3, 5, 4, 5, 3, 4, 3, 3, 4, 5, 4, 5]
+	                data: averages
 	            }
 	        ]
 	    };
@@ -198,9 +229,6 @@
 	        responsive: true,
 	    }
 
-	    // var legendOptions = {
-	    // 	fullWidth: true,
-	    // }
 
 	    var ctx = document.getElementById("over-under").getContext("2d");
 	    var myNewChart = new Chart(ctx).Radar(radarData, radarOptions);

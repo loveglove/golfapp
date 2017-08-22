@@ -468,7 +468,9 @@
 
         client.onConnectionLost = function (responseObject) {
             console.log("MQTT Connection Lost: " + responseObject.errorMessage);
-            connectMQTT();
+            setTimeout(function(){
+                connectMQTT();
+            },1000);
         };
 
         client.onMessageArrived = function (message) {
@@ -514,7 +516,9 @@
                 },
                 onFailure: function (message) {
                     console.log("MQTT Connection Failed: " + message.errorMessage);
-                    connectMQTT();
+                    setTimeout(function(){
+                        connectMQTT();
+                    },1000);
                 }
             };
             client.connect(options);

@@ -10,7 +10,7 @@ use Request;
 use Input;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Repositories\CourseRepository;
+use App\Repositories\StandingsRepository;
 use App\Repositories\TeamRepository;
 
 class AnalyticsController extends Controller
@@ -19,20 +19,27 @@ class AnalyticsController extends Controller
     // protected $courseRepo;
     // protected $teamRepo;
 
-    public function __construct(CourseRepository $courseRepo, TeamRepository $teamRepo)
+    public function __construct(StandingsRepository $standingsRepo, TeamRepository $teamRepo)
     {
         $this->middleware('auth');
         $this->tournament = Session::get('tournament');
-        $this->courseRepo = $courseRepo;
+        $this->standingsRepo = $standingsRepo;
         $this->teamRepo = $teamRepo;
     }
 
 
     public function show()
     {
+        $team_id = $this->teamRepo->getTeam()->id;
+        $myscores = $this->teamRepo->getCompletedValues($team_id);
+        $averages = $this->standingsRepo->getHoleAverage($this->tournament->id, count($myscores));
+        $avgscore = $this->teamRepo->getTourAverage();
+
         return view('analytics', [
-            'course' => $this->courseRepo->getCourse(),
             'statistics' => $this->teamRepo->getStatistics(),
+            'myscores' => $myscores,
+            'averages' => $averages,
+            'avgscore' => $avgscore,
         ]);
     }
 

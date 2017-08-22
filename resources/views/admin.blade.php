@@ -32,8 +32,8 @@
                   <thead>
                   <tr>
                       <th>Name </th>
-                      <th>Active</th>
-                      <th>Edit</th>
+                      <th>Status</th>
+                      <th>Enable</th>
                   </tr>
                   </thead>
                   <tbody>
