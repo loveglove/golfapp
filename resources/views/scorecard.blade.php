@@ -460,7 +460,7 @@
         			// No streak
         			if(current >= 3){
         				// console.log("just blew that hole");
-        				publishNote('images/jackie.png', '<strong>SEEEEE YA!</strong><br/>'+ teamName +' just blew <b>Hole #' + hole + '</b> Smash a pint '+ teamName +'<br/><i>Terrible Hole </i><span class="redicon"><i class="fa fa-times"></i></span>');
+        				publishNote('images/jackie.png', '<strong>SEEEEE YA!</strong><br/>'+ teamName +' just blew <b>Hole #' + hole + '</b> Smash a pint!<br/><i>Terrible Hole </i><span class="redicon"><i class="fa fa-times"></i></span>');
         				// publishMSG('fa-frown-o', teamName + " just blew it on<br/><b>Hole:</b> #" + hole);
         			}		
         		}

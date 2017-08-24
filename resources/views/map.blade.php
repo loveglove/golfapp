@@ -1,7 +1,8 @@
 @extends('layouts.master')
 
 @section('scripts')
-	
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDwYvEiJHi4rgFoTUb9i1Eexeds7ssfzew"></script>
+  <script src="{{{ asset('/richmarker/src/richmarker.js') }}}"></script>
 
 @endsection
 
@@ -29,40 +30,29 @@
 }
 */
 
-.customMarker {
-    position:absolute;
-    cursor:pointer;
-    background:#424242;
-    width:100px;
-    height:100px;
-    /* -width/2 */
-    margin-left:-50px;
-    /* -height + arrow */
-    margin-top:-110px;
-    border-radius:10px;
-    padding:0px;
-}
-.customMarker:after {
-    content:"";
-    position: absolute;
-    bottom: -10px;
-    left: 40px;
-    border-width: 10px 10px 0;
-    border-style: solid;
-    border-color: #424242 transparent;
-    display: block;
-    width: 0;
-}
-.customMarker img {
-    width:90px;
-    height:90px;
-    margin:5px;
-    border-radius:10px;
-}
-.my-other-marker{
-    width:50px;
+.rich-marker{
+/*    width:50px;
     height:50px;
-    background: white;
+    border-radius: 50%;
+    border:3px solid white;*/
+}
+.rich-marker img{
+    width:60px;
+    height:60px;
+    border-radius: 50%;
+    border:2px solid white;
+    z-index: 9999;
+}
+.arrow-down {
+  width: 0; 
+  height: 0; 
+  border-left: 24px solid transparent;
+  border-right: 24px solid transparent;
+  border-top: 24px solid white;
+  position: absolute;
+  bottom:-12px;
+  left:6px;
+  z-index: -1;
 }
 
 </style>
@@ -95,7 +85,6 @@
     var myPos = null;
     var curvature = 0.5;
     var Point = null;
-    var marker2;
 
     function initMap() {
 
@@ -113,17 +102,6 @@
             fullscreenControl: false
         });
 
-        // var div = document.createElement('DIV');
-        // div.innerHTML = '<div class="my-other-marker">I am flat marker!</div>';
-
-        // marker2 = new RichMarker({
-        //   map: map,
-        //   position: new google.maps.LatLng(43.3898045900, -79.8109913600),
-        //   draggable: true,
-        //   flat: true,
-        //   anchor: RichMarkerPosition.MIDDLE,
-        //   content: div
-        // });
 
         map.addListener('click', function(event) {
             setDistMarker(event.latLng);
@@ -154,12 +132,9 @@
     function addMarkerUser(data, user_id){
 
         var parts = data.split(',');
-        var LatLng = {
-                lat: parseFloat(parts[0]), 
-                lng: parseFloat(parts[1])
-            };
-
-        // if(userID != user_id){ 
+        var LatLng = new google.maps.LatLng(parseFloat(parts[0]), parseFloat(parts[1]));
+            
+            // if(userID != user_id){ 
             if(user_id in playermarkers){
 
                 marker = playermarkers[user_id];
@@ -167,37 +142,22 @@
 
             }else{
 
-                //create player icon
-                var icon = {
-                    url: parts[2], // url
-                    scaledSize: new google.maps.Size(60,60), // scaled size
-                    origin: new google.maps.Point(0,0), // origin
-                    anchor: new google.maps.Point(30,30), // anchor
-                };
+                // add rich player marker
+                var div = document.createElement('DIV');
+                div.innerHTML = '<div class="rich-marker"><img class="img-circle" src="'+parts[2]+'" alt="player image"/><div class="arrow-down"></div></div>';
 
-                // var marker = new RichMarker({
-                //       position: LatLng,
-                //       map: map,
-                //       draggable: false,
-                //       content: '<div class="my-marker"><div>This is a nice image</div>' +
-                //         '<div><img src="'+parts[2]+'"/></div><div>You should drag it!</div></div>'
-                //       });
-
-                // add player marker
-                var marker = new google.maps.Marker({
-                    position: LatLng,
-                    animation: google.maps.Animation.DROP,
+                var marker = new RichMarker({
                     map: map,
-                    title: parts[3],
-                    icon: icon
+                    position: LatLng,
+                    flat: true,
+                    anchor: RichMarkerPosition.MIDDLE,
+                    content: div
                 });
-
-
 
                 
                 // add player content window
                 marker.info = new google.maps.InfoWindow({
-                    content: '<img src="'+parts[2]+'" alt="team img" /><br>'+parts[3] 
+                    content: parts[3] 
                 });
 
                 google.maps.event.addListener(marker, 'click', function() {
@@ -534,8 +494,6 @@
 
 
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDwYvEiJHi4rgFoTUb9i1Eexeds7ssfzew"></script>
-<script src='//google-maps-utility-library-v3.googlecode.com/svn/trunk/richmarker/src/richmarker-compiled.js' type='text/javascript'></script>
 
 <script>
     $(document).ready(function(){

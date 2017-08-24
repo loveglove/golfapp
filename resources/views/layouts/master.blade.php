@@ -9,33 +9,38 @@
  <!--  @yield('title') -->
  <title>Fisher Classic</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-  <link href="{{{ asset('/css/main.css') }}}" rel="stylesheet">
-  <link href="{{{ asset('/theme/css/bootstrap.css') }}}" rel="stylesheet">
-  <link href="{{{ asset('/theme/font-awesome/css/font-awesome.css') }}}" rel="stylesheet">
-  <link href="{{{ asset('/theme/css/animate.css') }}}" rel="stylesheet">
-  <link href="{{{ asset('/theme/css/style.css') }}}" rel="stylesheet">
-  <link href="{{{ asset('/theme/css/plugins/sweetalert/sweetalert.css') }}}" rel="stylesheet">
-  <link href="{{{ asset('/fonts/blacksword/stylesheet.css') }}}" rel="stylesheet">
-  <link href="{{{ asset('/addtohomescreen/style/addtohomescreen.css') }}}" rel="stylesheet" type="text/css" >
+<link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+<link href="{{{ asset('/css/main.css') }}}" rel="stylesheet">
+<link href="{{{ asset('/theme/css/bootstrap.css') }}}" rel="stylesheet">
+<link href="{{{ asset('/theme/font-awesome/css/font-awesome.css') }}}" rel="stylesheet">
+<link href="{{{ asset('/theme/css/animate.css') }}}" rel="stylesheet">
+<link href="{{{ asset('/theme/css/style.css') }}}" rel="stylesheet">
+<link href="{{{ asset('/theme/css/plugins/sweetalert/sweetalert.css') }}}" rel="stylesheet">
+<link href="{{{ asset('/fonts/blacksword/stylesheet.css') }}}" rel="stylesheet">
+<link href="{{{ asset('/addtohomescreen/style/addtohomescreen.css') }}}" rel="stylesheet" type="text/css" >
 
 
-  @yield('css')
+@yield('css')
 
 
-  <!-- Main scripts -->
-  <script src="{{{ asset('/theme/js/jquery-2.1.1.js') }}}"></script>
-  <script src="{{{ asset('/theme/js/bootstrap.min.js') }}}"></script>
-  <script src="{{{ asset('/theme/js/plugins/metisMenu/jquery.metisMenu.js') }}}"></script>
-  <script src="{{{ asset('/theme/js/plugins/slimscroll/jquery.slimscroll.min.js') }}}"></script>
-  <script src="{{{ asset('/theme/js/inspinia.js') }}}"></script>
-  <script src="{{{ asset('/theme/js/plugins/pace/pace.min.js') }}}"></script>
-  <script src="{{{ asset('/theme/js/plugins/sweetalert/sweetalert.min.js') }}}"></script>
-  <script src="{{{ asset('/js/mqttws31.js') }}}"></script>
-  <script src="{{{ asset('/js/moment.js') }}}"></script>
-  <script src="{{{ asset('/addtohomescreen/src/addtohomescreen.js') }}}"></script>
+<!-- Main scripts -->
+<script src="{{{ asset('/theme/js/jquery-2.1.1.js') }}}"></script>
+<script src="{{{ asset('/theme/js/bootstrap.min.js') }}}"></script>
+<script src="{{{ asset('/theme/js/plugins/metisMenu/jquery.metisMenu.js') }}}"></script>
+<script src="{{{ asset('/theme/js/plugins/slimscroll/jquery.slimscroll.min.js') }}}"></script>
+<script src="{{{ asset('/theme/js/inspinia.js') }}}"></script>
+<script src="{{{ asset('/theme/js/plugins/pace/pace.min.js') }}}"></script>
+<script src="{{{ asset('/theme/js/plugins/sweetalert/sweetalert.min.js') }}}"></script>
+<script src="{{{ asset('/js/mqttws31.js') }}}"></script>
+<script src="{{{ asset('/js/moment.js') }}}"></script>
+<script src="{{{ asset('/addtohomescreen/src/addtohomescreen.js') }}}"></script>
+
   
+@yield('scripts')
 
+
+
+<!-- Favicon -->
 <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{{ asset('/favicon/apple-touch-icon-57x57.png') }}}" />
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{{ asset('/favicon/apple-touch-icon-114x114.png') }}}" />
 <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{{ asset('/favicon/apple-touch-icon-72x72.png') }}}" />
@@ -57,7 +62,8 @@
 <meta name="msapplication-wide310x150logo" content="mstile-310x150.png" />
 <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
  
-  @yield('scripts')
+
+
 
 
 </head>
