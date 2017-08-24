@@ -162,12 +162,12 @@
               <h4 class="modal-title">Notifications</h4>
             </div>     
             <div class="modal-body dropdown-alerts">
-                <div class="text-center link-block">
-                    <a href="#">
-                        <strong>See All Alerts</strong>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                </div>
+                <div class="modal-notes"></div>
+            </div>
+            <div class="modal-footer" style="text-align: center;">                    
+              <a href="/notifications">
+                <span style="font-size:14px; font-weight:500;">See All Notifications <i class="fa fa-bell"></i></span>
+              </a>
             </div>
         </div>
       </div>
@@ -260,25 +260,27 @@
       }
 
       function openNotifications(){
-         $(".dropdown-alerts").empty();
-         for(var i=0, len=localStorage.length; i<len; i++) {
-            var key = localStorage.key(i);
-            var value = localStorage[key];
-            if(key != "notifycount"){
-               notifyData = value.split('|');
-               var alert = '<div>' + notifyData[0] + '<span class="pull-right text-muted small slate-text" style="padding-top:2px;">' + moment(notifyData[1]).fromNow() + '</span></div><hr/>';
-               $(".dropdown-alerts").append(alert);
-            }
+         $(".modal-notes").empty();
+            for(var i=0, len=localStorage.length; i<len; i++)
+            {
+               var key = localStorage.key(i);
+               var value = localStorage[key];
+               if(key != "notifycount" && key != 'org.cubiq.addtohome')
+               {
+                  notifyData = value.split('|');
+                  var alert = '<div>' + notifyData[0] + '<span class="pull-right text-muted small slate-text" style="padding-top:2px; padding-bottom:2px;">' + moment(notifyData[1]).fromNow() + '</span></div><hr/>';
+                  $(".modal-notes").prepend(alert);
+               }
          }
          $("#notify-modal").modal("show");
       }
 
-     $('#notify-modal').on('hidden.bs.modal', function () {
+      $('#notify-modal').on('hidden.bs.modal', function(){
          localStorage.clear();
          $("#notify-count").empty();
-     })
+      })
 
-     </script>
+   </script>
 
 </body>
 

@@ -48,7 +48,9 @@ body {
     border-radius: 50% 50%;
     /*vertical-align: bottom;*/
 }
-
+.note-icon{
+    font-size: 24px;
+}
 
 .team-score{
     color:#62BE5C; 
@@ -149,6 +151,12 @@ box-shadow: -2px 10px 37px 0px rgba(0,0,0,0.75);
     -webkit-animation-duration: 5s; /* Chrome, Safari, Opera */
     animation-duration: 5s;
 }
+.yel{
+    color:#e7b923 !important;
+}
+.redicon{
+    color:#ad0d0d !important;
+}
 
 
 /***** SCORE CARD *****/
@@ -225,6 +233,12 @@ box-shadow: -2px 10px 37px 0px rgba(0,0,0,0.75);
 }
 
 /*MAP*/
+
+      .my-marker {
+        background: red;
+        border: 2px solid #fff;
+        padding: 3px;
+      }
 
 
 

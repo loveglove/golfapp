@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Session;
 use App\Team;
 use App\Tournament;
+use App\Notification;
 use Request;
 use Auth;
 use Input;
@@ -108,6 +109,14 @@ class TournamentController extends Controller
         Team::where('id', $team)->update(['id_user2' => Auth::user()->getId()]);
 
         return redirect()->action('CourseController@getHoles');
+    }
+
+    public function notifications(Request $request)
+    {
+        $tournament = Tournament::where('active', '=', 1)->first();
+        return view('notifications', [
+            'notifications' => Notification::where('tournament_id', $tournament->id)->orderBy('id', 'DESC')->get(),       
+        ]);
     }
 
 }

@@ -5,6 +5,8 @@ use Session;
 use App\Team;
 use App\Tournament;
 use App\Matchup;
+use App\Score;
+use App\Hole;
 use Request;
 use Auth;
 use DB;
@@ -130,14 +132,31 @@ class AdminController extends Controller
      */
     public function updateScore(Request $request)
     {
-        $tour = Session::get('tournament')->id;
+        $tour_id = Session::get('tournament')->id;
+        $course_id = Session::get('tournament')->id_course;
         $team_id = Request::input('team');
         $hole = Request::input('hole');
         $value = Request::input('value');
-        DB::table('scores')->where('id_team','=',$team_id)
-            ->where('id_tour', '=', $tour)
-            ->where('hole', '=', $hole)
-            ->update(['score' => $value]);
+
+        $score = Score::where('id_team', $team_id)->where('hole', $hole)->first();
+
+        if(!empty($score))
+        {
+            Score::where('id_team', $team_id)->where('hole', $hole)->update(['score' => $value]);
+        }
+        else
+        {
+            $holeFetch = Hole::where('id_course', $course_id)->where('hole',$hole )->first();
+            $score = new Score;
+            $score->id_tour = $tour_id;
+            $score->id_team = $team_id;
+            $score->hole = $hole;
+            $score->par = $holeFetch->par;
+            $score->score = $value;
+            $score->save();
+
+        }
+        
         return $this->getAdminView();
     }
 

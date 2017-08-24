@@ -6,6 +6,8 @@ use Session;
 use App\Course;
 use App\Team;
 use App\Score;
+use App\Notification;
+
 use Request;
 use Input;
 use App\Http\Requests;
@@ -92,6 +94,20 @@ class CourseController extends Controller
         return 0;
     }
 
+    public function insertNotification(Request $request)
+    {
+        if(Request::ajax())
+        {
+            $data = Request::all();
+            $note = new Notification;
+            $note->team_id = $data['team_id'];
+            $note->tournament_id = $this->tournament->id;
+            $note->text = $data['text'];
+            $note->save();
+            return $data;
+        }
+        return 0;
+    }
 
     /**
      * Get Team score totaled

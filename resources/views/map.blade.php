@@ -59,6 +59,11 @@
     margin:5px;
     border-radius:10px;
 }
+.my-other-marker{
+    width:50px;
+    height:50px;
+    background: white;
+}
 
 </style>
 
@@ -71,6 +76,7 @@
     <?php $userID = Auth::user()->id; ?>
     <?php $userAvatar = Auth::user()->avatar; ?>
     <?php $myTeamName = Session::get('myteam')->name ?>
+
 
 <script>
  	
@@ -89,6 +95,7 @@
     var myPos = null;
     var curvature = 0.5;
     var Point = null;
+    var marker2;
 
     function initMap() {
 
@@ -106,6 +113,17 @@
             fullscreenControl: false
         });
 
+        // var div = document.createElement('DIV');
+        // div.innerHTML = '<div class="my-other-marker">I am flat marker!</div>';
+
+        // marker2 = new RichMarker({
+        //   map: map,
+        //   position: new google.maps.LatLng(43.3898045900, -79.8109913600),
+        //   draggable: true,
+        //   flat: true,
+        //   anchor: RichMarkerPosition.MIDDLE,
+        //   content: div
+        // });
 
         map.addListener('click', function(event) {
             setDistMarker(event.latLng);
@@ -157,6 +175,14 @@
                     anchor: new google.maps.Point(30,30), // anchor
                 };
 
+                // var marker = new RichMarker({
+                //       position: LatLng,
+                //       map: map,
+                //       draggable: false,
+                //       content: '<div class="my-marker"><div>This is a nice image</div>' +
+                //         '<div><img src="'+parts[2]+'"/></div><div>You should drag it!</div></div>'
+                //       });
+
                 // add player marker
                 var marker = new google.maps.Marker({
                     position: LatLng,
@@ -166,60 +192,8 @@
                     icon: icon
                 });
 
-                //adapted from http://gmaps-samples-v3.googlecode.com/svn/trunk/overlayview/custommarker.html
-                // function CustomMarker(latlng, map, imageSrc) {
-                //     this.latlng_ = latlng;
-                //     this.imageSrc = imageSrc;
-                //     // Once the LatLng and text are set, add the overlay to the map.  This will
-                //     // trigger a call to panes_changed which should in turn call draw.
-                //     this.setMap(map);
-                // }
-
-                // CustomMarker.prototype = new google.maps.OverlayView();
-
-                // CustomMarker.prototype.draw = function () {
-                //     // Check if the div has been created.
-                //     var div = this.div_;
-                //     if (!div) {
-                //         // Create a overlay text DIV
-                //         div = this.div_ = document.createElement('div');
-                //         // Create the DIV representing our CustomMarker
-                //         div.className = "customMarker"
 
 
-                //         var img = document.createElement("img");
-                //         img.src = this.imageSrc;
-                //         div.appendChild(img);
-                //         google.maps.event.addDomListener(div, "click", function (event) {
-                //             google.maps.event.trigger(me, "click");
-                //         });
-
-                //         // Then add the overlay to the DOM
-                //         var panes = this.getPanes();
-                //         panes.overlayImage.appendChild(div);
-                //     }
-
-                //     // Position the overlay 
-                //     var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
-                //     if (point) {
-                //         div.style.left = point.x + 'px';
-                //         div.style.top = point.y + 'px';
-                //     }
-                // };
-
-                // CustomMarker.prototype.remove = function () {
-                //     // Check if the overlay was on the map and needs to be removed.
-                //     if (this.div_) {
-                //         this.div_.parentNode.removeChild(this.div_);
-                //         this.div_ = null;
-                //     }
-                // };
-
-                // CustomMarker.prototype.getPosition = function () {
-                //     return this.latlng_;
-                // };
-
-                // new CustomMarker(LatLng, map, parts[2]);
                 
                 // add player content window
                 marker.info = new google.maps.InfoWindow({
@@ -559,12 +533,14 @@
 // *********************************************
 
 
-
-
-
-
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDwYvEiJHi4rgFoTUb9i1Eexeds7ssfzew"></script>
+<script src='//google-maps-utility-library-v3.googlecode.com/svn/trunk/richmarker/src/richmarker-compiled.js' type='text/javascript'></script>
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwYvEiJHi4rgFoTUb9i1Eexeds7ssfzew&callback=initMap"></script>
+<script>
+    $(document).ready(function(){
+        initMap();
+    })
+</script>
 
 @endsection

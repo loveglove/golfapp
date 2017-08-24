@@ -36,6 +36,51 @@
 
 <div class="wrapper wrapper-content animated fadeInRight">
  
+
+	<div class="row" style="margin-top: 20px;">
+		<div class="col-xs-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+	                <div class="row">
+	   					<div class="col-xs-6">
+	   						<span style="font-size:18px; font-weight: 300; float:left; padding-top:10px;">Average Team Score Currently:</span>
+	   					</div>
+	   					<div class="col-xs-6">
+	   						<span style="font-size:48px; float:right;">
+		                    	@if($avgscore < 0)
+		                    		<i class="fa fa-level-down green-text"></i>&nbsp{{ $avgscore }}
+		                    	@elseif($avgscore > 0)
+		                    		<i class="fa fa-level-up red-text"></i>&nbsp+{{ $avgscore }}
+		                    	@else($avgscore == 0)
+		                    		<i class="fa fa-minus"></i>&nbspE
+		                    	@endif
+		                    </span>
+	   					</div>
+	                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div class="row">
+		<div class="col-xs-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+            		<div class="col-xs-4 myscore">
+            			My Score
+            		</div>
+            		<div class="col-xs-8 touravg">
+            			Tournament Average
+            		</div>
+            		<div class="text-center">
+            			<canvas id="over-under" height="320"></canvas>
+            		</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 	<div class="row count-fields">
 
   		@if(!empty($statistics['holeinones']))
@@ -117,45 +162,6 @@
 
 	</div>
 
-	<div class="row">
-		<div class="col-xs-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content">
-            		<div class="col-xs-4 myscore">
-            			My Score
-            		</div>
-            		<div class="col-xs-8 touravg">
-            			Tournament Average
-            		</div>
-            		<div class="text-center">
-            			<canvas id="over-under" height="320"></canvas>
-            		</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-		<div class="col-xs-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-content">
-	                <div class="row">
-	   					<div class="col-xs-7"><h2>Average Team <br/> Score Currently:</h2></div>
-	   					<div class="col-xs-5">
-	   						<span style="font-size:48px; float:right;">
-		                    	@if($avgscore < 0)
-		                    		<i class="fa fa-level-down green-text"></i>&nbsp{{ $avgscore }}
-		                    	@elseif($avgscore > 0)
-		                    		<i class="fa fa-level-up red-text"></i>&nbsp+{{ $avgscore }}
-		                    	@else($avgscore == 0)
-		                    		<i class="fa fa-minus"></i>&nbspE
-		                    	@endif
-	   					</div>
-	                </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </div>
 

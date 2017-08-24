@@ -287,10 +287,6 @@
 
 			// alert(currentHole);
 
-			if(currentHole >= 18){
-				currentHole = 1;
-			}
-
 			if(currentHole > 0){
 				$("body").scrollTop($("#anchor" + currentHole).offset().top - 50); 
 			}
@@ -340,10 +336,14 @@
 			    	});
 					currentHole = parseInt(hole) + 1;
 					if(currentHole == 19){
-						swal("Congratulations", "You have completed the tournament", "success");
+				    	swal({
+				    		title: "Congratulations", 
+				    		text: "You have completed the tournament. Smash a cold one for the boys", 
+				    		imageUrl: "images/trophy.png",
+				    	});
 						setTimeout(function(){
-							location.reload("/standings");
-						},5000);
+							window.location = "standings";
+						},10000);
 					}
 
 					console.log("current hole: " + currentHole);
@@ -368,6 +368,23 @@
 			});      
         }
 
+        function saveNotification(text){
+
+			$.ajax({
+			    url: 'insertNote',
+			    type: "post",
+			    dataType: "json",
+			    data: {'text': text, 'team_id': teamID },
+			    success: function(data){
+					console.log("Notification Saved");
+			    },
+			    error: function(error){
+			    	console.log(error);
+			    }
+			});      
+        }
+
+
         function disableControl(hole){
             $("#" + hole).siblings("canvas").remove();
 			$("#" + hole).unwrap().attr("data-readOnly",true).attr("data-fgColor","gray").data("kontroled","").data("readonly",true).knob({'fgColor':'gray'});
@@ -387,42 +404,42 @@
 				// Check for insane score
 				if(current == -4){
 					// console.log("albatross shot");
-					publishMSG('fa-flag', teamName + " - <b>HOLE IN ONE</b> - hole #" + hole);
+					publishMSG('fa-flag', teamName + " - <b>HOLE IN ONE</b><br/><b>Hole:</b> #" + hole);
 				}else if(current == -3){
 					// console.log("albatross shot");
-					publishMSG('fa-star', teamName + " - <b>ALBATROSS</b> - #" + hole);
+					publishMSG('fa-star', teamName + " - <b>ALBATROSS</b><br/><b>Hole:</b> #" + hole);
 				}
         		// check if there's a streak
         		else if(back_1 < 0 && back_2 < 0 && back_3 < 0 && back_4 < 0){
-        			// console.log("massive streak");
-        			publishMSG('fa-smile-o', teamName + " are in there <b>Happy</b> place");
+        			publishNote('images/heating.jpg', '<strong>THERE HEATING UP!</strong><br/>'+ teamName +' are on fire. Catch up before they take it all!<br/><i>UnderPar Streak </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
+
+        			// publishMSG('fa-smile-o', teamName + " are in there <b>Happy</b> place");
         		}else if (back_1 < 0 && back_2 < 0 && back_3 < 0){
         			// console.log("heavy streak");
-        			publishMSG('fa-bolt', teamName + " have found the <b>sweet</b> spot");
+        			publishNote('images/heating.jpg', '<strong>THERE HEATING UP!</strong><br/>'+ teamName +' are on fire. Catch up before they take it all!<br/><i>UnderPar Streak </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
         		}else if (back_1 < 0 && back_2 < 0){
         			// console.log("hot streak");
-        			publishMSG('fa-fire', teamName + " are on <b>fire</b>");
+        			publishNote('images/happy.jpg', '<strong>JUST TAP IT IN</strong><br/>'+ teamName +' have found their <b>Happy Place</b>.<br/><i>UnderPar Streak </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
         		} else {
 					if(current == -2){
 						// console.log("eagle shot");
-						publishMSG('fa-bullseye', teamName + " just <b>eagled</b> hole #" + hole);
-        			}else if(current == -1){
+						publishNote('images/eagle.jpg', '<strong>EAGLE SHOT</strong><br/>'+ teamName +' just eagled <b>Hole #'+ hole + '</b><br/><i>Beauty Hole </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
+        			}
+        			if(current == -1){
 						// console.log("birdy shot");
-						publishMSG('fa-twitter', teamName + " just <b>birdied</b> hole #" + hole);
+						// publishMSG('fa-twitter', teamName + " just <b>birdied</b> hole #" + hole +);
+						publishNote('images/FTB.jpg','<strong>COACOWTB</strong><br/>Time to crack open a <b>Crispy Boy</b> and take it to pound town brochachos! <i>- '+teamName+'</i>' );
         			}		
         		}
 
         	// is this a par score?
         	} else if (current == 0){
         		if(back_1 == 0 && back_2 == 0 && back_3 == 0 && back_4 == 0){
-        			// console.log("par master");
-        			publishMSG('fa-gavel', teamName + " are <b>MASTERS</b> of par");
+        			publishNote('images/slowclap.gif', '<strong>PAR PLAYERS</strong><br/>'+ teamName +' are playing textbook golf right now<br/><i>Par Streak </i><span class="green-text"><i class="fa fa-check"></i><i class="fa fa-check"></i><i class="fa fa-check"></i><i class="fa fa-check"></i></span>');
         		}else if (back_1 == 0 && back_2 == 0 && back_3 == 0){
-        			// console.log("clincal player");
-        			publishMSG('fa-magic', teamName + " are working some <b>magic!</b>");
+        			publishNote('images/shooter.gif', '<strong>SHOOTER</strong><br/>'+ teamName +' are putting on a free clinic!</b><br/><i>Par Streak </i><span class="green-text"><i class="fa fa-check"></i><i class="fa fa-check"></i><i class="fa fa-check"></i></span>');
         		}else if (back_1 == 0 && back_2 == 0){
-        			// console.log("even steven");
-        			publishMSG('fa-graduation-cap', teamName + " are <b>textbook</b> golfers");
+					publishNote('images/nodedit.gif', '<strong>NICE HOLE</strong><br/>'+ teamName +' are running even. Everybody keep up!</b><br/><i>Par Streak </i><span class="green-text"><i class="fa fa-check"></i><i class="fa fa-check"></i></span>');
         		} else {
         			// No streak
         			// Par shot. Do nothing
@@ -432,32 +449,43 @@
         	} else if (current > 0){
         		if(back_1 > 0 && back_2 > 0 && back_3 > 0 && back_4 > 0){
         			// console.log("should just give up");
-        			publishMSG('fa-wheelchair', teamName + " are complete <b>hacks</b>");
+        			publishNote('images/harambe.jpg', '<strong>DICKS OUT</strong><br/>'+ teamName +' might as well go dicks out. <b>RIP</b> <br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i><i class="fa fa-times"></i><i class="fa fa-times"></i></span>');
         		}else if (back_1 > 0 && back_2 > 0 && back_3 > 0){
         			// console.log("shitting the bed");
-        			publishMSG('fa-bed', teamName + " are <b>shitting</b> the bed");
+        			publishNote('images/tigerwoods.jpg', '<strong>ROUGH DAY</strong><br/>'+ teamName +' are struggling to stay in the game. <br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i><i class="fa fa-times"></i></span>');
         		}else if (back_1 > 0 && back_2 > 0){
         			// console.log("brutal go at it");
-        			publishMSG('fa-leaf', teamName + " are deep in the <b>cabbage</b>");
+        			publishNote('images/baywatch.jpg', '<strong>NOT SO HOT</strong><br/>'+ teamName +' are spending more time in the sand then David Hasselfoff<br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i></span>');
         		} else {
         			// No streak
         			if(current >= 3){
         				// console.log("just blew that hole");
-        				publishMSG('fa-frown-o', teamName + " just <b>blew</b> hole #" + hole);
+        				publishNote('images/jackie.png', '<strong>SEEEEE YA!</strong><br/>'+ teamName +' just blew <b>Hole #' + hole + '</b> Smash a pint '+ teamName +'<br/><i>Terrible Hole </i><span class="redicon"><i class="fa fa-times"></i></span>');
+        				// publishMSG('fa-frown-o', teamName + " just blew it on<br/><b>Hole:</b> #" + hole);
         			}		
         		}
         	}
         }
 
         function publishMSG(icon, text){
-        	html = '<i class="green-text fa fa-lg ' + icon + '"></i> ' + text;
+        	var html = '<div class="row"><div class="col-xs-2"><div class="note-icon"><i class="green-text fa fa-lg ' + icon + '"></i></div> </div><div class="col-xs-10">' + text + '</div></div>';
         	var time = moment().format();
         	var notification = html + '|' + time;
 	      	message = new Paho.MQTT.Message(notification);
           	message.destinationName = "fc/notify/score";
           	client.send(message);
+          	saveNotification(html);
         }
-        
+
+        function publishNote(image, htmlString){
+        	var html = '<div class="row"><div class="col-xs-5"><img class="img-responsive img-cover" src="' + image + '" /></div><div class="col-xs-7">'+htmlString+'</div></div>';
+        	var time = moment().format();
+        	var notification = html + '|' + time;
+	      	message = new Paho.MQTT.Message(notification);
+          	message.destinationName = "fc/notify/score";
+          	client.send(message);
+          	saveNotification(html);
+        }
 
 
 		function getLocation(){

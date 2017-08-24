@@ -97,14 +97,14 @@
   				<h3>{{ $tournament->name }}</h3>
   			</div>
   			<div class="col-xs-6 align-right animated fadeInDown" style="padding-top: 4px;">
-  				<a href="/standings" class=""> Back to Live Standings <i class="fa fa-forward"></i></a>
+  				<a href="/standings" class=""> Back to Live <i class="fa fa-forward"></i></a>
   			</div>
   		@else
 			<div class="col-xs-6 animated fadeInDown">
   				<h3>{{ $tournament->name }}</h3>
   			</div>
   			<div class="col-xs-6 align-right animated fadeInDown" style="padding-top: 4px;">
-  				<a href="/lastyear" class=""> View Last Years Standings <i class="fa fa-backward"></i></a>
+  				<a href="/lastyear" class=""> View Last Year <i class="fa fa-backward"></i></a>
   			</div>
   		@endif
   		<br/>

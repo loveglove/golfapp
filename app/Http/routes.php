@@ -27,15 +27,14 @@ Route::get('tournament', 'TournamentController@getActiveTour');
 Route::post('create_tournament',['as' => 'create_tournament', 'uses' => 'TournamentController@createTour']);
 Route::post('create_team',['as' => 'create_team', 'uses' => 'TournamentController@createTeam']);
 Route::post('join_team',['as' => 'join_team', 'uses' => 'TournamentController@joinTeam']);
-// Route::get('home', array('as' => 'home', 'uses' => function(){
-//   return view('home');
-// }));
+Route::get('/notifications', 'TournamentController@notifications');
+
 
 // Course Routes
 Route::get('/course', 'CourseController@getHoles');
 Route::post('/insertScore', 'CourseController@insertScore');
 Route::get('/getScore', 'CourseController@getScore');
-
+Route::post('/insertNote', 'CourseController@insertNotification');
 
 // Standings Routes
 Route::get('/standings', 'StandingsController@getStandings');
