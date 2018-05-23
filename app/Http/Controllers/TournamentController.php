@@ -6,8 +6,10 @@ use App\Team;
 use App\Tournament;
 use App\Notification;
 use Request;
+use Redirect;
 use Auth;
 use Input;
+use Validator;
 use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -90,6 +92,14 @@ class TournamentController extends Controller
 
     public function createTeam(Request $request)
     {
+        $validator = Validator::make(Request::all(), [
+            'teamname' => 'required|max:20',
+        ]);
+
+        if($validator->fails()) {
+            return Redirect::back()->withErrors($validator);
+        }
+
 
         $newteam = new Team;
         $newteam->id_tour = Session::get('tournament')->id;
@@ -105,10 +115,30 @@ class TournamentController extends Controller
      */
     public function joinTeam(Request $request)
     {
-        $team = Request::input('team');
-        Team::where('id', $team)->update(['id_user2' => Auth::user()->getId()]);
+
+
+        if(empty(Request::input('team'))){
+            return Redirect::back()->withErrors(['join' => 'You must select a team']);
+        }
+
+        $team = Team::find(Request::input('team'));
+
+        if(empty($team->id_user4)){
+            if(empty($team->id_user3)){
+                if(empty($team->id_user2)){
+                    $team->id_user2 = Auth::user()->id;
+                }else{
+                    $team->id_user3 = Auth::user()->id;
+                }
+            }else{
+                $team->id_user4 = Auth::user()->id;
+            }
+        }
+
+        $team->save();
 
         return redirect()->action('CourseController@getHoles');
+    
     }
 
     public function notifications(Request $request)

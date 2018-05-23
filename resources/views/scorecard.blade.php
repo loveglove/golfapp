@@ -1,19 +1,13 @@
 @extends('layouts.master')
 
-@section('scripts')
-	
-<!-- JSKnob -->
-<script src="{{{ asset('/theme/js/plugins/jsKnob/jquery.knob.js') }}}"></script>
-
-@endsection
 
 @section('content')
 
 
-  <div class="wrapper wrapper-content animated fadeInRight">
+  <div class="wrapper wrapper-content animated fadeInDown">
   		<br/>
         <div class="row main-row">
-            <div class="col-sm-12 col-md-6 col-lg-4">
+            <div id="contain" class="col-sm-12 col-md-6 col-lg-4">
 				@foreach ($course as $hole)
 					<a id="anchor{{  $hole->hole }}"></a>
                     <div class="ibox float-e-margins">
@@ -22,7 +16,7 @@
                                 <div class="col-xs-6" style="text-align: center; padding-top: 5px;">
                                 	<div class="row">
 								        <div class="col-xs-6" style="padding-right:2px;">
-									        <div class="hole-info red-bg" style="width:100%;">
+									        <div class="hole-info blue-bg" style="width:100%;">
 							                   <strong>Hole</strong>
 							                   <br/>
 							                   <span style="font-size:20px;"><strong>#{{ $hole->hole }}</strong></span>
@@ -36,7 +30,7 @@
 									        </div> 
 									     </div>
 								    </div>
-							         <div class="hole-info blue-bg">
+<!-- 							         <div class="hole-info blue-bg" >
 							            <div class="row">
 							                <div class="col-xs-4 text-left">
 							                   <strong>Blue</strong>
@@ -45,7 +39,7 @@
 							                    <strong>{{ $hole->blue }} yd</strong>
 							                </div>
 							            </div>
-							        </div>  
+							        </div>   -->
 							        <div class="hole-info white-bg">
 							            <div class="row">
 							                <div class="col-xs-4 text-left">
@@ -56,6 +50,16 @@
 							                </div>
 							            </div>
 							        </div> 
+                                    <div class="hole-info red-bg">
+                                        <div class="row">
+                                            <div class="col-xs-4 text-left">
+                                               <strong>Red</strong>
+                                            </div>
+                                            <div class="col-xs-8 text-right">
+                                                <strong>{{ $hole->red }} yd</strong>
+                                            </div>
+                                        </div>
+                                    </div> 
 							        <div class="hole-info green-bg">
 							            <div class="row">
 							                <div class="col-xs-4 text-left">
@@ -101,8 +105,8 @@
 		                    		<input id="{{ $hole->hole }}" type="text" value="0" class="knobclass dial m-r"
 		                    		data-thickness="0.5" 
 		                    		data-fgColor="#62BE5C" 
-		                    		data-width="200" 
-		                    		data-height="160" 
+		                    		data-width="180" 
+		                    		data-height="140" 
 		                    		data-angleOffset=-125 
 		                    		data-angleArc=250
 		                    		data-step="1"
@@ -141,13 +145,17 @@
   	<?php $teamID = $team->id ?>
 	<?php $userID = Auth::user()->id; ?>
     <?php $userAvatar = Auth::user()->avatar; ?>
-	  
 
+@endsection
+	  
+@section('scripts')
+<!-- JSKnob -->
+<script src="{{ asset('/theme/js/plugins/jsKnob/jquery.knob.js') }}"></script>
     <script>
 
 		var teamName = '<?php echo $teamName ?>';
 		var teamID = '<?php echo $teamID ?>';
-		var currentHole = 0;
+		var currentHole = null;
 
     	function openImageModal(imgPath, hole){
     		$("#holeimage-lg").attr("src",imgPath);
@@ -161,7 +169,9 @@
         		'release' : function (val) { 
         			var hole = this.$.attr('id');
         			var par = $("#hdnpar" + hole).val();
-        			confirmSave(val, hole, par);
+                    setTimeout(function(){
+                        confirmSave(val, hole, par);
+                    }, 200);
         		}
     		});
 
@@ -169,13 +179,13 @@
 			    'draw': function (v) {
 					var hole = this.$.attr('id');
 					var par = parseInt($("#hdnpar" + hole).val());
-		          	v=parseInt(document.getElementById(hole).value);
+		          	v = parseInt(document.getElementById(hole).value);
 		          	
 		          	if(v == 0){
 			            this.o.fgColor='#62BE5C';
 			            $("#" + hole).css("color", "white");
 			            $("#value-text" + hole).html("touch and slide to enter score");
-			            $("#value-int" + hole).val("-");
+			            $("#value-int" + hole).val("");
 		          	}
 					else if(v == 1) {
 		          		this.o.fgColor='#33cccc';
@@ -222,13 +232,13 @@
 			        else if(v == (par + 3)) {
 			            this.o.fgColor='#DB824A';
 			            $("#" + hole).css("color", "#DB824A");
-			            $("#value-text" + hole).html("Bollocks!");
+			            $("#value-text" + hole).html("Oh no!");
 			            $("#value-int" + hole).val(3);
 			        }
 			         else if(v >= (par + 4)) {
 			            this.o.fgColor='#E34444';
 			            $("#" + hole).css("color", "#E34444");
-			            $("#value-text" + hole).html("Bollocks!!");
+			            $("#value-text" + hole).html("Yikes!!!");
 			            $("#value-int" + hole).val(4);
 			        }
 			    }
@@ -238,6 +248,9 @@
           	var completed = <?php echo json_encode($completed) ?>;
           	$.each(completed, function(index, item){
           		currentHole = parseInt(item["hole"]) + 1;
+                if(currentHole == 19){
+                    currentHole = 1;
+                }
           		$("#" + item["hole"]).val(item["score"]);
           		var hole = item["hole"];
           		var par = parseInt($("#hdnpar" + hole).val());
@@ -275,11 +288,11 @@
 		            $("#value-int" + hole).val(2);
 		        }
 		        else if(v == (par + 3)) {
-		            $("#value-text" + hole).html("Bollocks!");
+		            $("#value-text" + hole).html("Oh no!");
 		            $("#value-int" + hole).val(3);
 		        }
 		         else if(v >= (par + 4)) {
-		            $("#value-text" + hole).html("Bollocks!!");
+		            $("#value-text" + hole).html("Yikes!!!");
 		            $("#value-int" + hole).val(4);
 		        }
           		disableControl(item["hole"]);
@@ -287,20 +300,27 @@
 
 			// alert(currentHole);
 
-			if(currentHole > 0){
-				$("body").scrollTop($("#anchor" + currentHole).offset().top - 50); 
-			}
-          	
 
+			    var anchor = $("#anchor" + currentHole);
+	    		var position = anchor.position().top + $("body").scrollTop() +20;
+	    		$("body").animate({scrollTop: position});
+
+				// $("body").scrollTop($("#anchor" + currentHole).offset().top); 
+                // $("#anchor" + currentHole).animate({ scrollTop: 0 }, "fast");
+
+          	
 			console.log("current hole: " + currentHole);
+			console.log("offest: " + position);
 
 			getLocation();
+
+            connectMQTT();
     	
 		});
 
         function confirmSave(score, hole, par){
 
-			if(parseInt(hole) == currentHole || currentHole == 0){
+			// if(parseInt(hole) == currentHole || currentHole == 0){
 
 				if(parseInt(score) != 0){
 					swal({
@@ -316,50 +336,61 @@
 							saveScore(score, hole, par);
 					});
 				}
-			} else {
-				swal("Heads up!","Looks like you haven't submitted your score for the previous hole. Please do so before continuing","warning");
-			}
+			// } else {
+			// 	swal("Heads up!","Looks like you haven't submitted your score for the previous hole. Please do so before continuing","warning");
+   //              $("body").scrollTop($("#anchor" + currentHole).offset().top - 50); 
+   //              $("#" + hole).css("color", "white");
+   //              $("#value-text" + hole).html("touch and slide to enter score");
+   //              $("#value-int" + hole).val("-"); 
+			// }
         }
 
         function saveScore(score, hole, par){
+
 			$.ajax({
 			    url: 'insertScore',
 			    type: "post",
 			    dataType: "json",
-			    data: {'hole': hole, 'score':score, 'par':par, '_token': $('input[name=_token]').val()},
+			    data: {'hole': hole, 'score':score, 'par':par },
 			    success: function(data){
+
 			    	swal({
 			    		title: "Saved", 
 			    		text: "Your score has been entered for hole #" + hole, 
 			    		type: "success",
 			    		timer: 3000
 			    	});
+
 					currentHole = parseInt(hole) + 1;
 					if(currentHole == 19){
-				    	swal({
-				    		title: "Congratulations", 
-				    		text: "You have completed the tournament. Smash a cold one for the boys", 
-				    		imageUrl: "images/trophy.png",
-				    	});
-						setTimeout(function(){
-							window.location = "standings";
-						},10000);
-					}
+                        currentHole = 1;
+                    }
 
 					console.log("current hole: " + currentHole);
 					
 			    	notify(score, hole, par);
 			    	disableControl(hole);
 
-					// var scrollDist = $("#anchor" + currentHole).offset().top;
-					// var viewableOffset = $("#anchor" + currentHole).offset().top + $(window).scrollTop();
-					// console.log(viewableOffset);
-					// console.log($(window).scrollTop());
-					
-					// $('html, body').animate({
-					// 	scrollTop: viewableOffset
-					// }, 2000);
-			    	// console.log(data);
+                    var cmp = $(".knobclass:disabled").length;
+                    console.log("Entered scores count: " + cmp);
+
+                    if(cmp == 18){
+                        swal({
+                            title: "Congratulations", 
+                            text: "You have completed the tournament! You will be redirected to the standings shortly..", 
+                            imageUrl: "images/trophy.png",
+                        });
+                        setTimeout(function(){
+                            window.location = "standings";
+                        },10000);
+                    }else{
+
+					    var anchor = $("#anchor" + currentHole);
+			    		var position = anchor.position().top + 20;
+			    		$("body").animate({scrollTop: position});
+			    		console.log(position);
+		    		}
+
 			    },
 			    error: function(error){
 			    	swal("Oops..","Something went wrong while attempting to save your score, please try again","error");
@@ -423,19 +454,20 @@
         		} else {
 					if(current == -2){
 						// console.log("eagle shot");
-						publishNote('images/eagle.jpg', '<strong>EAGLE SHOT</strong><br/>'+ teamName +' just eagled <b>Hole #'+ hole + '</b><br/><i>Beauty Hole </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
+						publishNote('images/golfdance.gif', '<strong>EAGLE SHOT</strong><br/>'+ teamName +' just eagled <b>Hole #'+ hole + '</b><br/><i>Beauty Hole </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
         			}
         			if(current == -1){
 						// console.log("birdy shot");
 						// publishMSG('fa-twitter', teamName + " just <b>birdied</b> hole #" + hole +);
-						publishNote('images/FTB.jpg','<strong>COACOWTB</strong><br/>Time to crack open a <b>Crispy Boy</b> and take it to pound town brochachos! <i>- '+teamName+'</i>' );
+						// publishNote('images/FTB.jpg','<strong>COACOWTB</strong><br/>Time to crack open a <b>Crispy Boy</b> and take it to pound town brochachos! <i>- '+teamName+'</i>' );
+						publishNote('images/slowclap.gif','<strong>NICE BIRDIE</strong><br/>'+ teamName +' just birdied <b>Hole #'+ hole + '</b><br/><i>Great Hole </i><span style="color:aqua;"><i class="fa fa-twitter"></i></span>' );
         			}		
         		}
 
         	// is this a par score?
         	} else if (current == 0){
         		if(back_1 == 0 && back_2 == 0 && back_3 == 0 && back_4 == 0){
-        			publishNote('images/slowclap.gif', '<strong>PAR PLAYERS</strong><br/>'+ teamName +' are playing textbook golf right now<br/><i>Par Streak </i><span class="green-text"><i class="fa fa-check"></i><i class="fa fa-check"></i><i class="fa fa-check"></i><i class="fa fa-check"></i></span>');
+        			publishNote('images/caddyshack.gif', '<strong>PAR PLAYERS</strong><br/>'+ teamName +' are playing textbook golf right now<br/><i>Par Streak </i><span class="green-text"><i class="fa fa-check"></i><i class="fa fa-check"></i><i class="fa fa-check"></i><i class="fa fa-check"></i></span>');
         		}else if (back_1 == 0 && back_2 == 0 && back_3 == 0){
         			publishNote('images/shooter.gif', '<strong>SHOOTER</strong><br/>'+ teamName +' are putting on a free clinic!</b><br/><i>Par Streak </i><span class="green-text"><i class="fa fa-check"></i><i class="fa fa-check"></i><i class="fa fa-check"></i></span>');
         		}else if (back_1 == 0 && back_2 == 0){
@@ -449,18 +481,18 @@
         	} else if (current > 0){
         		if(back_1 > 0 && back_2 > 0 && back_3 > 0 && back_4 > 0){
         			// console.log("should just give up");
-        			publishNote('images/harambe.jpg', '<strong>DICKS OUT</strong><br/>'+ teamName +' might as well go dicks out. <b>RIP</b> <br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i><i class="fa fa-times"></i><i class="fa fa-times"></i></span>');
+        			publishNote('images/homer.gif', '<strong>GAME OVER</strong><br/>'+ teamName +' are falling apart at the seams <br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i><i class="fa fa-times"></i><i class="fa fa-times"></i></span>');
         		}else if (back_1 > 0 && back_2 > 0 && back_3 > 0){
         			// console.log("shitting the bed");
         			publishNote('images/tigerwoods.jpg', '<strong>ROUGH DAY</strong><br/>'+ teamName +' are struggling to stay in the game. <br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i><i class="fa fa-times"></i></span>');
         		}else if (back_1 > 0 && back_2 > 0){
         			// console.log("brutal go at it");
-        			publishNote('images/baywatch.jpg', '<strong>NOT SO HOT</strong><br/>'+ teamName +' are spending more time in the sand then David Hasselfoff<br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i></span>');
+        			publishNote('images/baywatch.jpg', '<strong>BEACH BUMS</strong><br/>'+ teamName +' are spending more time in the sand then David Hasselfoff<br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i></span>');
         		} else {
         			// No streak
         			if(current >= 3){
         				// console.log("just blew that hole");
-        				publishNote('images/jackie.png', '<strong>SEEEEE YA!</strong><br/>'+ teamName +' just blew <b>Hole #' + hole + '</b> Smash a pint!<br/><i>Terrible Hole </i><span class="redicon"><i class="fa fa-times"></i></span>');
+        				publishNote('images/happygilmore.gif', '<strong>SEEEEE YA!</strong><br/>'+ teamName +' just blew <b>Hole #' + hole + '</b>.<br/><i>Terrible Hole </i><span class="redicon"><i class="fa fa-times"></i></span>');
         				// publishMSG('fa-frown-o', teamName + " just blew it on<br/><b>Hole:</b> #" + hole);
         			}		
         		}
@@ -591,15 +623,17 @@
 
         var userID = '<?php echo $userID ?>';
         var userAvatar = '<?php echo $userAvatar ?>';
-        var wsbroker = "wss://mqtt.apengage.io";
-        var wsport = 8083;
-        var client = new Paho.MQTT.Client("mqtt.apengage.io", Number(8083), "/wss", "fc_client_" + userID);
+        var client = new Paho.MQTT.Client("test.mosquitto.org", Number(8081), "fc_client_" + userID);
+        var maxAttempts = 0;
 
         client.onConnectionLost = function (responseObject) {
             console.log("MQTT Connection Lost: " + responseObject.errorMessage);
 			setTimeout(function(){
-				connectMQTT();
-			},1000);
+                if(maxAttempts < 5){
+    				connectMQTT();
+                    maxAttempts++;
+                }
+			},2000);
         };
 
         client.onMessageArrived = function (message) {
@@ -627,29 +661,23 @@
             var options = {
             	timeout: 20,
                 cleanSession: false,
-                useSSL: false,
-                userName: 'apengage',
-                password: 'webpass',
                 useSSL: true,
                 onSuccess: function () {
                     console.log("MQTT Connection Success!");
-                    client.subscribe('fc/notify/score', { qos: 1 });
-                    // client.subscribe('fc/selfcheck/' + userID, { qos: 1 });
-                    // message = new Paho.MQTT.Message("getting old messages...");
-                    // message.destinationName = "fc/selfcheck/" + userID; 
-                    // client.send(message);
+                    client.subscribe('fc/notify/score', { qos: 0 });
                 },
                 onFailure: function (message) {
                     console.log("MQTT Connection Failed: " + message.errorMessage);
 					setTimeout(function(){
-						connectMQTT();
-					},1000);
+						if(maxAttempts < 5){
+                            connectMQTT();
+                            maxAttempts++;
+                        }
+					},2000);
                 }
             };
             client.connect(options);
         }
-
-        connectMQTT();
        
         // Try HTML5 geolocation.
         navigator.geolocation.watchPosition(

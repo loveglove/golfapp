@@ -10,7 +10,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     
     <div class="ibox float-e-margins">
-       <div class="ibox-content">
+        <div class="ibox-content">
   		    <h3><i class="fa fa-flag"></i> Tournament </h3>
             {{ Form::open(array('route' => 'create_tournament', 'class' => 'form')) }}
             <div class="form-group">
@@ -18,7 +18,7 @@
                 <br/>
                 {{ Form::select('type', array('traditional' => 'Traditional', 'stroke' => 'Stroke', 'skins' => 'Skins', 'match' => 'Match'), null, ['class' => 'form-control', 'placeholder' => 'Tournament type...']) }}
                             <br/>
-                {{ Form::select('course', array('1' => 'Milcroft', '2' => 'Bellmere Winds'), null, ['class' => 'form-control', 'placeholder' => 'Course..']) }}
+                {{ Form::select('course', array('1' => 'Milcroft', '2' => 'Bellmere Winds', '3' => 'Glendale'), null, ['class' => 'form-control', 'placeholder' => 'Course..']) }}
                 <br/>
                 {{ Form::checkbox('active', '1') }}&nbsp{{ Form::label('cbx', 'Active') }}
                 <br/>
@@ -26,36 +26,36 @@
                 {{ Form::button('<i class="fa fa-plus"></i> Create Tournament', array('type' => 'submit', 'class' => 'btn btn-primary block full-width m-b dim')) }}
             </div>      
             {{ Form::close() }}
-        <br/>
-        <div class="table-responsive">
-              <table class="table table-striped">
-                  <thead>
-                  <tr>
-                      <th>Name </th>
-                      <th>Status</th>
-                      <th>Enable</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  @foreach ($tournaments as $tournament)
-                    <tr>
-                        <td>{{ $tournament->name }}</td>
-                        <td>
-                            @if($tournament->active == 1)
-                                <span class="green-text" ><strong>Active</strong></span>
-                            @else 
-                                <span>-</span>
-                            @endif
-                        </td>
-                        <td>
-                            {{ Form::open(array('route' => 'activate_tour', 'class' => 'form')) }}
-                            {{ Form::hidden('tour_id', $tournament->id) }}
-                            {{ Form::button('<i class="fa fa-check"></i> ', array('type' => 'submit')) }}
-                            {{ Form::close() }}
-                        </td>
-                    </tr>
-                  @endforeach
-                  </tbody>
+            <br/>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name </th>
+                            <th>Status</th>
+                            <th>Enable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($tournaments as $tournament)
+                        <tr>
+                            <td>{{ $tournament->name }}</td>
+                            <td>
+                                @if($tournament->active == 1)
+                                    <span class="green-text" ><strong>Active</strong></span>
+                                @else 
+                                    <span>-</span>
+                                @endif
+                            </td>
+                            <td>
+                                {{ Form::open(array('route' => 'activate_tour', 'class' => 'form')) }}
+                                {{ Form::hidden('tour_id', $tournament->id) }}
+                                {{ Form::button('<i class="fa fa-check"></i> ', array('type' => 'submit')) }}
+                                {{ Form::close() }}
+                                </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
                 </table>
             </div>
             <br/>
@@ -63,7 +63,7 @@
         </div>
     </div>
 
-    <div class="ibox float-e-margins">
+<!--     <div class="ibox float-e-margins">
         <div class="ibox-content">
             <h3><i class="fa fa-trophy"></i>  Match Ups </h3>
             <br/>
@@ -108,7 +108,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     
     <div class="ibox float-e-margins">
         <div class="ibox-content">
@@ -156,17 +156,17 @@
  
     <div class="ibox float-e-margins">
         <div class="ibox-content">
-            <h3><i class="fa fa-bullseye"></i> Score </h3>
+            <h3><i class="fa fa-bullseye"></i> Score</h3>
             <div class="form-group">
             {{ Form::open(array('route' => 'update_score', 'class' => 'form')) }}
                 {{ Form::select('team', $teams, null, ['class' => 'form-control', 'placeholder' => 'Team..']) }}
                 <br/>
                 <div class="row">
                     <div class="col-xs-6">
-                    {{ Form::text('hole', null, ['class' => 'form-control', 'placeholder' => 'Hole']) }}
+                        <input type="tel" name="hole" class="form-control" placeholder="Hole #" />
                     </div>
                     <div class="col-xs-6">
-                    {{ Form::text('value', null, ['class' => 'form-control', 'placeholder' => 'Val']) }}
+                        <input type="tel" name="value" class="form-control" placeholder="Strokes" />
                     </div>
                 </div>
                 <br/>
@@ -175,6 +175,21 @@
             {{ Form::close() }}
         </div>
     </div>
+
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <h3><i class="fa fa-times-circle"></i> Clear Tournament Scores</h3>
+            <div class="form-group">
+            {{ Form::open(array('route' => 'clear_tour', 'class' => 'form')) }}
+                {{ Form::select('tour', $tourList, null, ['class' => 'form-control', 'placeholder' => 'Tournament..']) }}
+                <br/>
+                {{ Form::button('<i class="fa fa-exclamation-triangle"></i> Clear ALL Scores', array('type' => 'submit', 'class' => 'btn btn-primary block full-width m-b dim')) }}
+            </div>      
+            {{ Form::close() }}
+        </div>
+    </div>
+
     <br/>
     <br/>
 

@@ -7,9 +7,12 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="_token" content="{!! csrf_token() !!}"/>
  <!--  @yield('title') -->
- <title>Fisher Classic</title>
+<!--  <title>Fisher Classic</title> -->
+<title>HAHFA - GOLF</title>
 
 <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"> 
+
 <link href="{{{ asset('/css/main.css') }}}" rel="stylesheet">
 <link href="{{{ asset('/theme/css/bootstrap.css') }}}" rel="stylesheet">
 <link href="{{{ asset('/theme/font-awesome/css/font-awesome.css') }}}" rel="stylesheet">
@@ -22,21 +25,6 @@
 
 @yield('css')
 
-
-<!-- Main scripts -->
-<script src="{{{ asset('/theme/js/jquery-2.1.1.js') }}}"></script>
-<script src="{{{ asset('/theme/js/bootstrap.min.js') }}}"></script>
-<script src="{{{ asset('/theme/js/plugins/metisMenu/jquery.metisMenu.js') }}}"></script>
-<script src="{{{ asset('/theme/js/plugins/slimscroll/jquery.slimscroll.min.js') }}}"></script>
-<script src="{{{ asset('/theme/js/inspinia.js') }}}"></script>
-<script src="{{{ asset('/theme/js/plugins/pace/pace.min.js') }}}"></script>
-<script src="{{{ asset('/theme/js/plugins/sweetalert/sweetalert.min.js') }}}"></script>
-<script src="{{{ asset('/js/mqttws31.js') }}}"></script>
-<script src="{{{ asset('/js/moment.js') }}}"></script>
-<script src="{{{ asset('/addtohomescreen/src/addtohomescreen.js') }}}"></script>
-
-  
-@yield('scripts')
 
 
 
@@ -99,7 +87,7 @@
                     <a href="map"><i class="fa fa-map-marker"></i> <span class="nav-label">Map</span></a>
                 </li>
                 <li id="menu-stats">
-                    <a href="analytics"><i class="fa fa-bar-chart"></i> <span class="nav-label">Stats</span></a>
+                    <a href="analytics"><i class="fa fa-pie-chart"></i> <span class="nav-label">Stats</span></a>
                 </li>
                 <li id="menu-logout">
                     <a href="logout"><i class="fa fa-sign-out"></i> <span class="nav-label">Log Out</span></a>
@@ -125,7 +113,10 @@
       <div class="row border-bottom" style="position:fixed; z-index:999; width:100%;">
         <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-green nav-btn" href="#"><i class="fa fa-chevron-right menu-button"></i> </a>
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-green nav-btn" href="#">
+              <i class="fa fa-bars"></i> 
+          <!--     <i class="fa fa-chevron-right menu-button"></i>  -->
+            </a>
         </div>
             <ul class="nav navbar-top-links navbar-right" style="display: inline-block;">
 <!--                 <li>
@@ -150,7 +141,7 @@
                 </li>
 
             </ul>
-            <h3 class="m-r-sm fc-font fc-header animated flipInY" style="display:inline-block; float:right;">Fisher Classic</h3>
+            <h3 class="m-r-sm fc-font fc-header hf-font animated flipInY" style="display:inline-block; float:right; font-size: 20px;">Spring String Scramble</h3>
         </nav>
       </div>
       
@@ -185,8 +176,8 @@
         <div class="pull-right">
             <strong>{{ Auth::user()->name }}</strong>
         </div>
-        <div>
-            M.Glover &copy; 2017
+        <div style="font-size: 10px;">
+            Developed by Matt Glover &copy; 2018
         </div>
       </div>
     
@@ -198,6 +189,35 @@
     <?php $page = Request::segment(1); ?>
     <?php $userID = Auth::user()->id; ?>
     <?php $userAvatar = Auth::user()->avatar; ?>
+
+
+<!-- Main scripts -->
+<script src="{{{ asset('/theme/js/jquery-2.1.1.js') }}}"></script>
+<script src="{{{ asset('/theme/js/bootstrap.min.js') }}}"></script>
+<script src="{{{ asset('/theme/js/plugins/metisMenu/jquery.metisMenu.js') }}}"></script>
+<script src="{{{ asset('/theme/js/plugins/slimscroll/jquery.slimscroll.min.js') }}}"></script>
+<script src="{{{ asset('/theme/js/inspinia.js') }}}"></script>
+<script src="{{{ asset('/theme/js/plugins/pace/pace.min.js') }}}"></script>
+<script src="{{{ asset('/theme/js/plugins/sweetalert/sweetalert.min.js') }}}"></script>
+<script src="{{{ asset('/js/mqttws31.js') }}}"></script>
+<script src="{{{ asset('/js/moment.js') }}}"></script>
+<script src="{{{ asset('/addtohomescreen/src/addtohomescreen.js') }}}"></script>
+
+<script>
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        },
+        type: "POST",
+        dataType: "json"
+    });
+
+</script>
+
+
+@yield('scripts')
+
      
 <script>
 

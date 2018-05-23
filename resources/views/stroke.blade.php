@@ -679,7 +679,7 @@ var myTeam = '<?php echo $myTeam ?>';
  
         var userID = '<?php echo $userID ?>';
         var userAvatar = '<?php echo $userAvatar ?>';
-        var client = new Paho.MQTT.Client("mqtt.apengage.io", Number(8083), "/wss", "fc_client_" + userID);
+        var client = new Paho.MQTT.Client("mqtt2.apengage.io", Number(8083), "fc_client_" + userID);
 
         client.onConnectionLost = function (responseObject) {
             console.log("MQTT Connection Lost: " + responseObject.errorMessage);

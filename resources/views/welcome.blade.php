@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Fisher Classic</title>
+        <title>HAHFA - GOLF</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"> 
+
         <link href="{{{ asset('/css/main.css') }}}" rel="stylesheet">
         <link href="{{{ asset('/theme/css/bootstrap.css') }}}" rel="stylesheet">
         <link href="{{{ asset('/theme/font-awesome/css/font-awesome.css') }}}" rel="stylesheet">
@@ -39,7 +41,6 @@
     </head>
 
     <style>
-
         @keyframes animatedBackground {
             from { background-position: 0 0; }
             to { background-position: 100% 0; }
@@ -59,7 +60,6 @@
             animation: animatedBackground 10s linear infinite;
             z-index:-1;
         }
-
         .footer-area{
           /*  border:1px solid red;*/
             position:absolute;
@@ -74,22 +74,30 @@
             background-size: contain;
             z-index:-1;
         }
+                .help-block{
+            color:red;
+        }
+
 
     </style>
 
         <body class="gray-bg" ontouchstart="">
          <!--    <div class="header-area"></div> -->
-            <div class="middle-box text-center loginscreen" style="margin-top:5%;">
+            <div class="middle-box text-center loginscreen" style="padding-top:5%;">
                 <div>
                     <div>
-                        <a href="leaderboard" ><h1 class="logo-name fc-font" style="font-size:135px;">FC</h1></a>
+                       <!--  <a href="leaderboard" ><h1 class="logo-name fc-font" style="font-size:90px;">FC</h1></a> -->
+                       <a href="leaderboard" ><h1 class="logo-name fc-font" style="font-size:60px; font-family: 'Lato'">HAHFA</h1></a>
                     </div>
-                    <h3 class="fc-font" style="font-size:40px;">Fisher Classic</h3>
-                    <p>The 2017 annual Fisher Classic golf tournament. Login with facebook to enter.
+                    <br>
+                    <h3 class="fc-font hf-font" style="font-size:24px;">Spring String Scramble</h3>
+                    <p>The 2018 annual HAHFA golf tournament. Login or register to enter.
                     </p>
                     <a href="auth/facebook" class="form-group"><button type="submit" class="btn btn-primary block full-width m-b dim"><i class="fa fa-facebook"></i>  Login with facebook</button></a>
+                    <br>
+                    <a href="auth/login" class="form-group"><button type="submit" class="btn btn-info block full-width m-b dim"><i class="fa fa-envelope"></i>  Login / Register with E-mail</button></a>
 
-                    <p class="m-t"> <small>Developed by Matt Glover &copy; 2017<br/>All Rights Reserved</small> </p>
+                    <p class="m-t"> <small>Developed by Matt Glover &copy; 2018<br/>All Rights Reserved</small> </p>
                 </div>
             </div>
             <div class="footer-area"></div>

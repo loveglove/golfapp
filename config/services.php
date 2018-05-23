@@ -42,7 +42,7 @@ return [
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
-        'redirect' => env('CALLBACK_URL'),
+        'redirect' => 'https://'.$_SERVER[HTTP_HOST].'/auth/facebook/callback',
      ],
     'google' => [
         'client_id' =>  env('GOOGLE_APP_ID'),

@@ -66,11 +66,11 @@
 		<div class="col-xs-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
-            		<div class="col-xs-4 myscore">
-            			My Score
+            		<div class="col-xs-6 myscore">
+            			<i class="fa fa-stop"></i> My Score
             		</div>
-            		<div class="col-xs-8 touravg">
-            			Tournament Average
+            		<div class="col-xs-6 touravg">
+            			<i class="fa fa-stop"></i> Tour Average
             		</div>
             		<div class="text-center">
             			<canvas id="over-under" height="320"></canvas>

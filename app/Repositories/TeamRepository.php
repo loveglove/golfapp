@@ -27,7 +27,7 @@ class TeamRepository
     public function getTeamListOpen()
     {
         $tournament = Session::get('tournament');
-        return Team::where('id_tour', '=', $tournament->id)->whereNull('id_user2')->lists('name', 'id');
+        return Team::where('id_tour', '=', $tournament->id)->whereNull('id_user4')->lists('name', 'id');
     }
 
     public function getTeamListAll()
@@ -41,7 +41,10 @@ class TeamRepository
         $tournament = Session::get('tournament');
         $id = Auth::user()->getId();
         return Team::where('id_tour', '=', $tournament->id)->where(function($query) use($id) {
-            $query->where('id_user1', '=', $id)->orWhere('id_user2', '=', $id);
+            $query->where('id_user1', '=', $id)
+            ->orWhere('id_user2', '=', $id)
+            ->orWhere('id_user3', '=', $id)
+            ->orWhere('id_user4', '=', $id);
         })->first();
     }
 
@@ -50,7 +53,19 @@ class TeamRepository
         $team = $this->getTeam();
         $user1 = User::where('id', '=', $team->id_user1)->first();
         $user2 = User::where('id', '=', $team->id_user2)->first();
-        return [$user1, $user2];
+        $user3 = User::where('id', '=', $team->id_user3)->first();
+        $user4 = User::where('id', '=', $team->id_user4)->first();
+        return [$user1, $user2, $user3, $user4];
+    }
+
+    public function getTeamUsers($team_id)
+    {
+        $team = Team::find($team_id);
+        $user1 = User::where('id', '=', $team->id_user1)->first();
+        $user2 = User::where('id', '=', $team->id_user2)->first();
+        $user3 = User::where('id', '=', $team->id_user3)->first();
+        $user4 = User::where('id', '=', $team->id_user4)->first();
+        return [$user1, $user2, $user3, $user4];
     }
 
     public function getScore()

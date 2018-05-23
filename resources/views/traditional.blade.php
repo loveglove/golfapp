@@ -1,9 +1,5 @@
 @extends('layouts.master')
 
-@section('scripts')
-	
-
-@endsection
 
 @section('content')
 
@@ -96,16 +92,16 @@
   			<div class="col-xs-6 animated fadeInDown">
   				<h3>{{ $tournament->name }}</h3>
   			</div>
-  			<div class="col-xs-6 align-right animated fadeInDown" style="padding-top: 4px;">
+<!--   			<div class="col-xs-6 align-right animated fadeInDown" style="padding-top: 4px;">
   				<a href="/standings" class=""> Back to Live <i class="fa fa-forward"></i></a>
-  			</div>
+  			</div> -->
   		@else
 			<div class="col-xs-6 animated fadeInDown">
   				<h3>{{ $tournament->name }}</h3>
   			</div>
-  			<div class="col-xs-6 align-right animated fadeInDown" style="padding-top: 4px;">
+<!--   			<div class="col-xs-6 align-right animated fadeInDown" style="padding-top: 4px;">
   				<a href="/lastyear" class=""> View Last Year <i class="fa fa-backward"></i></a>
-  			</div>
+  			</div> -->
   		@endif
   		<br/>
   		<br/>
@@ -368,6 +364,11 @@
 				                	</div>
 		                		</div>
 		                		<br />
+		                		<br />
+		                		<div class="col-xs-12"><strong>Members:</strong>
+		                			<div id="sc_members_{{ $standing->id_team }}">
+		                			</div>
+		                		</div>
 		               		</div>
 		            	</div>
 		            @endforeach
@@ -384,6 +385,14 @@
     <?php $userID = Auth::user()->id; ?>
     <?php $userAvatar = Auth::user()->avatar; ?>
  	<?php $myTeam = Session::get('myteam')->name ?>
+
+
+
+@endsection
+
+
+@section('scripts')
+	
 
 <script>
 
@@ -412,7 +421,7 @@
     
 
     function drawScoreCard(team_id, data){
-    	$.each(data, function( index, scoreData ) {
+    	$.each(data.scores, function(index, scoreData) {
 		  	$("#sc_" + scoreData.hole + "_" + team_id).find(".col-hole").html("#"+scoreData.hole);
 		  	$("#sc_" + scoreData.hole + "_" + team_id).find(".box-inner").html(scoreData.score);
 		  	$("#sc_" + scoreData.hole + "_" + team_id).find(".col-par").html(scoreData.par);
@@ -436,6 +445,13 @@
 				$("#sc_" + scoreData.hole + "_" + team_id).find(".box-inner").addClass("square-border");;
 		  	}
 		});
+		$.each(data.members, function(index, member) {
+			var delim = "<span class=\"green-text\"><b> | </b></span>";
+			if(index == (data.members.length - 1)){
+				delim = "";
+			}
+			$("#sc_members_"+team_id).append("<span>"+member.name+"<span>" + delim);
+		});
     }
 
 
@@ -445,7 +461,7 @@
  
         var userID = '<?php echo $userID ?>';
         var userAvatar = '<?php echo $userAvatar ?>';
-        var client = new Paho.MQTT.Client("mqtt.apengage.io", Number(8083), "/wss", "fc_client_" + userID);
+   var client = new Paho.MQTT.Client("test.mosquitto.org", Number(8081), "fc_client_" + userID);
 
         client.onConnectionLost = function (responseObject) {
             console.log("MQTT Connection Lost: " + responseObject.errorMessage);
@@ -479,22 +495,16 @@
             var options = {
                 timeout: 20,
                 cleanSession: false,
-                userName: "apengage", 
-		        password: "webpass",
 		        useSSL: true,
                 onSuccess: function () {
                     console.log("MQTT Connection Success!");
-                    client.subscribe('fc/notify/score', { qos: 1 });
-                    // client.subscribe('fc/selfcheck/' + userID, { qos: 1 });
-                    // message = new Paho.MQTT.Message("getting old messages...");
-                    // message.destinationName = "fc/selfcheck/" + userID; 
-                    // client.send(message);
+                    client.subscribe('fc/notify/score', { qos: 0 });
                 },
                 onFailure: function (message) {
                     console.log("MQTT Connection Failed: " + message.errorMessage);
 					setTimeout(function(){
 						connectMQTT();
-					},1000);
+					},2000);
                 }
             };
             client.connect(options);
@@ -515,7 +525,7 @@
             {
                 maximumAge: 30000, 
                 timeout: 60000, 
-                enableHighAccuracy: true 
+                enableHighAccuracy: false 
             }
         );
 

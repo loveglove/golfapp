@@ -16,14 +16,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Privacy
+Route::get('/privacy', function () {
+    return view('privacy');
+});
+
 // Login Routes
+Route::auth();
+Route::get('auth/login', array('as' => 'login', 'uses' => function(){
+    return view('auth.login');
+}));
+Route::get('/register', array('as' => 'register', 'uses' => function(){
+    return view('auth.register');
+}));
 Route::get('auth/facebook', 'Auth\AuthController@redirectToProvider');
 Route::get('auth/facebook/callback', 'Auth\AuthController@handleProviderCallback');
 Route::get('/logout', 'Auth\AuthController@getSignOut');
 
 
 // Tournament Routes
-Route::get('tournament', 'TournamentController@getActiveTour');
+Route::get('/tournament', 'TournamentController@getActiveTour');
 Route::post('create_tournament',['as' => 'create_tournament', 'uses' => 'TournamentController@createTour']);
 Route::post('create_team',['as' => 'create_team', 'uses' => 'TournamentController@createTeam']);
 Route::post('join_team',['as' => 'join_team', 'uses' => 'TournamentController@joinTeam']);
@@ -59,6 +71,9 @@ Route::post('eject_mate',['as' => 'eject_mate', 'uses' => 'AdminController@eject
 Route::post('delete_team',['as' => 'delete_team', 'uses' => 'AdminController@deleteTeam']);
 Route::post('update_score',['as' => 'update_score', 'uses' => 'AdminController@updateScore']);
 Route::post('clear_score',['as' => 'clear_score', 'uses' => 'AdminController@clearScore']);
+Route::post('clear_tour',['as' => 'clear_tour', 'uses' => 'AdminController@clearTour']);
+Route::get('/team/edit/{id}', 'AdminController@teamEdit');
+
 
 // Error Route
 Route::get('error', array('as' => 'error', 'uses' => function(){
@@ -66,3 +81,4 @@ Route::get('error', array('as' => 'error', 'uses' => function(){
 }));
 
 
+Route::get('/home', 'HomeController@index');

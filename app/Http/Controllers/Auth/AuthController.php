@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use Auth;
 use Socialite;
+use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -29,7 +30,41 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/tournament';
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+        ]);
+    }
+
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $data
+     * @return User
+     */
+    protected function create(array $user_data)
+    {
+
+        $user = User::create([
+            'name' => $user_data['name'],
+            'email' => $user_data['email'],
+            'password' => bcrypt($user_data['password']),
+            'avatar' => "https://www.gravatar.com/avatar/".md5($user_data['email'])."?d=retro"
+        ]);
+
+        return $user;
+    }
 
 
     /**
@@ -72,7 +107,7 @@ class AuthController extends Controller
     {
         $authUser = User::where('facebook_id', $facebookUser->id)->first();
  
-        if ($authUser){
+        if($authUser){
             return $authUser;
         }
  
@@ -83,6 +118,9 @@ class AuthController extends Controller
             'avatar' => $facebookUser->avatar
         ]);
     }
+
+
+
 
     /* Log out the user */
     public function getSignOut() {

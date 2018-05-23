@@ -38,6 +38,7 @@ class AdminController extends Controller
         {
             return view('admin', [
                 'tournaments' => Tournament::all(),
+                'tourList' => Tournament::lists('name', 'id'),
                 'openteams' => $this->team->getTeamListOpen(),
                 'teams' => $this->team->getTeamListAll(),
                 'allteams' => $this->team->getAllTeams(),
@@ -168,6 +169,22 @@ class AdminController extends Controller
     {
         $id = Request::input('team');
         DB::table('scores')->where('id_team','=',$id)->delete();
+        return $this->getAdminView();
+    }
+
+
+    /*
+     * Clear Tour
+     *
+     */
+    public function clearTour(Request $request)
+    {
+        $id = Request::input('tour');
+        //protect FC tournmanet scores
+        if($id != '1' && $id != '23'){
+            DB::table('scores')->where('id_tour','=',$id)->delete();
+            DB::table('notifications')->where('tournament_id','=',$id)->delete();
+        }
         return $this->getAdminView();
     }
 

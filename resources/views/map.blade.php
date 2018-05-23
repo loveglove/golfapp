@@ -1,10 +1,6 @@
 @extends('layouts.master')
 
-@section('scripts')
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDwYvEiJHi4rgFoTUb9i1Eexeds7ssfzew"></script>
-  <script src="{{{ asset('/richmarker/src/richmarker.js') }}}"></script>
 
-@endsection
 
 @section('content')
 
@@ -67,6 +63,12 @@
     <?php $userAvatar = Auth::user()->avatar; ?>
     <?php $myTeamName = Session::get('myteam')->name ?>
 
+@endsection
+
+@section('scripts')
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDwYvEiJHi4rgFoTUb9i1Eexeds7ssfzew"></script>
+  <script src="{{{ asset('/richmarker/src/richmarker.js') }}}"></script>
+
 
 <script>
  	
@@ -103,7 +105,8 @@
         });
 
 
-        map.addListener('click', function(event) {
+        google.maps.event.addListener(map, 'click', function(event) {
+            console.log(event);
             setDistMarker(event.latLng);
         });
 
@@ -114,8 +117,12 @@
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
+                var pos2 = {
+                    lat: position.coords.latitude + 0.00040,
+                    lng: position.coords.longitude
+                };
                 map.setCenter(pos);
-                setMainMarker(pos);
+                setMainMarker(pos2);
                 connectMQTT();
 
             });
@@ -150,14 +157,15 @@
                     map: map,
                     position: LatLng,
                     flat: true,
-                    anchor: RichMarkerPosition.MIDDLE,
+                    anchor: RichMarkerPosition.BOTTOM,
                     content: div
                 });
 
                 
                 // add player content window
                 marker.info = new google.maps.InfoWindow({
-                    content: parts[3] 
+                    content: parts[3],
+                    pixelOffset: new google.maps.Size(0, -55)
                 });
 
                 google.maps.event.addListener(marker, 'click', function() {
@@ -398,13 +406,14 @@
 
         var userID = '<?php echo $userID ?>';
         var userAvatar = '<?php echo $userAvatar ?>';
-        var client = new Paho.MQTT.Client("mqtt.apengage.io", Number(8083), "/wss", "fc_client_" + userID);
+         // mqtt2.apengage.io set as secondary domain with SSL certs for websockets secure connection. 
+        var client = new Paho.MQTT.Client("test.mosquitto.org", Number(8081), "fc_client_" + userID);
 
         client.onConnectionLost = function (responseObject) {
             console.log("MQTT Connection Lost: " + responseObject.errorMessage);
             setTimeout(function(){
                 connectMQTT();
-            },1000);
+            },2000);
         };
 
         client.onMessageArrived = function (message) {
@@ -436,23 +445,17 @@
             var options = {
                 timeout: 20,
                 cleanSession: false,
-                userName: 'apengage',
-                password: 'webpass',
                 useSSL: true,
                 onSuccess: function () {
                     console.log("MQTT Connection Success!");
-                    client.subscribe('fc/notify/score', { qos: 1 });
-                    // client.subscribe('fc/selfcheck/' + userID, { qos: 1 });
-                    client.subscribe('fc/position/#', { qos: 1 });
-                    // message = new Paho.MQTT.Message("this gets old messages");
-                    // message.destinationName = "fc/selfcheck/" + userID; 
-                    // client.send(message);
+                    client.subscribe('fc/notify/score', { qos: 0 });
+                    client.subscribe('fc/position/#', { qos: 0 });
                 },
                 onFailure: function (message) {
                     console.log("MQTT Connection Failed: " + message.errorMessage);
                     setTimeout(function(){
                         connectMQTT();
-                    },1000);
+                    },2000);
                 }
             };
             client.connect(options);
@@ -473,7 +476,9 @@
                 mypos = { lat: position.coords.latitude, lng: position.coords.longitude };
             },
             function(error){
-                console.log("geolocation watch error");
+                if(error.code == error.PERMISSION_DENIED){
+                    alert("You have previously denied permission to your location for this site, as a result you will not be able to use this feature. Clear your browser data to re-enable permissions. Make sure to select \"allow\" when promted");
+                }
             },
             {
                 maximumAge: 10000, 
