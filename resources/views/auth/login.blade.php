@@ -88,7 +88,7 @@
                         <a href="leaderboard" ><h1 class="logo-name fc-font" style="font-size:100px;">FC</h1></a>
                     </div> -->
 
-                    <h3 class="fc-font hf-font" style="font-size:24px;">Spring String Scramble</h3>
+                    <h3 class="fc-font" style="font-size:24px;">Spring String Scramble</h3>
                     <br/>
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}

@@ -93,7 +93,7 @@ class TournamentController extends Controller
     public function createTeam(Request $request)
     {
         $validator = Validator::make(Request::all(), [
-            'teamname' => 'required|max:20',
+            'teamname' => 'required|max:24',
         ]);
 
         if($validator->fails()) {
@@ -126,7 +126,11 @@ class TournamentController extends Controller
         if(empty($team->id_user4)){
             if(empty($team->id_user3)){
                 if(empty($team->id_user2)){
-                    $team->id_user2 = Auth::user()->id;
+                    if(empty($team->id_user1)){
+                        $team->id_user1 = Auth::user()->id;
+                    }else{
+                        $team->id_user2 = Auth::user()->id;
+                    }
                 }else{
                     $team->id_user3 = Auth::user()->id;
                 }
@@ -140,6 +144,51 @@ class TournamentController extends Controller
         return redirect()->action('CourseController@getHoles');
     
     }
+
+
+
+    /*
+     * Join a number
+     *
+     */
+    public function joinNumber(Request $request)
+    {
+
+
+        if(empty(Request::input('number'))){
+            return Redirect::back()->withErrors(['join' => 'Please enter a number']);
+        }
+
+        $team = Team::where("number", Request::input('number'))->first();
+
+        if(empty($team)){
+            return Redirect::back()->withErrors(['join' => 'No team found with the number you entered']);
+        }
+
+        if(empty($team->id_user4)){
+            if(empty($team->id_user3)){
+                if(empty($team->id_user2)){
+                    if(empty($team->id_user1)){
+                        $team->id_user1 = Auth::user()->id;
+                    }else{
+                        $team->id_user2 = Auth::user()->id;
+                    }
+                }else{
+                    $team->id_user3 = Auth::user()->id;
+                }
+            }else{
+                $team->id_user4 = Auth::user()->id;
+            }
+        }else{
+            return Redirect::back()->withErrors(['join' => 'The team number you entered is already full']);
+        }
+
+        $team->save();
+
+        return redirect()->action('CourseController@getHoles');
+    
+    }
+
 
     public function notifications(Request $request)
     {

@@ -78,23 +78,28 @@
                   </div>
                 </li>
                 <li id="menu-course">
-                    <a href="course"><i class="fa fa-flag"></i> <span class="nav-label">Course</span></a>
+                    <a href="/course"><i class="fa fa-flag"></i> <span class="nav-label">Course</span></a>
                 </li>
                 <li id="menu-standings">
-                    <a href="standings"><i class="fa fa-trophy"></i> <span class="nav-label">Standings</span></a>
+                    <a href="/standings"><i class="fa fa-trophy"></i> <span class="nav-label">Standings</span></a>
                 </li>
                 <li id="menu-map" style="text-align: center;">
-                    <a href="map"><i class="fa fa-map-marker"></i> <span class="nav-label">Map</span></a>
+                    <a href="/map"><i class="fa fa-map-marker"></i> <span class="nav-label">Map</span></a>
                 </li>
                 <li id="menu-stats">
-                    <a href="analytics"><i class="fa fa-pie-chart"></i> <span class="nav-label">Stats</span></a>
+                    <a href="/analytics"><i class="fa fa-pie-chart"></i> <span class="nav-label">Stats</span></a>
+                </li>
+                <hr style="border-color:#333;">
+                <li id="menu-help">
+                    <a href="{{ asset('pdf/HAHFA-how-to-use.pdf') }}" target="_blank"><i class="fa fa-info-circle"></i> <span class="nav-label">Help</span></a>
                 </li>
                 <li id="menu-logout">
-                    <a href="logout"><i class="fa fa-sign-out"></i> <span class="nav-label">Log Out</span></a>
+                    <a href="/logout"><i class="fa fa-sign-out"></i> <span class="nav-label">Log Out</span></a>
                 </li>
+
                  @if(Auth::user()->isAdmin())
                     <li id="menu-admin">
-                        <a href="admin"><i class="fa fa-gears green-text"></i> <span class="nav-label">Admin</span></a>
+                        <a href="/admin"><i class="fa fa-gears green-text"></i> <span class="nav-label">Admin</span></a>
                     </li>
                 @endif
 <!--                 <li id="menu-settings">
@@ -113,7 +118,7 @@
       <div class="row border-bottom" style="position:fixed; z-index:999; width:100%;">
         <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-green nav-btn" href="#">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-green nav-btn" id="menu-button" href="#">
               <i class="fa fa-bars"></i> 
           <!--     <i class="fa fa-chevron-right menu-button"></i>  -->
             </a>
@@ -141,7 +146,7 @@
                 </li>
 
             </ul>
-            <h3 class="m-r-sm fc-font fc-header hf-font animated flipInY" style="display:inline-block; float:right; font-size: 20px;">Spring String Scramble</h3>
+            <h3 class="m-r-sm fc-font fc-header animated flipInY" style="display:inline-block; float:right; font-size: 18px; line-height:28px;">Spring String Scramble</h3>
         </nav>
       </div>
       
@@ -174,10 +179,16 @@
       <!-- ****** FOOTER ******** -->
       <div class="footer">
         <div class="pull-right">
-            <strong>{{ Auth::user()->name }}</strong>
+            <strong>
+              @if(!empty(Auth::user()->team()->name))
+                {{ Auth::user()->team()->name }}
+              @else
+                {{ Auth::user()->name }}
+              @endif
+            </strong>
         </div>
         <div style="font-size: 10px;">
-            Developed by Matt Glover &copy; 2018
+            Matt Glover &copy; 2018
         </div>
       </div>
     
@@ -196,8 +207,8 @@
 <script src="{{{ asset('/theme/js/bootstrap.min.js') }}}"></script>
 <script src="{{{ asset('/theme/js/plugins/metisMenu/jquery.metisMenu.js') }}}"></script>
 <script src="{{{ asset('/theme/js/plugins/slimscroll/jquery.slimscroll.min.js') }}}"></script>
-<script src="{{{ asset('/theme/js/inspinia.js') }}}"></script>
 <script src="{{{ asset('/theme/js/plugins/pace/pace.min.js') }}}"></script>
+<script src="{{{ asset('/theme/js/inspinia.js') }}}"></script>
 <script src="{{{ asset('/theme/js/plugins/sweetalert/sweetalert.min.js') }}}"></script>
 <script src="{{{ asset('/js/mqttws31.js') }}}"></script>
 <script src="{{{ asset('/js/moment.js') }}}"></script>
@@ -205,13 +216,13 @@
 
 <script>
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        },
-        type: "POST",
-        dataType: "json"
-    });
+   $.ajaxSetup({
+      headers: {
+         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+      },
+      type: "POST",
+      dataType: "json"
+   });
 
 </script>
 
@@ -256,10 +267,6 @@
                   break;
             }
 
-            $.ajaxSetup({
-               headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
-            });
-
             getScore();
 
             var count = localStorage.notifycount;
@@ -287,16 +294,16 @@
 
       function openNotifications(){
          $(".modal-notes").empty();
-            for(var i=0, len=localStorage.length; i<len; i++)
+         for(var i=0, len=localStorage.length; i<len; i++)
+         {
+            var key = localStorage.key(i);
+            var value = localStorage[key];
+            if(key != "notifycount" && key != 'org.cubiq.addtohome')
             {
-               var key = localStorage.key(i);
-               var value = localStorage[key];
-               if(key != "notifycount" && key != 'org.cubiq.addtohome')
-               {
-                  notifyData = value.split('|');
-                  var alert = '<div>' + notifyData[0] + '<span class="pull-right text-muted small slate-text" style="padding-top:2px; padding-bottom:2px;">' + moment(notifyData[1]).fromNow() + '</span></div><hr/>';
-                  $(".modal-notes").prepend(alert);
-               }
+               notifyData = value.split('|');
+               var alert = '<div>' + notifyData[0] + '<span class="pull-right text-muted small slate-text" style="padding-top:2px; padding-bottom:2px;">' + moment(notifyData[1]).fromNow() + '</span></div><hr/>';
+               $(".modal-notes").prepend(alert);
+            }
          }
          $("#notify-modal").modal("show");
       }

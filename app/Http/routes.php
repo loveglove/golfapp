@@ -39,6 +39,7 @@ Route::get('/tournament', 'TournamentController@getActiveTour');
 Route::post('create_tournament',['as' => 'create_tournament', 'uses' => 'TournamentController@createTour']);
 Route::post('create_team',['as' => 'create_team', 'uses' => 'TournamentController@createTeam']);
 Route::post('join_team',['as' => 'join_team', 'uses' => 'TournamentController@joinTeam']);
+Route::post('join_number',['as' => 'join_number', 'uses' => 'TournamentController@joinNumber']);
 Route::get('/notifications', 'TournamentController@notifications');
 
 
@@ -72,7 +73,13 @@ Route::post('delete_team',['as' => 'delete_team', 'uses' => 'AdminController@del
 Route::post('update_score',['as' => 'update_score', 'uses' => 'AdminController@updateScore']);
 Route::post('clear_score',['as' => 'clear_score', 'uses' => 'AdminController@clearScore']);
 Route::post('clear_tour',['as' => 'clear_tour', 'uses' => 'AdminController@clearTour']);
+
+
 Route::get('/team/edit/{id}', 'AdminController@teamEdit');
+Route::post('/team/name',['as' => 'update_name', 'uses' => 'AdminController@updateName']);
+Route::post('/team/clear',['as' => 'clear_team', 'uses' => 'AdminController@clearTeamScore']);
+Route::post('/team/eject',['as' => 'eject_member', 'uses' => 'AdminController@ejectMember']);
+
 
 
 // Error Route

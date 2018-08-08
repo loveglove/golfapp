@@ -83,21 +83,26 @@
 
         <body class="gray-bg" ontouchstart="">
          <!--    <div class="header-area"></div> -->
-            <div class="middle-box text-center loginscreen" style="padding-top:5%;">
+            <div class="middle-box text-center loginscreen" style="padding-top:2%;">
                 <div>
                     <div>
-                       <!--  <a href="leaderboard" ><h1 class="logo-name fc-font" style="font-size:90px;">FC</h1></a> -->
-                       <a href="leaderboard" ><h1 class="logo-name fc-font" style="font-size:60px; font-family: 'Lato'">HAHFA</h1></a>
+                       <!--  <a href="/leaderboard" ><h1 class="logo-name fc-font" style="font-size:90px;">FC</h1></a> -->
+                       <a href="/leaderboard" >
+
+                        <!-- <h1 class="logo-name fc-font" style="font-size:50px; font-family: 'Lato'">HAHFA</h1> -->
+                        <img src="{{ asset('images/hahfa.png') }}" height="200" alt="logo" />
+                    </a>
                     </div>
                     <br>
-                    <h3 class="fc-font hf-font" style="font-size:24px;">Spring String Scramble</h3>
+                    <h3 class="fc-font" style="font-size:24px;">Spring String Scramble</h3>
                     <p>The 2018 annual HAHFA golf tournament. Login or register to enter.
                     </p>
                     <a href="auth/facebook" class="form-group"><button type="submit" class="btn btn-primary block full-width m-b dim"><i class="fa fa-facebook"></i>  Login with facebook</button></a>
                     <br>
                     <a href="auth/login" class="form-group"><button type="submit" class="btn btn-info block full-width m-b dim"><i class="fa fa-envelope"></i>  Login / Register with E-mail</button></a>
 
-                    <p class="m-t"> <small>Developed by Matt Glover &copy; 2018<br/>All Rights Reserved</small> </p>
+                    <p class="m-t"> <small>Developed by Matt Glover &copy; 2018</small> </p>
+                    <a href="{{ asset('pdf/HAHFA-how-to-use.pdf') }}" target="_blank"><i class="fa fa-info-circle"></i> <span class="nav-label">User Guide</span></a>
                 </div>
             </div>
             <div class="footer-area"></div>
@@ -115,9 +120,9 @@
 
     <script>
         // addToHomescreen.removeSession();
-        addToHomescreen({
-            maxDisplayCount:5,
-            displayPace: 20,
-        });
+        // addToHomescreen({
+        //     maxDisplayCount:5,
+        //     displayPace: 20,
+        // });
     </script>
 </html>

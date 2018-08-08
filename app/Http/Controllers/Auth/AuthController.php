@@ -60,7 +60,7 @@ class AuthController extends Controller
             'name' => $user_data['name'],
             'email' => $user_data['email'],
             'password' => bcrypt($user_data['password']),
-            'avatar' => "https://www.gravatar.com/avatar/".md5($user_data['email'])."?d=retro"
+            'avatar' => "https://www.gravatar.com/avatar/".md5($user_data['email'])."?d=wavatar"
         ]);
 
         return $user;

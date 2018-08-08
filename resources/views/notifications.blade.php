@@ -25,17 +25,21 @@
 
         <div class="ibox float-e-margins">
             <div class="ibox-content">
-            	@foreach ($notifications as $note)
-            		<div class="note-container">
-						{!! $note->text !!}
-                        <div class="row">
-    						<span class="pull-right text-muted small slate-text extra-pad">
-                                {{ $note->created_at->diffForHumans() }}
-    						</span>
+                @if(!$notifications->isEmpty())
+                    @foreach ($notifications as $note)
+                        <div class="note-container">
+                            {!! $note->text !!}
+                            <div class="row">
+                                <span class="pull-right text-muted small slate-text extra-pad">
+                                    {{ $note->created_at->diffForHumans() }}
+                                </span>
+                            </div>
                         </div>
-					</div>
-                    <hr>
-            	@endforeach
+                        <hr>
+                    @endforeach
+                @else
+                    <h4>No Notifications Yet!</h4>
+                @endif
             </div>
         </div>
     </div>

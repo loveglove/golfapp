@@ -15,7 +15,7 @@
 
 #map{
     position: absolute;
-    height: 100%;
+    height: calc(100% - 70px);
     width: 100%;
     margin-left: -10px !important;
 }
@@ -61,7 +61,7 @@
 
     <?php $userID = Auth::user()->id; ?>
     <?php $userAvatar = Auth::user()->avatar; ?>
-    <?php $myTeamName = Session::get('myteam')->name ?>
+    <?php $myTeamName = htmlspecialchars(Session::get("myteam")->name); ?>
 
 @endsection
 
@@ -75,8 +75,8 @@
  	var map;
     var playermarkers = {};
 
-    var userID = '<?php echo $userID ?>';
-    var myTeam = '<?php echo $myTeamName ?>';
+    var userID = "<?php echo $userID ?>";
+    var myTeam = "<?php echo $myTeamName ?>";
 
     var dmcnt = 0;
 
@@ -87,20 +87,24 @@
     var myPos = null;
     var curvature = 0.5;
     var Point = null;
+    var def_latlng = null;
 
     function initMap() {
 
         console.log("Start Loading Map");
 
+            // new google.maps.LatLng(43.3898045900, -79.8109913600),
+        def_latlng = {lat: 43.210066, lng: -79.799785};
+
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 18,
-            center: new google.maps.LatLng(43.3898045900, -79.8109913600),
+            center:  new google.maps.LatLng(def_latlng.lat, def_latlng.lng),
             mapTypeId: google.maps.MapTypeId.SATELLITE,
             zoomControl: false,
             mapTypeControl: false,
-            scaleControl: true,
+            scaleControl: false,
             streetViewControl: false,
-            rotateControl: false,
+            rotateControl: true,
             fullscreenControl: false
         });
 
@@ -118,13 +122,21 @@
                     lng: position.coords.longitude
                 };
                 var pos2 = {
-                    lat: position.coords.latitude + 0.00040,
-                    lng: position.coords.longitude
+                    lat: position.coords.latitude + 0.00042,
+                    lng: position.coords.longitude - 0.0004
+                };
+                var pos3 = {
+                    lat: position.coords.latitude + 0.00042,
+                    lng: position.coords.longitude + 0.0004
                 };
                 map.setCenter(pos);
-                setMainMarker(pos2);
+                setMainMarker(pos2); // set first
+                setDistMarker(pos3); // then second
                 connectMQTT();
 
+            }, function(error) {
+                console.log("Permission denied or unavailable");
+                setMainMarker(def_latlng);
             });
         } else {
             alert("Browser does not support geolocation");
@@ -277,6 +289,16 @@
             icon: icon
         });
 
+        var preWindow = new google.maps.InfoWindow({
+            content: 'Move us around!'
+        });
+
+        // open info window
+        preWindow.open(map, mainMarker);
+
+        setTimeout(function(){
+            preWindow.close();
+        },4000);
 
         // create drag listener
         google.maps.event.addListener(mainMarker, 'drag', function() {
@@ -317,7 +339,10 @@
         drawDistance();
 
         // open info window
-        infoWindow.open(map, distMarker);
+        setTimeout(function(){
+            infoWindow.open(map, distMarker);
+        },4200);
+
 
         // add click listener
         google.maps.event.addListener(distMarker, 'click', function() {
@@ -407,7 +432,7 @@
         var userID = '<?php echo $userID ?>';
         var userAvatar = '<?php echo $userAvatar ?>';
          // mqtt2.apengage.io set as secondary domain with SSL certs for websockets secure connection. 
-        var client = new Paho.MQTT.Client("test.mosquitto.org", Number(8081), "fc_client_" + userID);
+        var client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "fc_client_" + userID);
 
         client.onConnectionLost = function (responseObject) {
             console.log("MQTT Connection Lost: " + responseObject.errorMessage);
@@ -469,15 +494,13 @@
             function(position) {
                 var lat = position.coords.latitude;
                 var lon = position.coords.longitude;
-                // var tempLat = "43.39095";
-                // var tempLon = "-79.81103361";  
-                // publishPosition(tempLat, tempLon);
                 publishPosition(lat, lon);
                 mypos = { lat: position.coords.latitude, lng: position.coords.longitude };
             },
             function(error){
+               
                 if(error.code == error.PERMISSION_DENIED){
-                    alert("You have previously denied permission to your location for this site, as a result you will not be able to use this feature. Clear your browser data to re-enable permissions. Make sure to select \"allow\" when promted");
+                    alert("You have previously denied permission to your location for this site, as a result you will not be able to use this feature. Clear your browser cache and cookies to re-enable permissions. Make sure to select \"allow\" when promted");
                 }
             },
             {

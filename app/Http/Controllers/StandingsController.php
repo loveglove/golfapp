@@ -109,9 +109,13 @@ class StandingsController extends Controller
         if(Request::ajax()) {
             $data = Request::all();
             $scores = $this->team->getCompleted($data['team_id']);
-            $members = $this->team->getTeamUsers($data['team_id']);
-            $members = array_filter($members, function($var){return !is_null($var);} );
-            return ["scores" => $scores, "members" => $members];
+
+            // $members = $this->team->getTeamUsers($data['team_id']);
+            // $members = array_filter($members, function($var){return !is_null($var);} );
+            $team = Team::find($data['team_id']);
+            $mems = explode(',', $team->members);
+
+            return ["scores" => $scores, "members" => $mems];
         }
         return 0;
     }

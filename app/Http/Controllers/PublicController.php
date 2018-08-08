@@ -36,7 +36,7 @@ class PublicController extends Controller
     public function getPublicBoard()
     {
         return view('leaderboard', [
-            'standings' => $this->standings->getLeaderboard(1),
+            'standings' => $this->standings->getLeaderboard(26),
         ]);
     }
 

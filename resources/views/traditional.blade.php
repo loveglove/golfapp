@@ -87,22 +87,25 @@
 <div class="wrapper wrapper-content animated fadeInRight">
 	<br/>
   	<div class="row">
-  		
-  		@if($tournament->id == 1)
+  		  	<div class="col-xs-12 animated fadeInDown" style="text-align: center;">
+  				<h3>{{ $tournament->name }}</h3>
+  			</div>
+
+<!--   		@if($tournament->id == 1)
   			<div class="col-xs-6 animated fadeInDown">
   				<h3>{{ $tournament->name }}</h3>
   			</div>
-<!--   			<div class="col-xs-6 align-right animated fadeInDown" style="padding-top: 4px;">
+  			<div class="col-xs-6 align-right animated fadeInDown" style="padding-top: 4px;">
   				<a href="/standings" class=""> Back to Live <i class="fa fa-forward"></i></a>
-  			</div> -->
+  			</div>
   		@else
 			<div class="col-xs-6 animated fadeInDown">
   				<h3>{{ $tournament->name }}</h3>
   			</div>
-<!--   			<div class="col-xs-6 align-right animated fadeInDown" style="padding-top: 4px;">
+  			<div class="col-xs-6 align-right animated fadeInDown" style="padding-top: 4px;">
   				<a href="/lastyear" class=""> View Last Year <i class="fa fa-backward"></i></a>
-  			</div> -->
-  		@endif
+  			</div>
+  		@endif -->
   		<br/>
   		<br/>
   		<div class="col-md-6 col-lg-8">
@@ -384,7 +387,7 @@
 
     <?php $userID = Auth::user()->id; ?>
     <?php $userAvatar = Auth::user()->avatar; ?>
- 	<?php $myTeam = Session::get('myteam')->name ?>
+ 	<?php $myTeam = htmlspecialchars(Session::get("myteam")->name); ?>
 
 
 
@@ -396,7 +399,7 @@
 
 <script>
 
-	var myTeam = '<?php echo $myTeam ?>';
+	var myTeam = "<?php echo $myTeam ?>";
 
 	function getScoreCard(team_id){	
 		if($("#hidden_set" + team_id).val() == 0)
@@ -421,6 +424,8 @@
     
 
     function drawScoreCard(team_id, data){
+    	console.log("Members ------ ");
+    	console.log(data.members);
     	$.each(data.scores, function(index, scoreData) {
 		  	$("#sc_" + scoreData.hole + "_" + team_id).find(".col-hole").html("#"+scoreData.hole);
 		  	$("#sc_" + scoreData.hole + "_" + team_id).find(".box-inner").html(scoreData.score);
@@ -450,7 +455,7 @@
 			if(index == (data.members.length - 1)){
 				delim = "";
 			}
-			$("#sc_members_"+team_id).append("<span>"+member.name+"<span>" + delim);
+			$("#sc_members_"+team_id).append("<span>"+member+"<span>" + delim);
 		});
     }
 
@@ -461,7 +466,7 @@
  
         var userID = '<?php echo $userID ?>';
         var userAvatar = '<?php echo $userAvatar ?>';
-   var client = new Paho.MQTT.Client("test.mosquitto.org", Number(8081), "fc_client_" + userID);
+   		var client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "fc_client_" + userID);
 
         client.onConnectionLost = function (responseObject) {
             console.log("MQTT Connection Lost: " + responseObject.errorMessage);

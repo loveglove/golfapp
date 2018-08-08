@@ -34,7 +34,7 @@ class AdminController extends Controller
      */
     public function getAdminView()
     {
-        if(Auth::user()->getId() == 1)
+        if(Auth::user()->isAdmin())
         {
             return view('admin', [
                 'tournaments' => Tournament::all(),
@@ -112,7 +112,7 @@ class AdminController extends Controller
     public function deleteTeam(Request $request)
     {
         $id = Request::input('team');
-        Team::where('id','=', $id)->delete();
+        Team::find($id)->delete();
         return $this->getAdminView();
     }
 
@@ -186,6 +186,82 @@ class AdminController extends Controller
             DB::table('notifications')->where('tournament_id','=',$id)->delete();
         }
         return $this->getAdminView();
+    }
+
+
+    /*
+     * Edit A Team
+     *
+     */
+    public function teamEdit(Request $request, $teamid)
+    {
+
+        return view('editteam',[
+            "team" => Team::find($teamid),
+            "members" => array_filter($this->team->getTeamUsers($teamid))
+        ]);
+
+    }
+
+
+    /*
+     * Edit A Team
+     *
+     */
+    public function updateName(Request $request)
+    {
+        $data = Request::all();
+        $team = Team::find($data["id"]);
+        $team->name = $data["name"];
+        $team->save();
+        return redirect('/team/edit/'.$data["id"])->withErrors(['name' => 'Team name updated.']);
+
+    }
+
+
+
+    /*
+     * Clear Team Score
+     *
+     */
+    public function clearTeamScore(Request $request)
+    {
+        $tour_id = Session::get('tournament')->id;
+        $data = Request::all();     
+        DB::table('scores')->where('id_tour', $tour_id)->where("id_team", $data["id"])->delete();
+        DB::table('notifications')->where('tournament_id', $tour_id)->where('team_id', $data["id"])->delete();
+
+        return redirect('/team/edit/'.$data["id"])->withErrors(['clear' => 'Team scores cleared.']);
+
+    }
+
+
+
+    /*
+     * Eject Team Memver
+     *
+     */
+    public function ejectMember(Request $request)
+    {
+        $tour_id = Session::get('tournament')->id;
+        $data = Request::all();   
+
+        $team = Team::find($data["team_id"]);
+
+        if($team->id_user1 == $data["user_id"]){
+            $team->id_user1 = NULL;
+        }else if($team->id_user2 == $data["user_id"]){
+            $team->id_user2 = NULL;
+        }else if($team->id_user3 == $data["user_id"]){
+            $team->id_user3 = NULL;
+        }else if($team->id_user4 == $data["user_id"]){
+            $team->id_user4 = NULL;
+        }
+
+        $team->save();
+
+        return redirect('/team/edit/'.$data["team_id"]);
+
     }
 
 }

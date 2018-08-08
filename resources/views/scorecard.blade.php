@@ -141,7 +141,7 @@
 		</div>
 	</div>
 
-  	<?php $teamName = $team->name ?>
+  	<?php $teamName = htmlspecialchars($team->name) ?>
   	<?php $teamID = $team->id ?>
 	<?php $userID = Auth::user()->id; ?>
     <?php $userAvatar = Auth::user()->avatar; ?>
@@ -153,9 +153,11 @@
 <script src="{{ asset('/theme/js/plugins/jsKnob/jquery.knob.js') }}"></script>
     <script>
 
-		var teamName = '<?php echo $teamName ?>';
-		var teamID = '<?php echo $teamID ?>';
+		var teamName = "<?php echo $teamName ?>";
+		var teamID = "<?php echo $teamID ?>";
+		var starthole = "{{ $team->start }}";
 		var currentHole = null;
+
 
     	function openImageModal(imgPath, hole){
     		$("#holeimage-lg").attr("src",imgPath);
@@ -164,7 +166,8 @@
     	}
 
         $(document).ready(function() {
-          	
+
+
           	$(".dial").knob({
         		'release' : function (val) { 
         			var hole = this.$.attr('id');
@@ -235,7 +238,7 @@
 			            $("#value-text" + hole).html("Oh no!");
 			            $("#value-int" + hole).val(3);
 			        }
-			         else if(v >= (par + 4)) {
+			        else if(v >= (par + 4)) {
 			            this.o.fgColor='#E34444';
 			            $("#" + hole).css("color", "#E34444");
 			            $("#value-text" + hole).html("Yikes!!!");
@@ -300,23 +303,84 @@
 
 			// alert(currentHole);
 
-
-			    var anchor = $("#anchor" + currentHole);
-	    		var position = anchor.position().top + $("body").scrollTop() +20;
-	    		$("body").animate({scrollTop: position});
+				if(currentHole > 0){
+				    var anchor = $("#anchor" + currentHole);
+		    		var position = anchor.position().top + $("body").scrollTop() +20;
+		    		$("body").animate({scrollTop: position});
+	    		}
 
 				// $("body").scrollTop($("#anchor" + currentHole).offset().top); 
                 // $("#anchor" + currentHole).animate({ scrollTop: 0 }, "fast");
 
-          	
 			console.log("current hole: " + currentHole);
 			console.log("offest: " + position);
 
-			getLocation();
+
+            if(currentHole === null){
+            	currentHole = starthole;
+        		var anchor = $("#anchor" + currentHole);
+	    		var position = anchor.position().top + $("body").scrollTop() +20;
+	    		$("body").animate({scrollTop: position});
+            	console.log('Fresh hole');
+            }
+
 
             connectMQTT();
+
+        	// if(teamName == ""){
+        	// 	setTeamName();	
+        	// }
+          	
     	
 		});
+
+
+
+		function setTeamName(){
+
+			swal({
+			  title: "Set Your Team Name",
+			  text: "Please enter a team name:",
+			  type: "input",
+			  showCancelButton: false,
+			  closeOnConfirm: false,
+			  allowOutsideClick: false,
+			  animation: "slide-from-top",
+			  inputPlaceholder: "Write something"
+			},
+			function(inputValue){
+
+				if (inputValue === false) return false;
+
+				if (inputValue === "") {
+				    swal.showInputError("You need to write something!");
+				    return false
+				}
+				if(inputValue.length > 24){
+					swal.showInputError("Must be less than 24 characters.");
+				    return false	  	
+				}
+
+				$.ajax({
+				    url: '/team/name',
+				    type: "post",
+				    dataType: "json",
+				    data: {'name':inputValue, 'id': teamID },
+				    success: function(data){
+				    	console.log(data);
+						swal("Nice!", "Your all set " + inputValue + "..", "success");	
+
+				    },
+				    error: function(error){
+						console.log(error);
+				    	swal("Oops..","Something went wrong while trying to save your name, please try again","error");
+				    	
+				    }
+				});  
+
+			});
+
+		}
 
         function confirmSave(score, hole, par){
 
@@ -623,7 +687,7 @@
 
         var userID = '<?php echo $userID ?>';
         var userAvatar = '<?php echo $userAvatar ?>';
-        var client = new Paho.MQTT.Client("test.mosquitto.org", Number(8081), "fc_client_" + userID);
+        var client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "fc_client_" + userID);
         var maxAttempts = 0;
 
         client.onConnectionLost = function (responseObject) {
@@ -665,6 +729,7 @@
                 onSuccess: function () {
                     console.log("MQTT Connection Success!");
                     client.subscribe('fc/notify/score', { qos: 0 });
+                    getLocation();
                 },
                 onFailure: function (message) {
                     console.log("MQTT Connection Failed: " + message.errorMessage);
@@ -684,7 +749,7 @@
             function(position) {
                 var lat = position.coords.latitude;
                 var lon = position.coords.longitude;
-                publishPosition(lat, lon);
+                // publishPosition(lat, lon);
             },
             function(error){
                 console.log("geolocation watch error");

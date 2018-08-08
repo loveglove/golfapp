@@ -8,7 +8,6 @@
 @section('content')
 <br/>
 <div class="wrapper wrapper-content animated fadeInRight">
-    
     <div class="ibox float-e-margins">
         <div class="ibox-content">
   		    <h3><i class="fa fa-flag"></i> Tournament </h3>
@@ -119,9 +118,7 @@
                     <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Eject</th>
-                        <th>Delete</th>
-                        <th>Clear</th>
+                        <th>Edit</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -129,22 +126,7 @@
                         <tr>
                             <td>{{ $team->name }}</td>
                             <td>
-                                {{ Form::open(array('route' => 'eject_mate', 'class' => 'form')) }}
-                                {{ Form::hidden('mate', $team->id_user2) }}
-                                {{ Form::button('<i class="fa fa-eject"></i> ', array('type' => 'submit')) }}
-                                {{ Form::close() }}
-                            </td>
-                            <td>
-                                {{ Form::open(array('route' => 'delete_team', 'class' => 'form')) }}
-                                {{ Form::hidden('team', $team->id) }}
-                                {{ Form::button('<i class="fa fa-times"></i> ', array('type' => 'submit')) }}
-                                {{ Form::close() }}
-                            </td>
-                            <td>
-                                {{ Form::open(array('route' => 'clear_score', 'class' => 'form')) }}
-                                {{ Form::hidden('team', $team->id) }}
-                                {{ Form::button('<i class="fa fa-trash-o"></i> ', array('type' => 'submit')) }}
-                                {{ Form::close() }}
+                                <a href="/team/edit/{{ $team->id }}"><button><i class="fa fa-edit"></i></button></a>
                             </td>
                         </tr>
                     @endforeach

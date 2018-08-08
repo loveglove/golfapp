@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Team;
+use Session;
+
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -41,7 +44,14 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function team()
     {
-        return $this->belongsTo(Team::team);
+        $tournament = Session::get('tournament');
+        $userid = $this->id;
+        return Team::where('id_tour', '=', $tournament->id)->where(function($query) use($userid) {
+            $query->where('id_user1', '=', $userid)
+            ->orWhere('id_user2', '=', $userid)
+            ->orWhere('id_user3', '=', $userid)
+            ->orWhere('id_user4', '=', $userid);
+        })->first();
     }
 
     public function isAdmin()
