@@ -363,6 +363,7 @@
 
 <script>
 
+
 	function getScoreCard(team_id){	
 		if($("#hidden_set" + team_id).val() == 0)
 		{
@@ -411,6 +412,11 @@
 		  	}
 		});
     }
+
+
+
+
+
 
 </script>
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>HAHFA - GOLF</title>
+        <title>Fisher Classic</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"> 
@@ -86,20 +86,18 @@
             <div class="middle-box text-center loginscreen" style="padding-top:2%;">
                 <div>
                     <div>
-                       <!--  <a href="/leaderboard" ><h1 class="logo-name fc-font" style="font-size:90px;">FC</h1></a> -->
-                       <a href="/leaderboard" >
-
+                        <a href="/leaderboard" ><h1 class="logo-name fc-font" style="font-size:90px;">FC</h1></a>
                         <!-- <h1 class="logo-name fc-font" style="font-size:50px; font-family: 'Lato'">HAHFA</h1> -->
-                        <img src="{{ asset('images/hahfa.png') }}" height="200" alt="logo" />
-                    </a>
+<!--                         <img src="{{ asset('images/hahfa.png') }}" height="200" alt="logo" /> -->
+                        </a>
                     </div>
                     <br>
-                    <h3 class="fc-font" style="font-size:24px;">Spring String Scramble</h3>
+                    <h3 class="fc-font" style="font-size:40px;">Fisher Classic</h3>
                     <p>The 2018 annual HAHFA golf tournament. Login or register to enter.
                     </p>
-                    <a href="auth/facebook" class="form-group"><button type="submit" class="btn btn-primary block full-width m-b dim"><i class="fa fa-facebook"></i>  Login with facebook</button></a>
+                    <a href="auth/facebook" class="form-group"><button type="submit" class="btn btn-primary block full-width m-b dim"><i class="fa fa-facebook"></i>  Login with Facebook</button></a>
                     <br>
-                    <a href="auth/login" class="form-group"><button type="submit" class="btn btn-info block full-width m-b dim"><i class="fa fa-envelope"></i>  Login / Register with E-mail</button></a>
+                    <a href="auth/login" class="form-group"><button type="submit" class="btn btn-info block full-width m-b dim"><i class="fa fa-envelope"></i>  Login with E-mail</button></a>
 
                     <p class="m-t"> <small>Developed by Matt Glover &copy; 2018</small> </p>
                     <a href="{{ asset('pdf/HAHFA-how-to-use.pdf') }}" target="_blank"><i class="fa fa-info-circle"></i> <span class="nav-label">User Guide</span></a>
@@ -120,9 +118,9 @@
 
     <script>
         // addToHomescreen.removeSession();
-        // addToHomescreen({
-        //     maxDisplayCount:5,
-        //     displayPace: 20,
-        // });
+        addToHomescreen({
+            maxDisplayCount:5,
+            displayPace: 20,
+        });
     </script>
 </html>

@@ -218,7 +218,33 @@ class AdminController extends Controller
 
     }
 
+    /*
+     * Update member names
+     *
+     */
+    public function updateMemberNames(Request $request)
+    {
+        $data = Request::all();
+        $team = Team::find($data["id"]);
+        $team->members = $data["membername"];
+        $team->save();
+        return redirect('/team/edit/'.$data["id"])->withErrors(['membername' => 'Member names updated.']);
 
+    }
+
+
+    /*
+     * Set Team Members
+     *
+     */
+    public function setMembers(Request $request)
+    {
+        $data = Request::all();
+        $team = Team::find($data["id"]);
+        $team->members = $data["name"];
+        $team->save();
+        return 1;
+    }
 
     /*
      * Clear Team Score

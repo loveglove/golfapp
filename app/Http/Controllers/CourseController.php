@@ -68,6 +68,7 @@ class CourseController extends Controller
                 'teams' => $this->team->getTeamListOpen()
             ]);
         }
+        
     }
 
 

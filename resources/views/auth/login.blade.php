@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>HAHFA - GOLF</title>
+        <title>Fisher Classic</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"> 
@@ -88,7 +88,7 @@
                         <a href="leaderboard" ><h1 class="logo-name fc-font" style="font-size:100px;">FC</h1></a>
                     </div> -->
 
-                    <h3 class="fc-font" style="font-size:24px;">Spring String Scramble</h3>
+                    <h3 class="fc-font" style="font-size:40px;">Fisher Classic</h3>
                     <br/>
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}

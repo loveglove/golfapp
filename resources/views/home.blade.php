@@ -7,14 +7,18 @@
                     <img class="avatar" src="{{Auth::user()->avatar }}" height="70" width="70" />&nbspWelcome
                 </div>
                 <div>
-                    <h2><b>{{Auth::user()->name }} </b></h2>
-                                         <p>Looks like you haven't joined a team yet! Please select a <b>Team Name</b> from the list below and click join</p>
+                    <h2><b>{{Auth::user()->name }}</b></h2>
+                    <p>
+                        Looks like you haven't joined a team yet! Create a new team by entering a team name below, <b>OR</b> join an existing team from the drop down list to continue.
                     </p>
-<!--                      <p>Looks like you haven't joined a team yet! Create a new team by entering a team name below, <b>OR</b> join an existing team from the drop down list to continue.
+
+<!--                 For Preloaded Team Names
+                    <p>Looks like you haven't joined a team yet! Please select a <b>Team Name</b> from the list below and click join</p> -->
+
+                    <!-- For Team Number -->
+<!--               <p>Looks like you haven't joined a team yet! <br>Please enter the <b>Team Number</b> you have been assigned by the tournament coordinator.
                     </p> -->
-<!--                     <p>Looks like you haven't joined a team yet! <br>Please enter the <b>Team Number</b> you have been assigned by the tournament coordinator.
-                    </p> -->
-<!--                     <br />
+                    <br />
 
                     {!! Form::open(array('route' => 'create_team', 'class' => 'form')) !!}
                         <div class="form-group {{ $errors->has('teamname') ? ' has-error' : '' }}">
@@ -27,7 +31,7 @@
                             <br/>
                             {{Form::button('<i class="fa fa-user"></i> Create Team', array('type' => 'submit', 'class' => 'btn btn-primary block full-width m-b dim'))}}
                         </div>      
-                    {!! Form::close() !!} -->
+                    {!! Form::close() !!}
 
 
                     <br/>

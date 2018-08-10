@@ -57,6 +57,7 @@ class StandingsController extends Controller
                 return view('traditional', [
                     'standings' => $this->standings->getLeaderboard($tournament->id),
                     'tournament' => $tournament,
+                    'team' => $this->team->getTeam(),
                 ]);
             break;
 
@@ -68,7 +69,8 @@ class StandingsController extends Controller
                     array_push($standings, $result);
                 }  
                 return view('skins', [
-                    'standings' => $standings
+                    'standings' => $standings,
+
                 ]);
             break;
 

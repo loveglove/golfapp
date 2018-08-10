@@ -151,9 +151,17 @@
 			                    	@endif
 			                    </div>
 			                </div>
-		                    <input type="hidden" id="hidden_set{{ $standing->id_team }}" value="0" />	   
+		                    <input type="hidden" id="hidden_set{{ $standing->id_team }}" value="0" />
+
 		                    <div class="row" id="score{{ $standing->id_team }}" style="display:none; text-align:center;">
-		                    	<br />
+		                    	<br>
+		                    	<div class="col-xs-12"><strong>Members:</strong>
+		                			<div id="sc_members_{{ $standing->id_team }}">
+		                			</div>
+		                		</div>
+		                		<br>
+		                		<br>
+		                		<br>
 		                		<div class="col-xs-6"><strong>Front 9</strong>
 		                			<div class="row">
 		                				<div class="col-xs-4"><small><strong>Hole</strong></small></div>
@@ -366,12 +374,6 @@
 			                			<div class="col-xs-4 col-par">-</div>
 				                	</div>
 		                		</div>
-		                		<br />
-		                		<br />
-		                		<div class="col-xs-12"><strong>Members:</strong>
-		                			<div id="sc_members_{{ $standing->id_team }}">
-		                			</div>
-		                		</div>
 		               		</div>
 		            	</div>
 		            @endforeach
@@ -385,11 +387,6 @@
 	</div>
 </div>
 
-    <?php $userID = Auth::user()->id; ?>
-    <?php $userAvatar = Auth::user()->avatar; ?>
- 	<?php $myTeam = htmlspecialchars(Session::get("myteam")->name); ?>
-
-
 
 @endsection
 
@@ -399,7 +396,11 @@
 
 <script>
 
-	var myTeam = "<?php echo $myTeam ?>";
+	var teamName = "{{ htmlspecialchars($team->name) }}";
+	var teamID = "{{ $team->id }}";
+    var userID = "{{ Auth::user()->id }}";
+    var userAvatar = "{{ Auth::user()->avatar }}";
+
 
 	function getScoreCard(team_id){	
 		if($("#hidden_set" + team_id).val() == 0)
@@ -460,89 +461,121 @@
     }
 
 
+
+
+
 // *********************************************
 // ******************* MQTT ********************
 // *********************************************
- 
-        var userID = '<?php echo $userID ?>';
-        var userAvatar = '<?php echo $userAvatar ?>';
-   		var client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "fc_client_" + userID);
 
-        client.onConnectionLost = function (responseObject) {
-            console.log("MQTT Connection Lost: " + responseObject.errorMessage);
-			setTimeout(function(){
+
+    var client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "fc_client_" + userID);
+    var maxAttempts = 0;
+
+    client.onConnectionLost = function (responseObject) {
+        console.log("MQTT Connection Lost: " + responseObject.errorMessage);
+		setTimeout(function(){
+            if(maxAttempts < 5){
 				connectMQTT();
-			},1000);
-        };
+                maxAttempts++;
+            }
+		},2000);
+    };
 
-        client.onMessageArrived = function (message) {
-            if(message.destinationName == "fc/notify/score"){
+    client.onMessageArrived = function (message) {
 
-                if (localStorage.notifycount) {
-                    localStorage.notifycount = Number(localStorage.notifycount) + 1;
-                } else {
-                    localStorage.notifycount = 1;
-                }
+        if(message.destinationName == "fc/notify/score"){
 
-                var count = localStorage.notifycount;
-                localStorage.setItem(count, message.payloadString);
-                $("#notify-count").html(count);
+            if (localStorage.notifycount) {
+                localStorage.notifycount = Number(localStorage.notifycount) + 1;
+            } else {
+                localStorage.notifycount = 1;
+            }
 
-            }else if(message.destinationName.includes("fc/position/")){
-                
-				// console.log("Last Position..");
-                // console.log(message.payloadString);
+            var count = localStorage.notifycount;
+            localStorage.setItem(count, message.payloadString);
+            $("#notify-count").html(count);
 
+        }else if(message.destinationName == "fc/notify/chirp"){
+        	
+            var data = message.payloadString.split(',');
+            if(data[0] == teamID){
+                swal({
+                    title: data[1], 
+                    text: data[2], 
+                    imageUrl: data[3],
+                    confirmButtonText: "Close",
+                });
+            }
+
+        }
+    };
+
+    function connectMQTT(){
+    	console.log("Attempting MQTT connection...")
+        var options = {
+        	timeout: 20,
+            cleanSession: false,
+            useSSL: true,
+            onSuccess: function () {
+                console.log("MQTT Connection Success!");
+                client.subscribe('fc/notify/score', { qos: 1 });
+                client.subscribe('fc/notify/chirp', { qos: 1 });
+                getLocation();
+            },
+            onFailure: function (message) {
+                console.log("MQTT Connection Failed: " + message.errorMessage);
+				setTimeout(function(){
+					if(maxAttempts < 5){
+                        connectMQTT();
+                        maxAttempts++;
+                    }
+				},2000);
             }
         };
+        client.connect(options);
+    }
+   
 
-        function connectMQTT(){
-            var options = {
-                timeout: 20,
-                cleanSession: false,
-		        useSSL: true,
-                onSuccess: function () {
-                    console.log("MQTT Connection Success!");
-                    client.subscribe('fc/notify/score', { qos: 0 });
-                },
-                onFailure: function (message) {
-                    console.log("MQTT Connection Failed: " + message.errorMessage);
-					setTimeout(function(){
-						connectMQTT();
-					},2000);
-                }
-            };
-            client.connect(options);
-        }
+	function getLocation(){
 
-        connectMQTT();
-       
-        // Try HTML5 geolocation.
-        navigator.geolocation.watchPosition(
-            function(position) {
-                var lat = position.coords.latitude;
-                var lon = position.coords.longitude;
-                publishPosition(lat, lon);
-            },
-            function(error){
-                console.log("geolocation watch error");
-            },
-            {
-                maximumAge: 30000, 
-                timeout: 60000, 
-                enableHighAccuracy: false 
-            }
-        );
+		if(navigator.geolocation)
+		{
+			navigator.geolocation.watchPosition(
+				function(position) {
+					var myLat = position.coords.latitude;
+					var myLon = position.coords.longitude;
+					publishPosition(myLat, myLon);
+				},
+				function(error){
+					console.log("geolocation watch error");
+				},
+				{
+					maximumAge: 30000, 
+					timeout: 60000, 
+					enableHighAccuracy: true 
+				}
+			);
+		} 
+		else 
+		{
+			alert("Geolocation is not supported by this browser.");
+		}
+	}
 
-        function publishPosition(lat, lon){
-	      	message = new Paho.MQTT.Message(lat + ',' + lon + ',' + userAvatar + ',' + myTeam);
-          	message.destinationName = "fc/position/" + userID;
-          	client.send(message);
-        }
+    function publishPosition(lat, lon){
+      	message = new Paho.MQTT.Message(lat + ',' + lon + ',' + userAvatar + ',' + teamName);
+      	message.destinationName = "fc/position/" + userID;
+      	client.send(message);
+    }
+
+
+    connectMQTT();
 
 // *********************************************
 // ******************* END ********************
 // *********************************************
+
 
 
 </script>

@@ -8,7 +8,7 @@
   <meta name="_token" content="{!! csrf_token() !!}"/>
  <!--  @yield('title') -->
 <!--  <title>Fisher Classic</title> -->
-<title>HAHFA - GOLF</title>
+<title>Fisher Classic</title>
 
 <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"> 
@@ -24,7 +24,6 @@
 
 
 @yield('css')
-
 
 
 
@@ -53,7 +52,6 @@
 
 
 
-
 </head>
 
 <body class="" ontouchstart="">
@@ -73,7 +71,7 @@
                     </div>
                   <div class="logo-element">
                       <span class="team-score">
-                        <h1>-</h1>
+                        <h1 style="font-weight: 600;">-</h1>
                       </span>
                   </div>
                 </li>
@@ -85,6 +83,9 @@
                 </li>
                 <li id="menu-map" style="text-align: center;">
                     <a href="/map"><i class="fa fa-map-marker"></i> <span class="nav-label">Map</span></a>
+                </li>
+                <li id="menu-map" style="text-align: center;">
+                    <a href="/chirp"><i class="fa fa-comment"></i> <span class="nav-label">Chirp</span></a>
                 </li>
                 <li id="menu-stats">
                     <a href="/analytics"><i class="fa fa-pie-chart"></i> <span class="nav-label">Stats</span></a>
@@ -146,7 +147,7 @@
                 </li>
 
             </ul>
-            <h3 class="m-r-sm fc-font fc-header animated flipInY" style="display:inline-block; float:right; font-size: 18px; line-height:28px;">Spring String Scramble</h3>
+            <h3 class="m-r-sm fc-font fc-header animated flipInY" style="display:inline-block; float:right;">Fisher Classic</h3>
         </nav>
       </div>
       
@@ -248,7 +249,7 @@
                $('.team-score h1').toggleClass("animated tada", function(){
                   $(this).remove();
                });
-            },1000);
+            },500);
          });      
 
         $(document).ready(function(){
@@ -294,18 +295,24 @@
 
       function openNotifications(){
          $(".modal-notes").empty();
+         var newitems = 0;
          for(var i=0, len=localStorage.length; i<len; i++)
          {
             var key = localStorage.key(i);
             var value = localStorage[key];
+
             if(key != "notifycount" && key != 'org.cubiq.addtohome')
             {
                notifyData = value.split('|');
-               var alert = '<div>' + notifyData[0] + '<span class="pull-right text-muted small slate-text" style="padding-top:2px; padding-bottom:2px;">' + moment(notifyData[1]).fromNow() + '</span></div><hr/>';
+               var alert = '<div>' + notifyData[0] + '<span class="pull-right text-muted small slate-text" style="padding-top:6px; padding-bottom:2px;">' + moment(notifyData[1]).fromNow() + '</span></div><br><hr/>';
                $(".modal-notes").prepend(alert);
+               newitems++;
             }
          }
-         $("#notify-modal").modal("show");
+        if(!newitems){
+          $(".modal-notes").html('<div style="width:100%; text-align:center; color:#AAA;">nothing new to show..</div>');
+        }
+        $("#notify-modal").modal("show");
       }
 
       $('#notify-modal').on('hidden.bs.modal', function(){

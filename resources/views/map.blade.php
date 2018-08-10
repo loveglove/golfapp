@@ -59,10 +59,6 @@
   		</div> 
   </div>
 
-    <?php $userID = Auth::user()->id; ?>
-    <?php $userAvatar = Auth::user()->avatar; ?>
-    <?php $myTeamName = htmlspecialchars(Session::get("myteam")->name); ?>
-
 @endsection
 
 @section('scripts')
@@ -75,8 +71,10 @@
  	var map;
     var playermarkers = {};
 
-    var userID = "<?php echo $userID ?>";
-    var myTeam = "<?php echo $myTeamName ?>";
+    var userID = "{{ Auth::user()->id }}";
+    var teamName = "{{ htmlspecialchars($team->name) }}";
+    var teamID = "{{ $team->id }}";
+    var userAvatar = "{{ Auth::user()->avatar }}";
 
     var dmcnt = 0;
 
@@ -429,8 +427,7 @@
 // ******************* MQTT ********************
 // *********************************************
 
-        var userID = '<?php echo $userID ?>';
-        var userAvatar = '<?php echo $userAvatar ?>';
+
          // mqtt2.apengage.io set as secondary domain with SSL certs for websockets secure connection. 
         var client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "fc_client_" + userID);
 
@@ -442,10 +439,10 @@
         };
 
         client.onMessageArrived = function (message) {
-            // console.log("Topic: " + message.destinationName);
-            // console.log("Message: " + message.payloadString);
+
             if(message.destinationName == "fc/notify/score"){
 
+                // notification
                 if(localStorage.notifycount) {
                     localStorage.notifycount = Number(localStorage.notifycount) + 1;
                 }else{
@@ -458,11 +455,24 @@
 
             }else if(message.destinationName.includes("fc/position/")){
                 
-                // console.log(message.payloadString);
+                // marker position
                 items = message.destinationName.split('/');
                 addMarkerUser(message.payloadString, items[2]);
 
+            }else if(message.destinationName == "fc/notify/chirp"){
+
+                // chirp
+                var data = message.payloadString.split(',');
+                if(data[0] == teamID){
+                    swal({
+                        title: data[1], 
+                        text: data[2], 
+                        imageUrl: data[3],
+                        confirmButtonText: "Close",
+                    });
+                }
             }
+
         };
 
         function connectMQTT(){
@@ -473,7 +483,8 @@
                 useSSL: true,
                 onSuccess: function () {
                     console.log("MQTT Connection Success!");
-                    client.subscribe('fc/notify/score', { qos: 0 });
+                    client.subscribe('fc/notify/score', { qos: 1 });
+                    client.subscribe('fc/notify/chirp', { qos: 1 });
                     client.subscribe('fc/position/#', { qos: 0 });
                 },
                 onFailure: function (message) {
@@ -511,7 +522,7 @@
         );
 
         function publishPosition(lat, lon){
-	      	message = new Paho.MQTT.Message(lat + ',' + lon + ',' + userAvatar + ',' + myTeam);
+	      	message = new Paho.MQTT.Message(lat + ',' + lon + ',' + userAvatar + ',' + teamName);
           	message.destinationName = "fc/position/" + userID;
           	client.send(message);
         }

@@ -8,7 +8,7 @@
   <meta name="_token" content="{!! csrf_token() !!}"/>
   <meta http-equiv="refresh" content="300">
  <!--  @yield('title') -->
- <title>HAHFA - Leaderboard</title>
+ <title>Fisher Classic :: Leaderboard</title>
 
   <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
   <link href="{{{ asset('/css/main.css') }}}" rel="stylesheet">
@@ -139,7 +139,7 @@
                 </li>
 
             </ul>
-            <h3 class="m-r-sm fc-font fc-header animated flipInY" style="display:inline-block; float:right;">Spring String Scramble</h3>
+            <h3 class="m-r-sm fc-font fc-header animated flipInY" style="display:inline-block; float:right;">Fisher Classic</h3>
         </nav>
       </div>
       

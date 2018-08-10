@@ -59,6 +59,9 @@ Route::get('/lastyear', 'StandingsController@getStandings');
 // Map Routes
 Route::get('map',['as' => 'map', 'uses' => 'MapController@getMapView']);
 
+// Chirp Routes
+Route::get('/chirp', 'TournamentController@showChirp');
+
 // Analytics Routes
 Route::get('/analytics', 'AnalyticsController@show');
 
@@ -77,6 +80,8 @@ Route::post('clear_tour',['as' => 'clear_tour', 'uses' => 'AdminController@clear
 
 Route::get('/team/edit/{id}', 'AdminController@teamEdit');
 Route::post('/team/name',['as' => 'update_name', 'uses' => 'AdminController@updateName']);
+Route::post('/team/membernames',['as' => 'update_members', 'uses' => 'AdminController@updateMemberNames']);
+Route::post('/team/members',['as' => 'set_members', 'uses' => 'AdminController@setMembers']);
 Route::post('/team/clear',['as' => 'clear_team', 'uses' => 'AdminController@clearTeamScore']);
 Route::post('/team/eject',['as' => 'eject_member', 'uses' => 'AdminController@ejectMember']);
 

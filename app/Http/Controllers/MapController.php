@@ -32,7 +32,9 @@ class MapController extends Controller
      */
     public function getMapView()
     {
-        return view('map');
+        return view('map',[
+            "team" => $this->team->getTeam(),
+        ]);
 
     }
 }

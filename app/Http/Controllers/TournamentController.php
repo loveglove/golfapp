@@ -198,4 +198,18 @@ class TournamentController extends Controller
         ]);
     }
 
+
+    /*
+     * Show the chirp page
+     *
+     */
+    public function showChirp()
+    {
+        return view('chirp', [
+            'allteams' => $this->team->getTeamListAll(),
+            'myteam' => $this->team->getTeam()
+        ]);
+    }
+
+
 }

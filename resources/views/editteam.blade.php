@@ -17,7 +17,7 @@
                 {{ Form::open(array('route' => 'update_name', 'class' => 'form')) }}
                     {{ Form::hidden('id', $team->id) }}
                     <input type="text" name="name" class="form-control" value="{{ $team->name }}" /></p>
-                    <button class="btn btn-primary" type="submit"><i class="fa fa-check"></i> Save Name</button>
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-check"></i> Save Team Name</button>
                     @if ($errors->has('name'))               
                         <small>{{ $errors->first('name') }}</small>
                     @endif
@@ -53,7 +53,21 @@
                 <p> No Team Members Yet</p>
             @endif
 
-            <br>
+
+            <b>Member Names:</b>
+            <div class="row">
+                <div class="col-xs-12">
+                <!-- Save Name -->
+                {{ Form::open(array('route' => 'update_members', 'class' => 'form')) }}
+                    {{ Form::hidden('id', $team->id) }}
+                    <input type="text" name="membername" class="form-control" value="{{ $team->members or '' }}" /></p>
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-check"></i> Save Member Names</button>
+                    @if ($errors->has('membername'))               
+                        <small>{{ $errors->first('membername') }}</small>
+                    @endif
+                {{ Form::close() }}
+                </div>
+            </div>
         </div>
     </div>
     <div class="ibox float-e-margins">
@@ -84,7 +98,7 @@
                 <!-- Clear Score -->
                     {{ Form::open(array('route' => 'delete_team', 'class' => 'form')) }}
                     {{ Form::hidden('team', $team->id) }}
-                    <button class="btn btn-secondary btn-sm" type="submit"><i class="fa fa-times"></i> Delete Team</button>
+                    <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash"></i> Delete Team</button>
                     {{ Form::close() }}
                 </div>
             </div>

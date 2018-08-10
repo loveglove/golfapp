@@ -30,7 +30,7 @@
                         <div class="note-container">
                             {!! $note->text !!}
                             <div class="row">
-                                <span class="pull-right text-muted small slate-text extra-pad">
+                                <span class="pull-right text-muted small slate-text extra-pad"><br>
                                     {{ $note->created_at->diffForHumans() }}
                                 </span>
                             </div>
