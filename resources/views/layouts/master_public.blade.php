@@ -61,112 +61,65 @@
 
 </head>
 
-<body class="" ontouchstart="">
+<style>
 
-  <div id="wrapper">
-  <!-- ******** SIDE NAV ******** -->
-  <div style="position:fixed;">
-    <nav class="navbar-default navbar-static-side" role="navigation">
-        <div class="sidebar-collapse">
-            <ul class="nav metismenu" id="side-menu">
-                <li class="nav-header">
-                    <div class="dropdown profile-element" style="text-align: center;"> 
-                      <span class="team-score">
-                        <h1>-</h1>
-                      </span>
-                      <span class="clear"> <span class="block m-t-xs"> </span></span> 
-                    </div>
-                  <div class="logo-element">
-                      <span class="team-score">
-                        <h1>-</h1>
-                      </span>
-                  </div>
-                </li>
-                <li id="menu-course">
-                    <a href="course"><i class="fa fa-flag"></i> <span class="nav-label">Course</span></a>
-                </li>
-                <li id="menu-standings">
-                    <a href="standings"><i class="fa fa-trophy"></i> <span class="nav-label">Standings</span></a>
-                </li>
-                <li id="menu-map">
-                    <a href="map"><i class="fa fa-globe"></i> <span class="nav-label">Map</span></a>
-                </li>
-                <li id="menu-stats">
-                    <a href="analytics"><i class="fa fa-bar-chart"></i> <span class="nav-label">Stats</span></a>
-                </li>
-                <li id="menu-logout">
-                    <a href="logout"><i class="fa fa-sign-out"></i> <span class="nav-label">Log Out</span></a>
-                </li>
+  .hidden{
+    display: none;
+  }
 
-<!--                 <li id="menu-settings">
-                    <a href="#"><i class="fa fa-gears"></i> <span class="nav-label">Settings</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                         <li><a href="#"><i class="fa fa-user"></i>Team</a></li>
-                         <li><a href="logout"><i class="fa fa-sign-out"></i>Log Out</a></li>
-                    </ul>
-                </li> -->
-            </ul>
-        </div>
-    </nav>
-  </div>
-  <!-- ******** TOP NAV ******** -->
-    <div id="page-wrapper" class="gray-bg">
-      <div class="row border-bottom" style="position:fixed; z-index:999; width:100%;">
+  .nav-btn{
+      display:none !important;
+  }
+
+</style>
+
+<body class="" ontouchstart="" style="background:#efefef">
+
         <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-green nav-btn" href="#"><i class="fa fa-chevron-right menu-button"></i> </a>
-        </div>
-            <ul class="nav navbar-top-links navbar-right" style="display: inline-block;">
-<!--                 <li>
-                    <span class="m-r-sm text-muted welcome-message">Welcome to the Fisher Classic</span>
-                </li> -->
-                <li class="dropdown notify-icon" >
-                    <a onclick="openNotifications();" class="dropdown-toggle count-info">
-                        <i class="fa fa-bell"></i>  <span id="notify-count" class="label label-primary"></span>
-                    </a>
 
-<!--                     <ul class="dropdown-menu" style="width:90vw; border:1px solid red; position:absolute; left:0;">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-trophy fa-fw"></i> Welcome to the tournament!
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                    </ul> -->
+          <div class="navbar-header">
+              <a class="navbar-minimalize minimalize-styl-2 btn btn-green nav-btn" href="#"><i class="fa fa-chevron-right menu-button"></i> </a>
+          </div>
+          <ul class="nav navbar-top-links navbar-right" style="display: inline-block; margin-left: 22px;">
+
+                <li id="note-icon" class="animated pulse">
+                    <a href="/notifications/public" class="dropdown-toggle">
+                        <i class="fa fa-bell"></i> Notifications
+                    </a>
                 </li>
 
-            </ul>
-            <h3 class="m-r-sm fc-font fc-header animated flipInY" style="display:inline-block; float:right;">Fisher Classic</h3>
+                <li id="lead-icon" class="animated pulse">
+                    <a href="/leaderboard" class="dropdown-toggle">
+                        <i class="fa fa-trophy"></i> Standings
+                    </a>
+                </li>
+
+          </ul>
+          <h3 class="m-r-sm fc-font fc-header animated flipInY" style="display:inline-block; float:right;">Fisher Classic</h3>
         </nav>
-      </div>
       
-      <br/>
-      <br/>       
       @yield('content')
       <br/>
       <br/>
 
-    <div id="notify-modal" class="modal fade" role="dialog" aria-hidden="true" style="z-index:99999;">
-      <div class="modal-dialog">
-        <div class="modal-content">     
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Notifications</h4>
-            </div>     
-            <div class="modal-body dropdown-alerts">
-                <div class="text-center link-block">
-                    <a href="notifications.html">
-                        <strong>See All Alerts</strong>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                </div>
-            </div>
+      <div id="notify-modal" class="modal fade" role="dialog" aria-hidden="true" style="z-index:99999;">
+        <div class="modal-dialog">
+          <div class="modal-content">     
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Notifications</h4>
+              </div>     
+              <div class="modal-body dropdown-alerts">
+                  <div class="text-center link-block">
+                      <a href="notifications.html">
+                          <strong>See All Alerts</strong>
+                          <i class="fa fa-angle-right"></i>
+                      </a>
+                  </div>
+              </div>
+          </div>
         </div>
       </div>
-    </div>
 
 
     <!-- ****** FOOTER ******** -->
@@ -175,7 +128,7 @@
            
         </div>
         <div>
-            Matt Glover &copy; 2016
+            Developed by Matt Glover &copy; 2018
         </div>
       </div>
     
@@ -188,6 +141,8 @@
 
      
 <script>
+
+
 
 
         // var menuState = false;
@@ -255,22 +210,22 @@
 
         // function openNotifications(){
         //   $(".dropdown-alerts").empty();
-        //   for(var i=0, len=localStorage.length; i<len; i++) {
-        //     var key = localStorage.key(i);
-        //     var value = localStorage[key];
-        //     if(key != "notifycount"){
-        //       notifyData = value.split('|');
-        //       var alert = '<div>' + notifyData[0] + '<span class="pull-right text-muted small slate-text" style="padding-top:2px;">' + moment(notifyData[1]).fromNow() + '</span></div><hr/>';
-        //       $(".dropdown-alerts").append(alert);
-        //     }
-        //   }
-        //  $("#notify-modal").modal("show");
-        // }
+        //      for(var i=0, len=localStorage.length; i<len; i++) {
+        //        var key = localStorage.key(i);
+        //        var value = localStorage[key];
+        //        if(key != "notifycount"){
+        //          notifyData = value.split('|');
+        //          var alert = '<div>' + notifyData[0] + '<span class="pull-right text-muted small slate-text" style="padding-top:2px;">' + moment(notifyData[1]).fromNow() + '</span></div><hr/>';
+        //          $(".dropdown-alerts").append(alert);
+        //        }
+        //      }
+        //     $("#notify-modal").modal("show");
+        //  }
 
-        // $('#notify-modal').on('hidden.bs.modal', function () {
+        //  $('#notify-modal').on('hidden.bs.modal', function () {
         //     localStorage.clear();
         //     $("#notify-count").empty();
-        // })
+        //  });
 
      </script>
 

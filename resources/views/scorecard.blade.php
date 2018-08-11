@@ -234,13 +234,13 @@
 		        else if(v == (par + 3)) {
 		            this.o.fgColor='#DB824A';
 		            $("#" + hole).css("color", "#DB824A");
-		            $("#value-text" + hole).html("Oh no!");
+		            $("#value-text" + hole).html("Bollox");
 		            $("#value-int" + hole).val(3);
 		        }
 		        else if(v >= (par + 4)) {
 		            this.o.fgColor='#E34444';
 		            $("#" + hole).css("color", "#E34444");
-		            $("#value-text" + hole).html("Yikes!!!");
+		            $("#value-text" + hole).html("Bollox!!!");
 		            $("#value-int" + hole).val(4);
 		        }
 		    }
@@ -290,11 +290,11 @@
 	            $("#value-int" + hole).val(2);
 	        }
 	        else if(v == (par + 3)) {
-	            $("#value-text" + hole).html("Oh no!");
+	            $("#value-text" + hole).html("Bollox");
 	            $("#value-int" + hole).val(3);
 	        }
 	         else if(v >= (par + 4)) {
-	            $("#value-text" + hole).html("Yikes!!!");
+	            $("#value-text" + hole).html("Bollox!!!");
 	            $("#value-int" + hole).val(4);
 	        }
       		disableControl(item["hole"]);
@@ -497,36 +497,36 @@
 			}
     		// check if there's a streak
     		else if(back_1 < 0 && back_2 < 0 && back_3 < 0 && back_4 < 0){
-    			publishNote('images/heating.jpg', '<strong>THERE HEATING UP!</strong><br/>'+ teamName +' are on fire. Catch up before they take it all!<br/><i>UnderPar Streak </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
+    			publishNote("{{ asset('images/heating.jpg') }}", '<strong>THERE HEATING UP!</strong><br/>'+ teamName +' are on fire. Catch up before they take it all!<br/><i>UnderPar Streak </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
 
     			// publishMSG('fa-smile-o', teamName + " are in there <b>Happy</b> place");
     		}else if (back_1 < 0 && back_2 < 0 && back_3 < 0){
     			// console.log("heavy streak");
-    			publishNote('images/heating.jpg', '<strong>THERE HEATING UP!</strong><br/>'+ teamName +' are on fire. Catch up before they take it all!<br/><i>UnderPar Streak </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
+    			publishNote("{{ asset('images/heating.jpg') }}", '<strong>THERE HEATING UP!</strong><br/>'+ teamName +' are on fire. Catch up before they take it all!<br/><i>UnderPar Streak </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
     		}else if (back_1 < 0 && back_2 < 0){
     			// console.log("hot streak");
-    			publishNote('images/happy.jpg', '<strong>JUST TAP IT IN</strong><br/>'+ teamName +' have found their <b>Happy Place</b>.<br/><i>UnderPar Streak </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
+    			publishNote("{{ asset('images/happy.jpg') }}", '<strong>JUST TAP IT IN</strong><br/>'+ teamName +' have found their <b>Happy Place</b>.<br/><i>UnderPar Streak </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
     		} else {
 				if(current == -2){
 					// console.log("eagle shot");
-					publishNote('images/golfdance.gif', '<strong>EAGLE SHOT</strong><br/>'+ teamName +' just eagled <b>Hole #'+ hole + '</b><br/><i>Beauty Hole </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
+					publishNote("{{ asset('images/golfdance.gif') }}", '<strong>EAGLE SHOT</strong><br/>'+ teamName +' just eagled <b>Hole #'+ hole + '</b><br/><i>Beauty Hole </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
     			}
     			if(current == -1){
 					// console.log("birdy shot");
 					// publishMSG('fa-twitter', teamName + " just <b>birdied</b> hole #" + hole +);
 					// publishNote('images/FTB.jpg','<strong>COACOWTB</strong><br/>Time to crack open a <b>Crispy Boy</b> and take it to pound town brochachos! <i>- '+teamName+'</i>' );
-					publishNote('images/slowclap.gif','<strong>NICE BIRDIE</strong><br/>'+ teamName +' just birdied <b>Hole #'+ hole + '</b><br/><i>Great Hole </i><span style="color:aqua;"><i class="fa fa-twitter"></i></span>' );
+					publishNote("{{ asset('images/slowclap.gif') }}",'<strong>NICE BIRDIE</strong><br/>'+ teamName +' just birdied <b>Hole #'+ hole + '</b><br/><i>Great Hole </i><span style="color:aqua;"><i class="fa fa-twitter"></i></span>' );
     			}		
     		}
 
     	// is this a par score?
     	} else if (current == 0){
     		if(back_1 == 0 && back_2 == 0 && back_3 == 0 && back_4 == 0){
-    			publishNote('images/caddyshack.gif', '<strong>PAR PLAYERS</strong><br/>'+ teamName +' are playing textbook golf right now<br/><i>Par Streak </i><span class="green-text"><i class="fa fa-check"></i><i class="fa fa-check"></i><i class="fa fa-check"></i><i class="fa fa-check"></i></span>');
+    			publishNote("{{ asset('images/caddyshack.gif') }}", '<strong>PAR PLAYERS</strong><br/>'+ teamName +' are playing textbook golf right now<br/><i>Par Streak </i><span class="green-text"><i class="fa fa-check"></i><i class="fa fa-check"></i><i class="fa fa-check"></i><i class="fa fa-check"></i></span>');
     		}else if (back_1 == 0 && back_2 == 0 && back_3 == 0){
-    			publishNote('images/shooter.gif', '<strong>SHOOTER</strong><br/>'+ teamName +' are putting on a free clinic!</b><br/><i>Par Streak </i><span class="green-text"><i class="fa fa-check"></i><i class="fa fa-check"></i><i class="fa fa-check"></i></span>');
+    			publishNote("{{ asset('images/shooter.gif') }}", '<strong>SHOOTER</strong><br/>'+ teamName +' are putting on a free clinic!</b><br/><i>Par Streak </i><span class="green-text"><i class="fa fa-check"></i><i class="fa fa-check"></i><i class="fa fa-check"></i></span>');
     		}else if (back_1 == 0 && back_2 == 0){
-				publishNote('images/nodedit.gif', '<strong>NICE HOLE</strong><br/>'+ teamName +' are running even. Everybody keep up!</b><br/><i>Par Streak </i><span class="green-text"><i class="fa fa-check"></i><i class="fa fa-check"></i></span>');
+				publishNote("{{ asset('images/nodedit.gif') }}", '<strong>NICE HOLE</strong><br/>'+ teamName +' are running even. Everybody keep up!</b><br/><i>Par Streak </i><span class="green-text"><i class="fa fa-check"></i><i class="fa fa-check"></i></span>');
     		} else {
     			// No streak
     			// Par shot. Do nothing
@@ -536,18 +536,18 @@
     	} else if (current > 0){
     		if(back_1 > 0 && back_2 > 0 && back_3 > 0 && back_4 > 0){
     			// console.log("should just give up");
-    			publishNote('images/homer.gif', '<strong>GAME OVER</strong><br/>'+ teamName +' are falling apart at the seams <br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i><i class="fa fa-times"></i><i class="fa fa-times"></i></span>');
+    			publishNote("{{ asset('images/homer.gif') }}", '<strong>GAME OVER</strong><br/>'+ teamName +' are falling apart at the seams <br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i><i class="fa fa-times"></i><i class="fa fa-times"></i></span>');
     		}else if (back_1 > 0 && back_2 > 0 && back_3 > 0){
     			// console.log("shitting the bed");
-    			publishNote('images/tigerwoods.jpg', '<strong>ROUGH DAY</strong><br/>'+ teamName +' are struggling to stay in the game. <br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i><i class="fa fa-times"></i></span>');
+    			publishNote("{{ asset('images/tigerwoods.jpg') }}", '<strong>ROUGH DAY</strong><br/>'+ teamName +' are struggling to stay in the game. <br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i><i class="fa fa-times"></i></span>');
     		}else if (back_1 > 0 && back_2 > 0){
     			// console.log("brutal go at it");
-    			publishNote('images/baywatch.jpg', '<strong>BEACH BUMS</strong><br/>'+ teamName +' are spending more time in the sand then David Hasselfoff<br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i></span>');
+    			publishNote("{{ asset('images/baywatch.jpg') }}", '<strong>BEACH BUMS</strong><br/>'+ teamName +' are spending more time in the sand then David Hasselfoff<br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i></span>');
     		} else {
     			// No streak
     			if(current >= 3){
     				// console.log("just blew that hole");
-    				publishNote('images/happygilmore.gif', '<strong>SEEEEE YA!</strong><br/>'+ teamName +' just blew <b>Hole #' + hole + '</b>.<br/><i>Terrible Hole </i><span class="redicon"><i class="fa fa-times"></i></span>');
+    				publishNote("{{ asset('images/happygilmore.gif') }}", '<strong>SEEEEE YA!</strong><br/>'+ teamName +' just blew <b>Hole #' + hole + '</b>.<br/><i>Terrible Hole </i><span class="redicon"><i class="fa fa-times"></i></span>');
     				// publishMSG('fa-frown-o', teamName + " just blew it on<br/><b>Hole:</b> #" + hole);
     			}		
     		}

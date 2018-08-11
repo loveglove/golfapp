@@ -6,6 +6,8 @@ use Session;
 use App\Course;
 use App\Team;
 use App\Score;
+use App\Tournament;
+
 use Request;
 use Input;
 use App\Http\Requests;
@@ -22,7 +24,7 @@ class AnalyticsController extends Controller
     public function __construct(StandingsRepository $standingsRepo, TeamRepository $teamRepo)
     {
         $this->middleware('auth');
-        $this->tournament = Session::get('tournament');
+        $this->tournament = Tournament::where('active', 1)->first();
         $this->standingsRepo = $standingsRepo;
         $this->teamRepo = $teamRepo;
     }

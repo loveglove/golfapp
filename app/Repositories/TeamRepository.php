@@ -7,6 +7,7 @@ use App\User;
 use App\Team;
 use App\Score;
 use App\Matchup;
+use App\Tournament;
 use DB;
 
 /*  This repo is a series of functions 
@@ -20,25 +21,25 @@ class TeamRepository
 
     public function getAllTeams()
     {
-        $tournament = Session::get('tournament');
+        $tournament = Tournament::where('active', 1)->first();
         return Team::where('id_tour', '=', $tournament->id)->get();
     }
 
     public function getTeamListOpen()
     {
-        $tournament = Session::get('tournament');
+        $tournament = Tournament::where('active', 1)->first();
         return Team::where('id_tour', '=', $tournament->id)->whereNull('id_user4')->lists('name', 'id');
     }
 
     public function getTeamListAll()
     {
-        $tournament = Session::get('tournament');
+        $tournament = Tournament::where('active', 1)->first();
         return Team::where('id_tour', '=', $tournament->id)->lists('name', 'id');
     }
 
     public function getTeam()
     {
-        $tournament = Session::get('tournament');
+        $tournament = Tournament::where('active', 1)->first();
         $id = Auth::user()->getId();
         return Team::where('id_tour', '=', $tournament->id)->where(function($query) use($id) {
             $query->where('id_user1', '=', $id)
@@ -70,10 +71,10 @@ class TeamRepository
 
     public function getScore()
     {
-        $id_tour = Session::get('tournament')->id;
+        $tournament = Tournament::where('active', 1)->first();
         $team = $this->getTeam();
-        $scoreTotal = DB::table('scores')->where('id_team','=', $team->id)->where('id_tour','=', $id_tour)->sum('score');
-        $parTotal = DB::table('scores')->where('id_team','=', $team->id)->where('id_tour','=', $id_tour)->sum('par');
+        $scoreTotal = DB::table('scores')->where('id_team','=', $team->id)->where('id_tour','=', $tournament->id)->sum('score');
+        $parTotal = DB::table('scores')->where('id_team','=', $team->id)->where('id_tour','=', $tournament->id)->sum('par');
         return $scoreTotal - $parTotal;
 
     }
@@ -105,7 +106,7 @@ class TeamRepository
     public function getMatchups()
     {
 
-        $tournament = Session::get('tournament');
+        $tournament = Tournament::where('active', 1)->first();
         return Matchup::where('id_tour','=', $tournament->id)->get();
 
     }
@@ -162,7 +163,7 @@ class TeamRepository
     public function getTourAverage()
     {
         $scores = array();
-        $tournament = Session::get('tournament');
+        $tournament = Tournament::where('active', 1)->first();
         $teams = $this->getAllTeams();
         foreach($teams as $team)
         {

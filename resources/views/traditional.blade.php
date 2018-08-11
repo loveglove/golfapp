@@ -87,11 +87,11 @@
 <div class="wrapper wrapper-content animated fadeInRight">
 	<br/>
   	<div class="row">
-  		  	<div class="col-xs-12 animated fadeInDown" style="text-align: center;">
+<!--   		  	<div class="col-xs-12 animated fadeInDown" style="text-align: center;">
   				<h3>{{ $tournament->name }}</h3>
-  			</div>
+  			</div> -->
 
-<!--   		@if($tournament->id == 1)
+  		@if($tournament->id == 23)
   			<div class="col-xs-6 animated fadeInDown">
   				<h3>{{ $tournament->name }}</h3>
   			</div>
@@ -103,9 +103,9 @@
   				<h3>{{ $tournament->name }}</h3>
   			</div>
   			<div class="col-xs-6 align-right animated fadeInDown" style="padding-top: 4px;">
-  				<a href="/lastyear" class=""> View Last Year <i class="fa fa-backward"></i></a>
+  				<a href="/lastyear" class=""> Last Year's Scores <i class="fa fa-reply"></i></a>
   			</div>
-  		@endif -->
+  		@endif
   		<br/>
   		<br/>
   		<div class="col-md-6 col-lg-8">
@@ -403,15 +403,15 @@
 
 
 	function getScoreCard(team_id){	
-		if($("#hidden_set" + team_id).val() == 0)
-		{
+		// var setval = $("#hidden_set" + team_id).val();
+		// if(setval == 0)
+		// {
 	        $.ajax({
 	            url: 'getScoreCard',
 				type: "get",
 				dataType: "json",
 				data: {'team_id': team_id},
 	            success: function(data){
-	            	$("#hidden_set" + team_id).val(1);
 	            	console.log(data);
 	            	drawScoreCard(team_id, data);
 	            },
@@ -419,14 +419,18 @@
 	            	console.log(error);
 	            }
 	        });    
-        }  
+        // }  
         $("#score" + team_id).slideToggle();
+        
+        // setval = !setval;
+        // $("#hidden_set" + team_id).val(setval);
     }
     
 
     function drawScoreCard(team_id, data){
-    	console.log("Members ------ ");
-    	console.log(data.members);
+   		
+    	$("#sc_members_"+team_id).empty();
+
     	$.each(data.scores, function(index, scoreData) {
 		  	$("#sc_" + scoreData.hole + "_" + team_id).find(".col-hole").html("#"+scoreData.hole);
 		  	$("#sc_" + scoreData.hole + "_" + team_id).find(".box-inner").html(scoreData.score);

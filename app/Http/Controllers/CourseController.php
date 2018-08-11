@@ -7,6 +7,7 @@ use App\Course;
 use App\Team;
 use App\Score;
 use App\Notification;
+use App\Tournament;
 
 use Request;
 use Input;
@@ -34,7 +35,7 @@ class CourseController extends Controller
         $this->middleware('auth');
         $this->course = $course;
         $this->team = $team;
-        $this->tournament = Session::get('tournament');
+        $this->tournament = Tournament::where('active', 1)->first();
     }
 
 
@@ -53,7 +54,6 @@ class CourseController extends Controller
         (and there respectively called functions)         */
 
         $myTeam = $this->team->getTeam();
-        Session::set('myteam', $myTeam);
 
         if($myTeam){
             return view('scorecard', [

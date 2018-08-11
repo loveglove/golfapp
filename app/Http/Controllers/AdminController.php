@@ -43,7 +43,7 @@ class AdminController extends Controller
                 'teams' => $this->team->getTeamListAll(),
                 'allteams' => $this->team->getAllTeams(),
                 'matchups' => $this->team->getMatchups(),
-                'active_tour' => Session::get('tournament')
+                'active_tour' => Tournament::where('active','=', 1)->first()
             ]);
         } else {
             return view('welcome');
@@ -269,7 +269,7 @@ class AdminController extends Controller
      */
     public function ejectMember(Request $request)
     {
-        $tour_id = Session::get('tournament')->id;
+
         $data = Request::all();   
 
         $team = Team::find($data["team_id"]);

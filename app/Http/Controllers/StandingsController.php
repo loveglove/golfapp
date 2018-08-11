@@ -44,11 +44,11 @@ class StandingsController extends Controller
         $type = null;
 
         if($URLpath == "/lastyear"){
-            $tournament = Tournament::find(1);
-            $type = "traditional";
+            $tournament = Tournament::find(23);
+            $type = $tournament->type;
         }else{
-            $tournament = Session::get('tournament');
-            $type = Session::get('tournament')->type; 
+            $tournament = Tournament::where('active', 1)->first();
+            $type = $tournament->type;
         }
             
         switch($type){
@@ -112,8 +112,6 @@ class StandingsController extends Controller
             $data = Request::all();
             $scores = $this->team->getCompleted($data['team_id']);
 
-            // $members = $this->team->getTeamUsers($data['team_id']);
-            // $members = array_filter($members, function($var){return !is_null($var);} );
             $team = Team::find($data['team_id']);
             $mems = explode(',', $team->members);
 

@@ -41,6 +41,7 @@ Route::post('create_team',['as' => 'create_team', 'uses' => 'TournamentControlle
 Route::post('join_team',['as' => 'join_team', 'uses' => 'TournamentController@joinTeam']);
 Route::post('join_number',['as' => 'join_number', 'uses' => 'TournamentController@joinNumber']);
 Route::get('/notifications', 'TournamentController@notifications');
+Route::get('/notifications/public', 'PublicController@notifications');
 
 
 // Course Routes
@@ -57,7 +58,7 @@ Route::get('/getScoreCardPublic', 'PublicController@getScoreCard');
 Route::get('/lastyear', 'StandingsController@getStandings');
 
 // Map Routes
-Route::get('map',['as' => 'map', 'uses' => 'MapController@getMapView']);
+Route::get('/map',['as' => 'map', 'uses' => 'MapController@getMapView']);
 
 // Chirp Routes
 Route::get('/chirp', 'TournamentController@showChirp');

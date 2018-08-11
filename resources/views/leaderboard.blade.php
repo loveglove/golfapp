@@ -1,8 +1,5 @@
 @extends('layouts.master_public')
 
-@section('scripts')
-	
-@endsection
 
 @section('content')
 
@@ -80,24 +77,17 @@
 		font-size:16px;
 		vertical-align: right;
 	}
-	.hidden{
-		display: none;
+
+	#lead-icon{
+		display: none !important;
 	}
-
-    .nav-btn, 
-    .count-info,
-    .notify-icon{
-        display:none !important;
-    }
-
 
 </style>
 
 <div class="wrapper wrapper-content animated fadeInRight">
-	<br/>
   	<div class="row">
   		
-  		<div class="col-md-6 col-lg-8">
+  		<div class="col-md-offset-3 col-md-6">
 	  		<div class="ibox float-e-margins">
 	            <div class="ibox-content">
 	            <div class="row standings-header">
@@ -140,9 +130,17 @@
 			                    	@endif
 			                    </div>
 			                </div>
-		                    <input type="hidden" id="hidden_set{{ $standing->id_team }}" value="0" />	   
+		                    <input type="hidden" id="hidden_set{{ $standing->id_team }}" value="0" />
+
 		                    <div class="row" id="score{{ $standing->id_team }}" style="display:none; text-align:center;">
-		                    	<br />
+		                    	<br>
+		                    	<div class="col-xs-12"><strong>Members:</strong>
+		                			<div id="sc_members_{{ $standing->id_team }}">
+		                			</div>
+		                		</div>
+		                		<br>
+		                		<br>
+		                		<br>
 		                		<div class="col-xs-6"><strong>Front 9</strong>
 		                			<div class="row">
 		                				<div class="col-xs-4"><small><strong>Hole</strong></small></div>
@@ -355,7 +353,6 @@
 			                			<div class="col-xs-4 col-par">-</div>
 				                	</div>
 		                		</div>
-		                		<br />
 		               		</div>
 		            	</div>
 		            @endforeach
@@ -373,14 +370,13 @@
 
     $(document).ready(function(){
         setInterval(function() {
-                window.location.reload();
-            }, 60000); 
+            window.location.reload();
+        }, 60000); 
     })
 
-
 	function getScoreCard(team_id){	
-		if($("#hidden_set" + team_id).val() == 0)
-		{
+		// if($("#hidden_set" + team_id).val() == 0)
+		// {
 	        $.ajax({
 	            url: 'getScoreCardPublic',
 				type: "get",
@@ -395,13 +391,16 @@
 	            	console.log(error);
 	            }
 	        });    
-        }  
+        // }  
         $("#score" + team_id).slideToggle();
     }
     
 
     function drawScoreCard(team_id, data){
-    	$.each(data, function( index, scoreData ) {
+
+    	$("#sc_members_"+team_id).empty();
+
+    	$.each(data.scores, function(index, scoreData) {
 		  	$("#sc_" + scoreData.hole + "_" + team_id).find(".col-hole").html("#"+scoreData.hole);
 		  	$("#sc_" + scoreData.hole + "_" + team_id).find(".box-inner").html(scoreData.score);
 		  	$("#sc_" + scoreData.hole + "_" + team_id).find(".col-par").html(scoreData.par);
@@ -424,6 +423,13 @@
 				$("#sc_" + scoreData.hole + "_" + team_id).find(".box-outer").addClass("square-border")
 				$("#sc_" + scoreData.hole + "_" + team_id).find(".box-inner").addClass("square-border");;
 		  	}
+		});
+		$.each(data.members, function(index, member) {
+			var delim = "<span class=\"green-text\"><b> | </b></span>";
+			if(index == (data.members.length - 1)){
+				delim = "";
+			}
+			$("#sc_members_"+team_id).append("<span>"+member+"<span>" + delim);
 		});
     }
 

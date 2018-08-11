@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Team;
 use App\Score;
+use App\Tournament;
+use App\Notification;
+
 use Request;
 use Input;
 use Session;
@@ -35,8 +38,9 @@ class PublicController extends Controller
      */
     public function getPublicBoard()
     {
+        $tournament = Tournament::where('active', 1)->first();
         return view('leaderboard', [
-            'standings' => $this->standings->getLeaderboard(26),
+            'standings' => $this->standings->getLeaderboard($tournament->id),
         ]);
     }
 
@@ -49,10 +53,24 @@ class PublicController extends Controller
     {
         if(Request::ajax()) {
             $data = Request::all();
-            return $this->team->getCompleted($data['team_id']);
+            $scores = $this->team->getCompleted($data['team_id']);
+
+            $team = Team::find($data['team_id']);
+            $mems = explode(',', $team->members);
+
+            return ["scores" => $scores, "members" => $mems];
         }
         return 0;
     }
 
+
+    // show active tournament notifcations for public view
+    public function notifications(Request $request)
+    {
+        $tournament = Tournament::where('active', 1)->first();
+        return view('publicnotifications', [
+            'notifications' => Notification::where('tournament_id', $tournament->id)->orderBy('id', 'DESC')->get(),       
+        ]);
+    }
 
 }

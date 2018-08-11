@@ -36,7 +36,7 @@ class TournamentController extends Controller
      */
     public function getActiveTour(Request $request)
     {
-        $tournament = Tournament::where('active', '=', 1)->first();
+        $tournament = Tournament::where('active', 1)->first();
         Session::set('tournament', $tournament);
         if(!$tournament){
             return view('error');
@@ -102,7 +102,7 @@ class TournamentController extends Controller
 
 
         $newteam = new Team;
-        $newteam->id_tour = Session::get('tournament')->id;
+        $newteam->id_tour = Tournament::where('active', 1)->first()->id;
         $newteam->id_user1 = Auth::user()->getId();
         $newteam->name = Request::input('teamname');
         $newteam->save();
