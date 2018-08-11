@@ -55,9 +55,20 @@ class CourseController extends Controller
 
         $myTeam = $this->team->getTeam();
 
+        $course = $this->course->getCourse();
+
+        foreach($course as $hole){
+
+        	$best = Score::where('id_tour', $this->tournament->id)->where('hole', $hole->hole)->min('score');
+        	$hole['best'] = $best;
+
+        }
+
+        // dd($course);
+
         if($myTeam){
             return view('scorecard', [
-                'course' => $this->course->getCourse(),
+                'course' => $course,
                 'team' => $myTeam,
                 'completed' => $this->team->getCompleted($myTeam->id), 
                 'users' => $this->team->getUsers(),

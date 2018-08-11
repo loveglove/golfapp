@@ -16,7 +16,7 @@
                                 <div class="col-xs-6" style="text-align: center; padding-top: 5px;">
                                 	<div class="row">
 								        <div class="col-xs-6" style="padding-right:2px;">
-									        <div class="hole-info blue-bg" style="width:100%;">
+									        <div class="hole-info red-bg" style="width:100%;">
 							                   <strong>Hole</strong>
 							                   <br/>
 							                   <span style="font-size:20px;"><strong>#{{ $hole->hole }}</strong></span>
@@ -30,7 +30,7 @@
 									        </div> 
 									     </div>
 								    </div>
-<!-- 							         <div class="hole-info blue-bg" >
+							         <div class="hole-info blue-bg" >
 							            <div class="row">
 							                <div class="col-xs-4 text-left">
 							                   <strong>Blue</strong>
@@ -39,7 +39,7 @@
 							                    <strong>{{ $hole->blue }} yd</strong>
 							                </div>
 							            </div>
-							        </div>   -->
+							        </div>  
 							        <div class="hole-info white-bg">
 							            <div class="row">
 							                <div class="col-xs-4 text-left">
@@ -50,7 +50,7 @@
 							                </div>
 							            </div>
 							        </div> 
-                                    <div class="hole-info red-bg">
+<!--                                     <div class="hole-info red-bg">
                                         <div class="row">
                                             <div class="col-xs-4 text-left">
                                                <strong>Red</strong>
@@ -59,7 +59,7 @@
                                                 <strong>{{ $hole->red }} yd</strong>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>  -->
 							        <div class="hole-info green-bg">
 							            <div class="row">
 							                <div class="col-xs-4 text-left">
@@ -70,13 +70,13 @@
 							                </div>
 							            </div>
 							        </div>     
-									<div class="hole-info silver-bg">
+									<div class="hole-info silver-bg" style="background:#333;">
 							            <div class="row">
-							                <div class="col-xs-4 text-left">
-							                   <strong>Club</strong>
+							                <div class="col-xs-8 text-left">
+							                   Best Score
 							                </div>
-							                <div id="club{{ $hole->hole }}" class="col-xs-8 text-right">
-							                    <strong>-</strong>
+							                <div class="col-xs-4 text-right">
+							                   {{ $hole->best or '-' }}
 							                </div>
 							            </div>
 							        </div>                                         

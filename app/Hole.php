@@ -9,7 +9,7 @@ class Hole extends Model
     //
     protected $table = 'holes';
     
-    protected $fillable = ['id', 'id_course', 'hole', 'par', 'blue', 'white', 'image', 'pin_lat', 'pin_lon'];
+    protected $guarded = [];
 
    /*
     * Get the course that owns the hole.
