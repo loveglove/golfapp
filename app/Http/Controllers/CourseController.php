@@ -8,6 +8,7 @@ use App\Team;
 use App\Score;
 use App\Notification;
 use App\Tournament;
+use App\Award;
 
 use Request;
 use Input;
@@ -120,6 +121,25 @@ class CourseController extends Controller
         }
         return 0;
     }
+
+
+    public function insertAward(Request $request, $type)
+    {
+    	$tournament = Tournament::where('active', 1)->first();
+    	
+    	Award::create([
+    		"id_tour" => $tournament->id,
+    		"id_course" => $tournament->id_course,
+    		"id_team" => Request::input('id'),
+    		"type" => $type,
+    		"hole" => Request::input('hole'),
+    		"name" => Request::input('name')
+    	]);
+
+    	return 1;
+
+    }
+
 
     /**
      * Get Team score totaled

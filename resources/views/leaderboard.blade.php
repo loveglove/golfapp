@@ -360,8 +360,19 @@
 	            </div>
 	        </div>
 	    </div>
-
 	</div>
+
+	<div class="row">
+  		<div class="col-md-offset-3 col-md-6">
+	  		<div class="ibox float-e-margins">
+	            <div class="ibox-content">
+	            	<b>Closest to Pin:</b>&nbsp&nbsp {{ $closest->name or 'No one yet' }}<br>
+	            	<b>Longest Drive:</b>&nbsp&nbsp {{ $longest->name or 'No one yet' }}
+	           	</div>
+	        </div>
+	    </div>
+	</div>
+
 </div>
 
 

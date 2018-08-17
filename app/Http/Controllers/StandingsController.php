@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Team;
 use App\Score;
 use App\Tournament;
+use App\Award;
 use Request;
 use Input;
 use Session;
@@ -58,6 +59,8 @@ class StandingsController extends Controller
                     'standings' => $this->standings->getLeaderboard($tournament->id),
                     'tournament' => $tournament,
                     'team' => $this->team->getTeam(),
+                    'closest' => Award::where('id_tour', $tournament->id)->where('type', 'closest')->latest()->first(),
+                    'longest' => Award::where('id_tour', $tournament->id)->where('type', 'longest')->latest()->first(),
                 ]);
             break;
 

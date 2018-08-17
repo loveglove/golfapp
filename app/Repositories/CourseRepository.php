@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Course;
 use App\Hole;
-use Session;
+use App\Tournament;
 
 class CourseRepository
 {
@@ -16,8 +16,8 @@ class CourseRepository
      */
     public function getCourse()
     {
-        $course = Session::get('tournament')->id_course;
-        return Hole::where('id_course','=', $course)->get();
+        $tournament = Tournament::where('active', 1)->first();
+        return Hole::where('id_course', $tournament->id_course)->get();
     }
 
 

@@ -106,16 +106,22 @@ class AuthController extends Controller
     private function findOrCreateUser($facebookUser)
     {
         $authUser = User::where('facebook_id', $facebookUser->id)->first();
+        // $avatar = $facebookUser->avatar;
+        $avatar = "https://www.gravatar.com/avatar/".md5($facebookUser->email)."?d=wavatar";
  
         if($authUser){
+            if(empty($authUser->avatar)){
+                $authUser->avatar = $avatar;
+                $authUser->save();
+            }
             return $authUser;
         }
- 
+
         return User::create([
             'name' => $facebookUser->name,
             'email' => $facebookUser->email,
             'facebook_id' => $facebookUser->id,
-            'avatar' => $facebookUser->avatar
+            'avatar' => $avatar
         ]);
     }
 

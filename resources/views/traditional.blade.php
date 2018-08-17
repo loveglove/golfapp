@@ -92,18 +92,18 @@
   			</div> -->
 
   		@if($tournament->id == 23)
-  			<div class="col-xs-6 animated fadeInDown">
+  			<div class="col-xs-7 animated fadeInDown">
   				<h3>{{ $tournament->name }}</h3>
   			</div>
-  			<div class="col-xs-6 align-right animated fadeInDown" style="padding-top: 4px;">
+  			<div class="col-xs-5 align-right animasted fadeInDown" style="padding-top: 4px;">
   				<a href="/standings" class=""> Back to Live <i class="fa fa-forward"></i></a>
   			</div>
   		@else
-			<div class="col-xs-6 animated fadeInDown">
+			<div class="col-xs-7 animated fadeInDown">
   				<h3>{{ $tournament->name }}</h3>
   			</div>
-  			<div class="col-xs-6 align-right animated fadeInDown" style="padding-top: 4px;">
-  				<a href="/lastyear" class=""> Last Year's Scores <i class="fa fa-reply"></i></a>
+  			<div class="col-xs-5 align-right animated fadeInDown" style="padding-top: 4px;">
+  				<a href="/lastyear" class=""> Last Year Scores <i class="fa fa-reply"></i></a>
   			</div>
   		@endif
   		<br/>
@@ -381,10 +381,19 @@
 	            </div>
 	        </div>
 	    </div>
-
-	    
-
 	</div>
+
+	<div class="row">
+  		<div class="col-md-6 col-lg-8">
+	  		<div class="ibox float-e-margins">
+	            <div class="ibox-content">
+	            	<b>Closest to Pin:</b>&nbsp&nbsp {{ $closest->name or 'No one yet' }}<br>
+	            	<b>Longest Drive:</b>&nbsp&nbsp {{ $longest->name or 'No one yet' }}
+	           	</div>
+	        </div>
+	    </div>
+	</div>
+
 </div>
 
 

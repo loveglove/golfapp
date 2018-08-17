@@ -2,17 +2,56 @@
 
 
 @section('content')
+<style>
+	
+	.award{
+		width:60px;
+		height:60px;
+		border-radius: 50%;
+		position: absolute;
+		top:-10px;
+		right:0;
+		color:white;
+		z-index: 999;
+		font-size:24px;
+		text-align: center;
+		line-height: 26px;
+		padding-top: 15px;
 
+  -webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  -moz-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  -ms-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  -o-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+	}
+
+	.cp-icon{
+		background:#46606d;
+	}
+
+	.ld-icon{
+		background:#46606d;
+	}
+
+</style>
 
   <div class="wrapper wrapper-content animated fadeInDown">
   		<br/>
         <div class="row main-row">
             <div id="contain" class="col-sm-12 col-md-6 col-lg-4">
 				@foreach ($course as $hole)
+					<input type="hidden" id="closest{{  $hole->hole }}" value="{{  $hole->closest or 0 }}" />
+					<input type="hidden" id="longest{{  $hole->hole }}" value="{{  $hole->longest or 0 }}" />
 					<a id="anchor{{  $hole->hole }}"></a>
                     <div class="ibox float-e-margins">
                         <div class="ibox-content">
-		                	<div class="row">
+		                	<div class="row" style="position: relative;">
+		                		@if(!empty($hole->closest))
+		                			<div class="award cp-icon animated pulse infinite" title="Closest to Pin"><i>CP&nbsp</i></div>
+		                		@endif
+		                		@if(!empty($hole->longest))
+									<div class="award ld-icon animated pulse infinite" title="Longest Drive"><i>LD&nbsp</i></div>
+		                		@endif
                                 <div class="col-xs-6" style="text-align: center; padding-top: 5px;">
                                 	<div class="row">
 								        <div class="col-xs-6" style="padding-right:2px;">
@@ -73,7 +112,7 @@
 									<div class="hole-info silver-bg" style="background:#333;">
 							            <div class="row">
 							                <div class="col-xs-8 text-left">
-							                   Best Score
+							                   Best
 							                </div>
 							                <div class="col-xs-4 text-right">
 							                   {{ $hole->best or '-' }}
@@ -245,7 +284,7 @@
 		        }
 		    }
 		});
-		$('.dial').trigger('change');
+		$('.dial').trigger('release');
 
       	var completed = <?php echo json_encode($completed) ?>;
       	$.each(completed, function(index, item){
@@ -304,7 +343,7 @@
 
 			if(currentHole > 0){
 			    var anchor = $("#anchor" + currentHole);
-	    		var position = anchor.position().top + $("body").scrollTop() +20;
+	    		var position = anchor.position().top + $("body").scrollTop() - 3;
 	    		$("body").animate({scrollTop: position});
     		}
 
@@ -312,15 +351,7 @@
             // $("#anchor" + currentHole).animate({ scrollTop: 0 }, "fast");
 
 		console.log("current hole: " + currentHole);
-		console.log("offest: " + position);
-
-
-        if(currentHole === null && currentHole > 0){
-    		currentHole = starthole;
-    		var anchor = $("#anchor" + currentHole);
-    		var position = anchor.position().top + $("body").scrollTop() +20;
-    		$("body").animate({scrollTop: position});
-        }
+		// console.log("offest: " + position);
 
         connectMQTT();
 
@@ -412,9 +443,10 @@
 		    	swal({
 		    		title: "Saved", 
 		    		text: "Your score has been entered for hole #" + hole, 
-		    		type: "success",
-		    		timer: 3000
+		    		type: "success"
 		    	});
+
+		    	checkAwards(hole);
 
 				currentHole = parseInt(hole) + 1;
 				if(currentHole == 19){
@@ -452,6 +484,90 @@
 		    	console.log(error);
 		    }
 		});      
+    }
+
+    function checkAwards(hole){
+
+    	var isClose = $("#closest"+hole).val();
+    	var isLong = $("#longest"+hole).val();
+
+    	console.log("Closest: " + isClose);
+    	console.log("Longest: " + isLong);
+
+    	if(isClose == "1"){
+			swal({
+				title: "Closest to Pin",
+				text: "Was someone on your team closet to the pin?",
+				showCancelButton: true,
+				closeOnConfirm: false,
+				confirmButtonColor: "#62BE5C",
+				confirmButtonText: "Yes",
+				cancelButtonText: "No",
+				closeOnConfirm: false,
+				imageUrl: "images/golfballdot.png",
+				html: true
+			},function(){
+				setAward(hole, "closest");
+			});
+    	}
+
+    	if(isLong == "1"){
+    		swal({
+				title: "Longest Drive",
+				text: "Did someone on your team have the longest drive?",
+				showCancelButton: true,
+				closeOnConfirm: false,
+				confirmButtonColor: "#62BE5C",
+				confirmButtonText: "Yes",
+				cancelButtonText: "No",
+				closeOnConfirm: false,
+				imageUrl: "images/golfballdot.png",
+				html: true
+			},function(){
+				setAward(hole, "longest");
+			});
+    	}
+
+    }
+
+
+    function setAward(hole, type){
+
+		swal({
+		  title: "Who was it?",
+		  text: "Please enter the team member name",
+		  type: "input",
+		  showCancelButton: false,
+		  showCancelButton: true,
+		  closeOnConfirm: false,
+		  allowOutsideClick: false,
+		  imageUrl: 'images/names-icon2.png',
+		  inputPlaceholder: "Enter a name"
+		},
+		function(inputValue){
+
+			if (inputValue === false) return false;
+
+			if (inputValue === "") {
+			    swal.showInputError("You need to write something!");
+			    return false
+			}
+
+			$.ajax({
+			    url: '/awards/set/'+type,
+			    type: "post",
+			    dataType: "json",
+			    data: {'name':inputValue, 'id': teamID, 'hole': hole},
+			    success: function(data){
+			    	swal.close();
+			    	console.log(data);	
+			    },
+			    error: function(error){
+					console.log(error);
+			    	swal("Oops..","Something went wrong","error");
+			    }
+			});  
+		});
     }
 
     function saveNotification(text){
@@ -635,29 +751,29 @@
 
 	function getClub(yd, hole){
 		var club = "";
-		if((yd).between(210, 400)) {
+		if((yd).between(250, 400)) {
 			club = "DR";
-		} else if((yd).between(190, 210)){
+		} else if((yd).between(200, 250)){
 			club = "3W";
-		} else if((yd).between(180, 190)){
+		} else if((yd).between(190, 200)){
 			club = "2I";
-		} else if((yd).between(170, 180)){
+		} else if((yd).between(180, 190)){
 			club = "3I";
-		}else if((yd).between(160, 170)){
+		}else if((yd).between(170, 180)){
 			club = "4I";
-		}else if((yd).between(150, 160)){
+		}else if((yd).between(160, 170)){
 			club = "5I";
-		}else if((yd).between(140, 150)){
+		}else if((yd).between(150, 160)){
 			club = "6I";
-		}else if((yd).between(130, 140)){
+		}else if((yd).between(140, 150)){
 			club = "7I";
-		}else if((yd).between(120, 130)){
+		}else if((yd).between(130, 140)){
 			club = "8I";
-		}else if((yd).between(100, 120)){
+		}else if((yd).between(100, 130)){
 			club = "9I";
-		}else if((yd).between(40, 100)){
+		}else if((yd).between(50, 100)){
 			club = "PW";
-		}else if((yd).between(30, 40)){
+		}else if((yd).between(30, 50)){
 			club = "SW";
 		}else if((yd).between(20, 30)){
 			club = "LW";
@@ -686,7 +802,7 @@
 				connectMQTT();
                 maxAttempts++;
             }
-		},2000);
+		},3000);
     };
 
     client.onMessageArrived = function (message) {

@@ -6,6 +6,7 @@ use App\Team;
 use App\Score;
 use App\Tournament;
 use App\Notification;
+use App\Award;
 
 use Request;
 use Input;
@@ -41,6 +42,8 @@ class PublicController extends Controller
         $tournament = Tournament::where('active', 1)->first();
         return view('leaderboard', [
             'standings' => $this->standings->getLeaderboard($tournament->id),
+            'closest' => Award::where('id_tour', $tournament->id)->where('type', 'closest')->latest()->first(),
+            'longest' => Award::where('id_tour', $tournament->id)->where('type', 'longest')->latest()->first(),
         ]);
     }
 

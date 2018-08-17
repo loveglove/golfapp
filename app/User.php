@@ -3,7 +3,7 @@
 namespace App;
 
 use App\Team;
-use Session;
+use App\Tournament;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -44,7 +44,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function team()
     {
-        $tournament = Session::get('tournament');
+        $tournament = Tournament::where('active', 1)->first();
         $userid = $this->id;
         return Team::where('id_tour', '=', $tournament->id)->where(function($query) use($userid) {
             $query->where('id_user1', '=', $userid)

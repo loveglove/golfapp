@@ -44,11 +44,13 @@ Route::get('/notifications', 'TournamentController@notifications');
 Route::get('/notifications/public', 'PublicController@notifications');
 
 
+
 // Course Routes
 Route::get('/course', 'CourseController@getHoles');
 Route::post('/insertScore', 'CourseController@insertScore');
 Route::get('/getScore', 'CourseController@getScore');
 Route::post('/insertNote', 'CourseController@insertNotification');
+Route::post('/awards/set/{type}',['as' => 'award_save', 'uses' => 'CourseController@insertAward']);
 
 // Standings Routes
 Route::get('/standings', 'StandingsController@getStandings');
@@ -77,6 +79,7 @@ Route::post('delete_team',['as' => 'delete_team', 'uses' => 'AdminController@del
 Route::post('update_score',['as' => 'update_score', 'uses' => 'AdminController@updateScore']);
 Route::post('clear_score',['as' => 'clear_score', 'uses' => 'AdminController@clearScore']);
 Route::post('clear_tour',['as' => 'clear_tour', 'uses' => 'AdminController@clearTour']);
+Route::post('set_award',['as' => 'set_award', 'uses' => 'AdminController@setAwardHoles']);
 
 
 Route::get('/team/edit/{id}', 'AdminController@teamEdit');

@@ -133,8 +133,7 @@ class AdminController extends Controller
      */
     public function updateScore(Request $request)
     {
-        $tour_id = Session::get('tournament')->id;
-        $course_id = Session::get('tournament')->id_course;
+        $tournament = Tournament::where('active', 1)->first();
         $team_id = Request::input('team');
         $hole = Request::input('hole');
         $value = Request::input('value');
@@ -147,9 +146,9 @@ class AdminController extends Controller
         }
         else
         {
-            $holeFetch = Hole::where('id_course', $course_id)->where('hole',$hole )->first();
+            $holeFetch = Hole::where('id_course', $tournament->id_course)->where('hole', $hole)->first();
             $score = new Score;
-            $score->id_tour = $tour_id;
+            $score->id_tour = $tournament->id;
             $score->id_team = $team_id;
             $score->hole = $hole;
             $score->par = $holeFetch->par;
@@ -181,9 +180,10 @@ class AdminController extends Controller
     {
         $id = Request::input('tour');
         //protect FC tournmanet scores
-        if($id != '1' && $id != '23'){
-            DB::table('scores')->where('id_tour','=',$id)->delete();
-            DB::table('notifications')->where('tournament_id','=',$id)->delete();
+        if($id != '1' && $id != '23' && $id != '26'){
+            DB::table('scores')->where('id_tour', $id)->delete();
+            DB::table('notifications')->where('tournament_id', $id)->delete();
+            DB::table('awards')->where('id_tour', $id)->delete();
         }
         return $this->getAdminView();
     }
@@ -252,10 +252,11 @@ class AdminController extends Controller
      */
     public function clearTeamScore(Request $request)
     {
-        $tour_id = Session::get('tournament')->id;
+        $tournament = Tournament::where('active', 1)->first();
         $data = Request::all();     
-        DB::table('scores')->where('id_tour', $tour_id)->where("id_team", $data["id"])->delete();
-        DB::table('notifications')->where('tournament_id', $tour_id)->where('team_id', $data["id"])->delete();
+        DB::table('scores')->where('id_tour', $tournament->id)->where("id_team", $data["id"])->delete();
+        DB::table('notifications')->where('tournament_id', $tournament->id)->where('team_id', $data["id"])->delete();
+        DB::table('awards')->where('id_tour', $tournament->id)->where('id_team', $data["id"])->delete();
 
         return redirect('/team/edit/'.$data["id"])->withErrors(['clear' => 'Team scores cleared.']);
 
@@ -289,5 +290,31 @@ class AdminController extends Controller
         return redirect('/team/edit/'.$data["team_id"]);
 
     }
+
+    /*
+     * Set holes for longest drive and closest to the pin
+     *
+     */
+    public function setAwardHoles(Request $request)
+    {
+        // remove previous settings
+        Hole::where('id_course', Request::input('course'))
+            ->update(['longest' => 0, 'closest' => 0]);
+
+        // set closest to pin hole
+        Hole::where('id_course', Request::input('course'))
+            ->where('hole', Request::input('closest'))
+            ->update(['closest' => 1]);
+
+        Hole::where('id_course', Request::input('course'))
+            ->where('hole', Request::input('longest'))
+            ->update(['longest' => 1]);
+            // finish sthis
+
+        return back()->withErrors(['awards' => 'Holes '.Request::input('closest'). ' and '.Request::input('longest'). ' set for closest and longest']);
+
+    }  
+
+
 
 }

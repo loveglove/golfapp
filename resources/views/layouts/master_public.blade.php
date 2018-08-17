@@ -80,7 +80,7 @@
           <div class="navbar-header">
               <a class="navbar-minimalize minimalize-styl-2 btn btn-green nav-btn" href="#"><i class="fa fa-chevron-right menu-button"></i> </a>
           </div>
-          <ul class="nav navbar-top-links navbar-right" style="display: inline-block; margin-left: 22px;">
+          <ul class="nav navbar-top-links" style="display: inline-block; margin-left: 22px;">
 
                 <li id="note-icon" class="animated pulse">
                     <a href="/notifications/public" class="dropdown-toggle">
