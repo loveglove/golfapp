@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Fisher Classic</title>
+        <title>HAHFA - Golf</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
         <link href="{{{ asset('/css/main.css') }}}" rel="stylesheet">
@@ -14,6 +14,9 @@
         <link href="{{{ asset('/fonts/blacksword/stylesheet.css') }}}" rel="stylesheet">
         <link href="{{{ asset('/addtohomescreen/style/addtohomescreen.css') }}}" rel="stylesheet" type="text/css" >
         
+        
+        <!-- HAHFA Font -->
+        <link href="https://fonts.googleapis.com/css?family=Boogaloo&display=swap" rel="stylesheet"> 
 
         <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{{ asset('/favicon/apple-touch-icon-57x57.png') }}}" />
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{{ asset('/favicon/apple-touch-icon-114x114.png') }}}" />

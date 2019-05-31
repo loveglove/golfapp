@@ -91,7 +91,7 @@
   				<h3>{{ $tournament->name }}</h3>
   			</div> -->
 
-  		@if($tournament->id == 23)
+  		@if($tournament->id == 26)
   			<div class="col-xs-7 animated fadeInDown">
   				<h3>{{ $tournament->name }}</h3>
   			</div>

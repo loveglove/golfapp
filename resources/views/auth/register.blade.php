@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Fisher Classic</title>
+        <title>HAHFA - Golf</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"> 
@@ -16,6 +16,9 @@
         <link href="{{{ asset('/fonts/blacksword/stylesheet.css') }}}" rel="stylesheet">
         <link href="{{{ asset('/addtohomescreen/style/addtohomescreen.css') }}}" rel="stylesheet" type="text/css" >
         
+
+        <!-- HAHFA Font -->
+        <link href="https://fonts.googleapis.com/css?family=Boogaloo&display=swap" rel="stylesheet"> 
 
         <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{{ asset('/favicon/apple-touch-icon-57x57.png') }}}" />
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{{ asset('/favicon/apple-touch-icon-114x114.png') }}}" />
@@ -87,7 +90,7 @@
  <!--                    <div>
                         <a href="leaderboard" ><h1 class="logo-name fc-font" style="font-size:100px;">FC</h1></a>
                     </div> -->
-                    <h3 class="fc-font" style="font-size:40px;">Fisher Classic</h3>
+                    <h3 class="hf-font" style="font-size:40px;">HAHFA Scramble</h3>
                     <br/>
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
                         {{ csrf_field() }}

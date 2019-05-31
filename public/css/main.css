@@ -136,12 +136,9 @@ box-shadow: -2px 10px 37px 0px rgba(0,0,0,0.75);
     color:#676A6C;
 }
 
-.fc-font{
-    font-family: 'blackswordregular';
-}
 .hf-font{
-    font-family: 'Pacifico', cursive;
-    font-weight: 300 !important;
+    font-family: 'Boogaloo', cursive;
+/*    font-weight: 300 !important;*/
 }
 
 .avatar-menu{

@@ -8,7 +8,7 @@
   <meta name="_token" content="{!! csrf_token() !!}"/>
   <meta http-equiv="refresh" content="300">
  <!--  @yield('title') -->
- <title>Fisher Classic</title>
+ <title>HAHFA - Golf</title>
 
   <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
   <link href="{{{ asset('/css/main.css') }}}" rel="stylesheet">
@@ -18,6 +18,9 @@
   <link href="{{{ asset('/theme/css/style.css') }}}" rel="stylesheet">
   <link href="{{{ asset('theme/css/plugins/sweetalert/sweetalert.css') }}}" rel="stylesheet">
   <link href="{{{ asset('/fonts/blacksword/stylesheet.css') }}}" rel="stylesheet">
+
+  <!-- HAHFA Font -->
+  <link href="https://fonts.googleapis.com/css?family=Boogaloo&display=swap" rel="stylesheet"> 
 
 
   @yield('css')

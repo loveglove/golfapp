@@ -8,7 +8,7 @@
   <meta name="_token" content="{!! csrf_token() !!}"/>
  <!--  @yield('title') -->
 <!--  <title>Fisher Classic</title> -->
-<title>Fisher Classic</title>
+<title>HAHFA - Golf</title>
 
 <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"> 
@@ -22,6 +22,9 @@
 <link href="{{{ asset('/fonts/blacksword/stylesheet.css') }}}" rel="stylesheet">
 <link href="{{{ asset('/addtohomescreen/style/addtohomescreen.css') }}}" rel="stylesheet" type="text/css" >
 
+
+  <!-- HAHFA Font -->
+  <link href="https://fonts.googleapis.com/css?family=Boogaloo&display=swap" rel="stylesheet"> 
 
 @yield('css')
 
@@ -84,9 +87,9 @@
                 <li id="menu-map" style="text-align: center;">
                     <a href="/map"><i class="fa fa-map-marker"></i> <span class="nav-label">Map</span></a>
                 </li>
-                <li id="menu-map" style="text-align: center;">
+ <!--                <li id="menu-map" style="text-align: center;">
                     <a href="/chirp"><i class="fa fa-comment"></i> <span class="nav-label">Chirp</span></a>
-                </li>
+                </li> -->
                 <li id="menu-stats">
                     <a href="/analytics"><i class="fa fa-pie-chart"></i> <span class="nav-label">Stats</span></a>
                 </li>
@@ -147,7 +150,7 @@
                 </li>
 
             </ul>
-            <h3 class="m-r-sm fc-font fc-header animated flipInY" style="display:inline-block; float:right;">Fisher Classic</h3>
+            <h3 class="m-r-sm hf-font fc-header animated flipInY" style="display:inline-block; float:right;">HAHFA Scramble</h3>
         </nav>
       </div>
       

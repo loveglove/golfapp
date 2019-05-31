@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Fisher Classic</title>
+        <title>HAHFA - Golf</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"> 
@@ -15,6 +15,9 @@
         <link href="{{{ asset('/theme/css/style.css') }}}" rel="stylesheet">
         <link href="{{{ asset('/fonts/blacksword/stylesheet.css') }}}" rel="stylesheet">
         <link href="{{{ asset('/addtohomescreen/style/addtohomescreen.css') }}}" rel="stylesheet" type="text/css" >
+
+        <!-- HAHFA Font -->
+        <link href="https://fonts.googleapis.com/css?family=Boogaloo&display=swap" rel="stylesheet"> 
         
 
         <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{{ asset('/favicon/apple-touch-icon-57x57.png') }}}" />
@@ -87,19 +90,19 @@
                 <div>
                     <div>
             <!--             <a href="/leaderboard" ><h1 class="logo-name fc-font" style="font-size:90px;">FC</h1></a> -->
-                        <h1 class="logo-name fc-font" style="font-size:50px; font-family: 'Lato'">HAHFA</h1>
-                        <img src="{{ asset('images/hahfa.png') }}" height="200" alt="logo" />
+         <!--                <h1 class="logo-name fc-font" style="font-size:50px; font-family: 'Lato'">HAHFA</h1> -->
+                        <img src="{{ asset('images/hahfa.png') }}" height="150" alt="logo" />
                         </a>
                     </div>
                     <br>
-                    <h3 class="fc-font" style="font-size:40px;">Fisher Classic</h3>
+                    <h3 class="hf-font" style="font-size:30px;">HAHFA Scramble</h3>
                     <p>The 2018 annual HAHFA golf tournament. Login or register to enter.
                     </p>
                     <a href="auth/facebook" class="form-group"><button type="submit" class="btn btn-primary block full-width m-b dim"><i class="fa fa-facebook"></i>  Login with Facebook</button></a>
                     <br>
                     <a href="auth/login" class="form-group"><button type="submit" class="btn btn-info block full-width m-b dim"><i class="fa fa-envelope"></i>  Login with E-mail</button></a>
 
-                    <p class="m-t"> <small>Developed by Matt Glover &copy; 2018</small> </p>
+                    <p class="m-t"><small>Developed by Matt Glover &copy; 2019</small> </p>
                     <a href="{{ asset('pdf/HAHFA-how-to-use.pdf') }}" target="_blank"><i class="fa fa-info-circle"></i> <span class="nav-label">User Guide</span></a>
                 </div>
             </div>
