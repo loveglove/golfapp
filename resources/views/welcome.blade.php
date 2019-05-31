@@ -86,9 +86,9 @@
             <div class="middle-box text-center loginscreen" style="padding-top:2%;">
                 <div>
                     <div>
-                        <a href="/leaderboard" ><h1 class="logo-name fc-font" style="font-size:90px;">FC</h1></a>
-                        <!-- <h1 class="logo-name fc-font" style="font-size:50px; font-family: 'Lato'">HAHFA</h1> -->
-<!--                         <img src="{{ asset('images/hahfa.png') }}" height="200" alt="logo" /> -->
+            <!--             <a href="/leaderboard" ><h1 class="logo-name fc-font" style="font-size:90px;">FC</h1></a> -->
+                        <h1 class="logo-name fc-font" style="font-size:50px; font-family: 'Lato'">HAHFA</h1>
+                        <img src="{{ asset('images/hahfa.png') }}" height="200" alt="logo" />
                         </a>
                     </div>
                     <br>
