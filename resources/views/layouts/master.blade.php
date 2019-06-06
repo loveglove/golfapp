@@ -125,29 +125,41 @@
             </a>
         </div>
             <ul class="nav navbar-top-links navbar-right" style="display: inline-block;">
-<!--                 <li>
-                    <span class="m-r-sm text-muted welcome-message">Welcome to the Fisher Classic</span>
-                </li> -->
-                <li class="dropdown notify-icon" >
+
+                <li class="notify-icon">
                     <a onclick="openNotifications();" class="dropdown-toggle count-info">
                         <i class="fa fa-bell"></i>  <span id="notify-count" class="label label-primary"></span>
                     </a>
-
-<!--                     <ul class="dropdown-menu" style="width:90vw; border:1px solid red; position:absolute; left:0;">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-trophy fa-fw"></i> Welcome to the tournament!
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                    </ul> -->
                 </li>
 
+                <?php 
+                  $page = Request::segment(1);
+                  if($page == "course"){
+                ?>
+                  <li class="notify-icon" style="margin-left: 6px;">
+                      <a onclick="openCompletedHoles();" class="dropdown-toggle">
+                          <i id="completed-holes-icon" style="font-size: 18px; vertical-align: bottom;" class="fa fa-check-circle"></i>
+                      </a>
+                  </li>
+                <?php } ?>
+
+                <?php 
+                  $page = Request::segment(1);
+                  if($page == "course"){
+                ?>
+                  <li class="notify-icon" style="margin-left: 10px;">
+                      <img src="images/windicon.png" height="22px" class="animated fadeInLeft" /><span id="weather"></span>
+                  </li>
+                <?php } ?>
+
+
             </ul>
+            <?php 
+              $page = Request::segment(1);
+              if($page != "course"){
+            ?>
             <h3 class="m-r-sm fc-font fc-header animated flipInY" style="display:inline-block; float:right;">Fisher Classic</h3>
+             <?php } ?>
         </nav>
       </div>
       

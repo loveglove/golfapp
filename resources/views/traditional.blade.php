@@ -385,14 +385,29 @@
 
 	<div class="row">
   		<div class="col-md-6 col-lg-8">
+  			<h3> Mens Awards </h3>
 	  		<div class="ibox float-e-margins">
 	            <div class="ibox-content">
-	            	<b>Closest to Pin:</b>&nbsp&nbsp {{ $closest->name or 'No one yet' }}<br>
-	            	<b>Longest Drive:</b>&nbsp&nbsp {{ $longest->name or 'No one yet' }}
+	            	<b>Closest to Pin:</b>&nbsp&nbsp {{ $cpm->name or 'No one yet' }}<br>
+	            	<b>Longest Drive:</b>&nbsp&nbsp {{ $ldm->name or 'No one yet' }}
 	           	</div>
 	        </div>
 	    </div>
 	</div>
+
+	@if(!empty($cpw->name) or !empty($ldw->name))
+	<div class="row">
+  		<div class="col-md-6 col-lg-8">
+  			<h3> Womens Awards </h3>
+	  		<div class="ibox float-e-margins">
+	            <div class="ibox-content">
+	            	<b>Closest to Pin:</b>&nbsp&nbsp {{ $cpw->name or 'No one yet' }}<br>
+	            	<b>Longest Drive:</b>&nbsp&nbsp {{ $ldw->name or 'No one yet' }}
+	           	</div>
+	        </div>
+	    </div>
+	</div>
+	@endif
 
 </div>
 

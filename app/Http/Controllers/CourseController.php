@@ -92,9 +92,20 @@ class CourseController extends Controller
     public function insertScore(Request $request)
     {
         $myTeam = $this->team->getTeam();
+        $data = Request::all();
 
-        if(Request::ajax()) {
-            $data = Request::all();
+        // check if a score already exists
+        $score = Score::where('id_team', $myTeam->id)
+                        ->where('id_tour', $this->tournament->id)
+                        ->where('hole', $data['hole'])
+                        ->first();
+
+        if(!empty($score))
+        {
+            $score->update(['score' => $value]);
+        }
+        else
+        {
             $score = new Score;
             $score->id_team = $myTeam->id;
             $score->id_tour = $this->tournament->id;
@@ -102,9 +113,9 @@ class CourseController extends Controller
             $score->par = $data['par'];
             $score->score = $data['score'];
             $score->save();
-            return $data;
         }
-        return 0;
+
+        return $data;
     }
 
     public function insertNotification(Request $request)

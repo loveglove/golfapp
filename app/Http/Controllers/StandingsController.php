@@ -59,8 +59,10 @@ class StandingsController extends Controller
                     'standings' => $this->standings->getLeaderboard($tournament->id),
                     'tournament' => $tournament,
                     'team' => $this->team->getTeam(),
-                    'closest' => Award::where('id_tour', $tournament->id)->where('type', 'closest')->latest()->first(),
-                    'longest' => Award::where('id_tour', $tournament->id)->where('type', 'longest')->latest()->first(),
+                    'cpm' => Award::where('id_tour', $tournament->id)->where('type', 'cpm')->latest()->first(),
+                    'ldm' => Award::where('id_tour', $tournament->id)->where('type', 'ldm')->latest()->first(),
+                    'cpw' => Award::where('id_tour', $tournament->id)->where('type', 'cpw')->latest()->first(),
+                    'ldw' => Award::where('id_tour', $tournament->id)->where('type', 'ldw')->latest()->first(),
                 ]);
             break;
 
