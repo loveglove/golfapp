@@ -130,10 +130,18 @@ box-shadow: -2px 10px 37px 0px rgba(0,0,0,0.75);
 /*    border:1px solid red;*/
     padding-top: 10px;
     padding-right:10px;
-    font-size: 30px;
+    font-size: 28px;
     -webkit-animation-delay: 1s; /* Chrome, Safari, Opera */
     animation-delay: 1s;
     color:#676A6C;
+}
+
+#weather{
+    vertical-align: middle;
+    margin-left: 6px;
+    font-size: 13px;
+    color: #999c9e !important;
+    font-weight: 700;
 }
 
 .hf-font{

@@ -96,7 +96,7 @@
                     </div>
                     <br>
                     <h3 class="hf-font" style="font-size:30px;">HAHFA Scramble</h3>
-                    <p>The 2018 annual HAHFA golf tournament. Login or register to enter.
+                    <p>The 2019 annual HAHFA golf tournament. Login or register to enter.
                     </p>
                     <a href="auth/facebook" class="form-group"><button type="submit" class="btn btn-primary block full-width m-b dim"><i class="fa fa-facebook"></i>  Login with Facebook</button></a>
                     <br>

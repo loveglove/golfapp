@@ -177,16 +177,26 @@
             <h3><i class="fa fa-star"></i> Awards</h3>
             <div class="form-group">
             {{ Form::open(array('route' => 'set_award', 'class' => 'form')) }}
-                {{ Form::select('course', array('1' => 'Milcroft', '2' => 'Bellmere Winds', '3' => 'Glendale'), null, ['class' => 'form-control', 'placeholder' => 'Course..']) }}
                 <br/>
                 <div class="row">
                     <div class="col-xs-6">
-                        <label for="longest" class="form-control"> Longest Drive </label>
-                        <input type="tel" name="longest" class="form-control" placeholder="Hole #" />
+                        <label for="ldm" > Mens Longest Drive </label>
+                        <input type="tel" name="ldm" class="form-control" placeholder="Hole #" />
                     </div>
                     <div class="col-xs-6">
-                        <label for="closest" class="form-control"> Closest Pin </label>
-                        <input type="tel" name="closest" class="form-control" placeholder="Hole #" />
+                        <label for="cpm" > Mens Closest Pin </label>
+                        <input type="tel" name="cpm" class="form-control" placeholder="Hole #" />
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label for="ldw" > Womens Longest Drive </label>
+                        <input type="tel" name="ldw" class="form-control" placeholder="Hole #" />
+                    </div>
+                    <div class="col-xs-6">
+                        <label for="cpw" > Womens Closest Pin </label>
+                        <input type="tel" name="cpw" class="form-control" placeholder="Hole #" />
                     </div>
                 </div>
                 <br/>

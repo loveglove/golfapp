@@ -7,24 +7,24 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="_token" content="{!! csrf_token() !!}"/>
  <!--  @yield('title') -->
-<!--  <title>Fisher Classic</title> -->
+
 <title>HAHFA - Golf</title>
 
 <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"> 
+<!-- HAHFA Font -->
+<link href="https://fonts.googleapis.com/css?family=Boogaloo&display=swap" rel="stylesheet"> 
 
-<link href="{{{ asset('/css/main.css') }}}" rel="stylesheet">
-<link href="{{{ asset('/theme/css/bootstrap.css') }}}" rel="stylesheet">
-<link href="{{{ asset('/theme/font-awesome/css/font-awesome.css') }}}" rel="stylesheet">
-<link href="{{{ asset('/theme/css/animate.css') }}}" rel="stylesheet">
-<link href="{{{ asset('/theme/css/style.css') }}}" rel="stylesheet">
-<link href="{{{ asset('/theme/css/plugins/sweetalert/sweetalert.css') }}}" rel="stylesheet">
-<link href="{{{ asset('/fonts/blacksword/stylesheet.css') }}}" rel="stylesheet">
-<link href="{{{ asset('/addtohomescreen/style/addtohomescreen.css') }}}" rel="stylesheet" type="text/css" >
+<link href="{{ asset('/css/main.css') }}" rel="stylesheet">
+<link href="{{ asset('/theme/css/bootstrap.css') }}" rel="stylesheet">
+<link href="{{ asset('/theme/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+<link href="{{ asset('/theme/css/animate.css') }}" rel="stylesheet">
+<link href="{{ asset('/theme/css/style.css') }}" rel="stylesheet">
+<link href="{{ asset('/theme/css/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">
+<link href="{{ asset('/fonts/blacksword/stylesheet.css') }}" rel="stylesheet">
+<link href="{{ asset('/addtohomescreen/style/addtohomescreen.css') }}" rel="stylesheet" type="text/css" >
 
 
-  <!-- HAHFA Font -->
-  <link href="https://fonts.googleapis.com/css?family=Boogaloo&display=swap" rel="stylesheet"> 
 
 @yield('css')
 
@@ -128,29 +128,41 @@
             </a>
         </div>
             <ul class="nav navbar-top-links navbar-right" style="display: inline-block;">
-<!--                 <li>
-                    <span class="m-r-sm text-muted welcome-message">Welcome to the Fisher Classic</span>
-                </li> -->
-                <li class="dropdown notify-icon" >
+
+                <li class="notify-icon">
                     <a onclick="openNotifications();" class="dropdown-toggle count-info">
                         <i class="fa fa-bell"></i>  <span id="notify-count" class="label label-primary"></span>
                     </a>
-
-<!--                     <ul class="dropdown-menu" style="width:90vw; border:1px solid red; position:absolute; left:0;">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-trophy fa-fw"></i> Welcome to the tournament!
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                    </ul> -->
                 </li>
 
+                <?php 
+                  $page = Request::segment(1);
+                  if($page == "course"){
+                ?>
+                  <li class="notify-icon">
+                      <a onclick="openCompletedHoles();" class="dropdown-toggle">
+                          <i style="font-size: 18px; vertical-align: bottom;" class="fa fa-check-circle"></i>
+                      </a>
+                  </li>
+                <?php } ?>
+
+                <?php 
+                  $page = Request::segment(1);
+                  if($page == "course"){
+                ?>
+                  <li class="notify-icon" style="margin-left: 5px;">
+                      <img src="images/windicon.png" height="22px" class="animated fadeInLeft" /><span id="weather"></span>
+                  </li>
+                <?php } ?>
+
+
             </ul>
+            <?php 
+              $page = Request::segment(1);
+              if($page != "course"){
+            ?>
             <h3 class="m-r-sm hf-font fc-header animated flipInY" style="display:inline-block; float:right;">HAHFA Scramble</h3>
+             <?php } ?>
         </nav>
       </div>
       
@@ -160,24 +172,24 @@
       <br/>
       <br/>
 
-    <div id="notify-modal" class="modal fade" role="dialog" aria-hidden="true" style="z-index:99999;">
-      <div class="modal-dialog">
-        <div class="modal-content">     
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Notifications</h4>
-            </div>     
-            <div class="modal-body dropdown-alerts">
-                <div class="modal-notes"></div>
+      <div id="notify-modal" class="modal fade" role="dialog" aria-hidden="true" style="z-index:99999;">
+         <div class="modal-dialog">
+            <div class="modal-content">     
+               <div class="modal-header">
+                 <button type="button" class="close" data-dismiss="modal">&times;</button>
+                 <h4 class="modal-title">Notifications</h4>
+               </div>     
+               <div class="modal-body dropdown-alerts">
+                   <div class="modal-notes"></div>
+               </div>
+               <div class="modal-footer" style="text-align: center;">                    
+                 <a href="/notifications">
+                   <span style="font-size:14px; font-weight:500;">See All Notifications <i class="fa fa-bell"></i></span>
+                 </a>
+               </div>
             </div>
-            <div class="modal-footer" style="text-align: center;">                    
-              <a href="/notifications">
-                <span style="font-size:14px; font-weight:500;">See All Notifications <i class="fa fa-bell"></i></span>
-              </a>
-            </div>
-        </div>
+         </div>
       </div>
-    </div>
 
 
       <!-- ****** FOOTER ******** -->
@@ -192,7 +204,7 @@
             </strong>
         </div>
         <div style="font-size: 10px;">
-            Matt Glover &copy; 2018
+            Matt Glover &copy; 2019
         </div>
       </div>
     

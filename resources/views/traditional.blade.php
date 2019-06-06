@@ -385,10 +385,23 @@
 
 	<div class="row">
   		<div class="col-md-6 col-lg-8">
+  			<h3> Mens Awards </h3>
 	  		<div class="ibox float-e-margins">
 	            <div class="ibox-content">
-	            	<b>Closest to Pin:</b>&nbsp&nbsp {{ $closest->name or 'No one yet' }}<br>
-	            	<b>Longest Drive:</b>&nbsp&nbsp {{ $longest->name or 'No one yet' }}
+	            	<b>Closest to Pin:</b>&nbsp&nbsp {{ $cpm->name or 'No one yet' }}<br>
+	            	<b>Longest Drive:</b>&nbsp&nbsp {{ $ldm->name or 'No one yet' }}
+	           	</div>
+	        </div>
+	    </div>
+	</div>
+
+	<div class="row">
+  		<div class="col-md-6 col-lg-8">
+  			<h3> Womens Awards </h3>
+	  		<div class="ibox float-e-margins">
+	            <div class="ibox-content">
+	            	<b>Closest to Pin:</b>&nbsp&nbsp {{ $cpw->name or 'No one yet' }}<br>
+	            	<b>Longest Drive:</b>&nbsp&nbsp {{ $ldw->name or 'No one yet' }}
 	           	</div>
 	        </div>
 	    </div>
@@ -441,6 +454,7 @@
     	$("#sc_members_"+team_id).empty();
 
     	$.each(data.scores, function(index, scoreData) {
+
 		  	$("#sc_" + scoreData.hole + "_" + team_id).find(".col-hole").html("#"+scoreData.hole);
 		  	$("#sc_" + scoreData.hole + "_" + team_id).find(".box-inner").html(scoreData.score);
 		  	$("#sc_" + scoreData.hole + "_" + team_id).find(".col-par").html(scoreData.par);

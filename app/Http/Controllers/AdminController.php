@@ -138,11 +138,15 @@ class AdminController extends Controller
         $hole = Request::input('hole');
         $value = Request::input('value');
 
-        $score = Score::where('id_team', $team_id)->where('hole', $hole)->first();
+        $score = Score::where('id_team', $team_id)
+                        ->where('id_tour', $tournament->id)
+                        ->where('hole', $hole)
+                        ->first();
 
+        // if score already exists update it. If not create a new record
         if(!empty($score))
         {
-            Score::where('id_team', $team_id)->where('hole', $hole)->update(['score' => $value]);
+            $score->update(['score' => $value]);
         }
         else
         {
@@ -291,6 +295,7 @@ class AdminController extends Controller
 
     }
 
+
     /*
      * Set holes for longest drive and closest to the pin
      *
@@ -298,21 +303,32 @@ class AdminController extends Controller
     public function setAwardHoles(Request $request)
     {
         // remove previous settings
-        Hole::where('id_course', Request::input('course'))
-            ->update(['longest' => 0, 'closest' => 0]);
 
-        // set closest to pin hole
-        Hole::where('id_course', Request::input('course'))
-            ->where('hole', Request::input('closest'))
-            ->update(['closest' => 1]);
+        $tournament = Tournament::where('active', 1)->first();
 
-        Hole::where('id_course', Request::input('course'))
-            ->where('hole', Request::input('longest'))
-            ->update(['longest' => 1]);
-            // finish sthis
+        Hole::where('id_course', $tournament->id_course)
+            ->update(['cpm' => 0, 'cpw' => 0, 'ldm' => 0, 'ldw' => 0]);
 
-        return back()->withErrors(['awards' => 'Holes '.Request::input('closest'). ' and '.Request::input('longest'). ' set for closest and longest']);
+        // set mens awards to holes
+        Hole::where('id_course', $tournament->id_course)
+            ->where('hole', Request::input('cpm'))
+            ->update(['cpm' => 1]);
 
+        Hole::where('id_course', $tournament->id_course)
+            ->where('hole', Request::input('ldm'))
+            ->update(['ldm' => 1]);
+
+        // set womens awards to holes
+        Hole::where('id_course', $tournament->id_course)
+            ->where('hole', Request::input('cpw'))
+            ->update(['cpw' => 1]);
+
+        Hole::where('id_course', $tournament->id_course)
+            ->where('hole', Request::input('ldw'))
+            ->update(['ldw' => 1]);
+
+
+        return back()->withErrors(['awards' => 'Holes '.Request::input('cpm'). ' and '.Request::input('ldm'). ' set for closest and longest for men. Holes '.Request::input('cpw'). ' and '.Request::input('ldw').' set for closest and longest for women']);
     }  
 
 

@@ -5,32 +5,46 @@
 <style>
 	
 	.award{
-		width:60px;
-		height:60px;
+		width: 60px;
+		height: 60px;
 		border-radius: 50%;
 		position: absolute;
-		top:-10px;
-		right:0;
-		color:white;
+		top: -10px;
+		right: 0;
+		color: white;
 		z-index: 999;
-		font-size:24px;
+		font-size: 20px;
 		text-align: center;
 		line-height: 26px;
 		padding-top: 15px;
-
-  -webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  -moz-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  -ms-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  -o-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  		-webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  		-moz-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  		-ms-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  		-o-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  		box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 	}
 
-	.cp-icon{
+	.cpm-icon{
 		background:#46606d;
 	}
-
-	.ld-icon{
+	.ldm-icon{
 		background:#46606d;
+	}
+	.cpw-icon{
+		background:#d56589;
+	}
+	.ldw-icon{
+		background:#d56589;
+	}
+	.btn-outline-primary{
+		border:1px solid silver;
+	}
+	.btn-comp{
+		width:50px;
+		height:50px;
+		font-size: 14px;
+		margin-right: 5px;
+		margin-bottom: 5px;
 	}
 
 </style>
@@ -40,19 +54,25 @@
         <div class="row main-row">
             <div id="contain" class="col-sm-12 col-md-6 col-lg-4">
 				@foreach ($course as $hole)
-					<input type="hidden" id="closest{{  $hole->hole }}" value="{{  $hole->closest or 0 }}" />
-					<input type="hidden" id="longest{{  $hole->hole }}" value="{{  $hole->longest or 0 }}" />
-					<a id="anchor{{  $hole->hole }}"></a>
+					<a id="anchor{{ $hole->hole }}"></a>
                     <div class="ibox float-e-margins">
                         <div class="ibox-content">
 		                	<div class="row" style="position: relative;">
-		                		@if(!empty($hole->closest))
-		                			<div class="award cp-icon animated pulse infinite" title="Closest to Pin"><i>CP&nbsp</i></div>
+		                    	<!-- Mens Awards -->
+		                		@if(!empty($hole->cpm))
+		                			<div class="award cpm-icon animated pulse infinite" data-hole="{{ $hole->hole }}" data-toggle="popover" data-placement="left" data-content="Mens Closest to Pin"><i>CPM</i></div>
 		                		@endif
-		                		@if(!empty($hole->longest))
-									<div class="award ld-icon animated pulse infinite" title="Longest Drive"><i>LD&nbsp</i></div>
+		                		@if(!empty($hole->ldm))
+									<div class="award ldm-icon animated pulse infinite" data-hole="{{ $hole->hole }}" data-toggle="popover" data-placement="left" data-content="Mens Longest Drive"><i>LDM</i></div>
 		                		@endif
-                                <div class="col-xs-6" style="text-align: center; padding-top: 5px;">
+		                		<!-- Womens Awards -->
+		                		@if(!empty($hole->cpw))
+		                			<div class="award cpw-icon animated pulse infinite" data-hole="{{ $hole->hole }}" data-toggle="popover" data-placement="left" data-content="Womens Closest to Pin"><i>CPW</i></div>
+		                		@endif
+		                		@if(!empty($hole->ldw))
+									<div class="award ldw-icon animated pulse infinite" data-hole="{{ $hole->hole }}" data-toggle="popover" data-placement="left" data-content="Womens Longest Drive"><i>LDW</i></div>
+		                		@endif
+                                <div class="col-xs-6" style="text-align: center; padding-top:5px;">
                                 	<div class="row">
 								        <div class="col-xs-6" style="padding-right:2px;">
 									        <div class="hole-info red-bg" style="width:100%;">
@@ -165,19 +185,57 @@
             </div>
         </div>
 
+      	<div id="completed-modal" class="modal fade" role="dialog" aria-hidden="true" style="z-index:99999;">
+         	<div class="modal-dialog">
+	            <div class="modal-content">     
+	               	<div class="modal-header">
+	                 	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	                 	<h4 class="modal-title">Completed Holes</h4>
+	               	</div>     
+	               	<div class="modal-body dropdown-alerts">
+	               		<b>Front 9</b>
+	               		<br>
+	               		<button id="complete-1" class="btn btn-sm btn-outline-primary btn-comp">1</button>
+	               		<button id="complete-2" class="btn btn-sm btn-outline-primary btn-comp">2</button> 
+	               		<button id="complete-3" class="btn btn-sm btn-outline-primary btn-comp">3</button> 
+	               		<button id="complete-4" class="btn btn-sm btn-outline-primary btn-comp">4</button>
+						<button id="complete-5" class="btn btn-sm btn-outline-primary btn-comp">5</button>
+						<button id="complete-6" class="btn btn-sm btn-outline-primary btn-comp">6</button>
+						<button id="complete-7" class="btn btn-sm btn-outline-primary btn-comp">7</button>
+						<button id="complete-8" class="btn btn-sm btn-outline-primary btn-comp">8</button>
+						<button id="complete-9" class="btn btn-sm btn-outline-primary btn-comp">9</button>
+	               		<br>
+	               		<br>
+	               		<b>Back 9</b>	
+	               		<br>
+	               		<button id="complete-10" class="btn btn-sm btn-outline-primary btn-comp">10</button>
+	               		<button id="complete-11" class="btn btn-sm btn-outline-primary btn-comp">11</button> 
+	               		<button id="complete-12" class="btn btn-sm btn-outline-primary btn-comp">12</button> 
+	               		<button id="complete-13" class="btn btn-sm btn-outline-primary btn-comp">13</button>
+						<button id="complete-14" class="btn btn-sm btn-outline-primary btn-comp">14</button>
+						<button id="complete-15" class="btn btn-sm btn-outline-primary btn-comp">15</button>
+						<button id="complete-16" class="btn btn-sm btn-outline-primary btn-comp">16</button>
+						<button id="complete-17" class="btn btn-sm btn-outline-primary btn-comp">17</button>
+						<button id="complete-18" class="btn btn-sm btn-outline-primary btn-comp">18</button>                 	
+	               	</div>
+	            </div>
+         	</div>
+      	</div>
+
 		<div class="modal fade" id="holePreview" role="dialog" aria-hidden="true" style="z-index:99999;">
-		  <div class="modal-dialog">
-		    <div class="modal-content">  
-		        <div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><h3><i class="fa fa-times fa-lg"></i></h3></button>
-					<h3 id="hole-modal-title"></h3>
-				</div>            
-		      	<div class="modal-body" style="text-align: center;">
-					<img src="" id="holeimage-lg" alt="hole image" />
-		      	</div>
-		    </div>
-		  </div>
+		  	<div class="modal-dialog">
+		    	<div class="modal-content">  
+			        <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><h3><i class="fa fa-times fa-lg"></i></h3></button>
+						<h3 id="hole-modal-title"></h3>
+					</div>            
+			      	<div class="modal-body" style="text-align: center;">
+						<img src="" id="holeimage-lg" alt="hole image" />
+			      	</div>
+		    	</div>
+		  	</div>
 		</div>
+
 	</div>
 
 
@@ -195,16 +253,43 @@
 
 	var starthole = "{{ $team->start }}";
 	var currentHole = null;
+	var windSpeedSet = false;
 
 
+	// open hole preview modal
 	function openImageModal(imgPath, hole){
 		$("#holeimage-lg").attr("src",imgPath);
 		$("#hole-modal-title").html("Hole #" + hole);
 		$("#holePreview").modal("show");
 	}
 
+	// open copleted holes modal
+	function openCompletedHoles(){
+		$("#completed-modal").modal("show");
+	}
+
+	// scroll to hole
+	$(".btn-comp").click(function(){
+		var hole = $(this).html();
+		var position = $("#anchor" + hole).position().top + 20;
+		$(document).animate({scrollTop: position});
+		
+        // var target = this.hash,
+        // target = $(target);
+        // $('html, body').stop().animate({
+        //     'scrollTop': target.offset().top-85
+        // }, 500, 'swing', function () {
+        //     window.location.hash = target.selector;
+        //     $(document).on("scroll", onScroll);
+        // });
+
+	});
+
+
     $(document).ready(function() {
 
+
+		$('[data-toggle="popover"]').popover();
 
       	$(".dial").knob({
     		'release' : function (val) { 
@@ -287,7 +372,9 @@
 		$('.dial').trigger('release');
 
       	var completed = <?php echo json_encode($completed) ?>;
+
       	$.each(completed, function(index, item){
+
       		currentHole = parseInt(item["hole"]) + 1;
             if(currentHole == 19){
                 currentHole = 1;
@@ -337,21 +424,23 @@
 	            $("#value-int" + hole).val(4);
 	        }
       		disableControl(item["hole"]);
+
+      		$("#complete-" + item["hole"]).removeClass("btn-outline-primary").addClass("btn-primary");
+
       	});
 
 		// alert(currentHole);
 
-			if(currentHole > 0){
-			    var anchor = $("#anchor" + currentHole);
-	    		var position = anchor.position().top + $("body").scrollTop() - 3;
-	    		$("body").animate({scrollTop: position});
-    		}
+		if(currentHole > 0){
+		    var anchor = $("#anchor" + currentHole);
+    		var position = anchor.position().top + $("body").scrollTop() - 3;
+    		$("html body").animate({scrollTop: position});
+		}
 
-			// $("body").scrollTop($("#anchor" + currentHole).offset().top); 
-            // $("#anchor" + currentHole).animate({ scrollTop: 0 }, "fast");
+		// $("body").scrollTop($("#anchor" + currentHole).offset().top); 
+        // $("#anchor" + currentHole).animate({ scrollTop: 0 }, "fast");
 
 		console.log("current hole: " + currentHole);
-		// console.log("offest: " + position);
 
         connectMQTT();
 
@@ -446,6 +535,8 @@
 		    		type: "success"
 		    	});
 
+                $("#complete-" + hole).removeClass("btn-outline-primary").addClass("btn-primary");
+
 		    	checkAwards(hole);
 
 				currentHole = parseInt(hole) + 1;
@@ -461,6 +552,7 @@
                 var cmp = $(".knobclass:disabled").length;
                 console.log("Entered scores count: " + cmp);
 
+
                 if(cmp == 18){
                     swal({
                         title: "Congratulations", 
@@ -474,8 +566,8 @@
 
 				    var anchor = $("#anchor" + currentHole);
 		    		var position = anchor.position().top + 20;
-		    		$("body").animate({scrollTop: position});
-		    		console.log(position);
+		    		$("html body").animate({scrollTop: position});
+
 	    		}
 
 		    },
@@ -488,15 +580,9 @@
 
     function checkAwards(hole){
 
-    	var isClose = $("#closest"+hole).val();
-    	var isLong = $("#longest"+hole).val();
-
-    	console.log("Closest: " + isClose);
-    	console.log("Longest: " + isLong);
-
-    	if(isClose == "1"){
+    	if($(".cpm-icon").data('hole') == hole){
 			swal({
-				title: "Closest to Pin",
+				title: "Mens Closest to Pin",
 				text: "Was someone on your team closet to the pin?",
 				showCancelButton: true,
 				closeOnConfirm: false,
@@ -507,13 +593,13 @@
 				imageUrl: "images/golfballdot.png",
 				html: true
 			},function(){
-				setAward(hole, "closest");
+				setAward(hole, "cpm");
 			});
     	}
 
-    	if(isLong == "1"){
+    	if($(".ldm-icon").data('hole') == hole){
     		swal({
-				title: "Longest Drive",
+				title: "Mens Longest Drive",
 				text: "Did someone on your team have the longest drive?",
 				showCancelButton: true,
 				closeOnConfirm: false,
@@ -524,7 +610,41 @@
 				imageUrl: "images/golfballdot.png",
 				html: true
 			},function(){
-				setAward(hole, "longest");
+				setAward(hole, "ldm");
+			});
+    	}
+
+    	if($(".cpw-icon").data('hole') == hole){
+			swal({
+				title: "Womens Closest to Pin",
+				text: "Was someone on your team closet to the pin?",
+				showCancelButton: true,
+				closeOnConfirm: false,
+				confirmButtonColor: "#62BE5C",
+				confirmButtonText: "Yes",
+				cancelButtonText: "No",
+				closeOnConfirm: false,
+				imageUrl: "images/golfballdot.png",
+				html: true
+			},function(){
+				setAward(hole, "cpw");
+			});
+    	}
+
+    	if($(".ldw-icon").data('hole') == hole){
+    		swal({
+				title: "Womens Longest Drive",
+				text: "Did someone on your team have the longest drive?",
+				showCancelButton: true,
+				closeOnConfirm: false,
+				confirmButtonColor: "#62BE5C",
+				confirmButtonText: "Yes",
+				cancelButtonText: "No",
+				closeOnConfirm: false,
+				imageUrl: "images/golfballdot.png",
+				html: true
+			},function(){
+				setAward(hole, "ldw");
 			});
     	}
 
@@ -708,6 +828,10 @@
 					// var tempLat = "43.39028106";
 					// var tempLon = "-79.81139839";
 					calculateDistance(myLat, myLon, pinLat, pinLon, hole);
+					
+					if(!windSpeedSet){
+						getWindSpeed(myLat, myLon);
+					}
 				},
 				function(error){
 					console.log("geolocation watch error");
@@ -885,6 +1009,42 @@
 // *********************************************
 // ******************* END ********************
 // *********************************************
+
+
+	function getWindSpeed(lat, lon){
+
+	   	$.ajax({
+	       type:"GET",
+	       url:"https://api.openweathermap.org/data/2.5/find?lat="+lat+"&lon="+lon+"&cnt=1&units=imperial&appid=40bee0568ac76ea2ea1051870a596c4d",
+	       dataType : "jsonp",
+	       success:function(result){
+
+	       	console.log(result);
+
+	           var windspeed = result.list[0].wind.speed;
+	           var winddeg = result.list[0].wind.deg;
+
+	           console.log("Wind Speed: " + windspeed + " mph");
+	           console.log("Wind Direction: " + winddeg + " deg");
+
+	           var dir = degToCompass(winddeg);
+	           
+	           $("#weather").html(windspeed+ " mph " + dir);
+
+	       },
+	       error: function(xhr, status, error) {
+	           console.log(status);
+	       }
+	    });
+
+	    windSpeedSet = true;
+	}
+
+	function degToCompass(num) {
+	    var val = Math.floor((num / 22.5) + 0.5);
+	    var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+	    return arr[(val % 16)];
+	}
 
 
 </script>

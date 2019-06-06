@@ -138,7 +138,7 @@
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary block full-width m-b dim"><i class="fa fa-btn fa-sign-in"></i>  Login</button>
 
-                          <!--       <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a> -->
+                                <a class="btn btn-link" href="{{ url('/forgot') }}">Forgot Your Password?</a>
                                 <br/>
 
                             </div>
