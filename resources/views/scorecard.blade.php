@@ -75,7 +75,7 @@
                                 <div class="col-xs-6" style="text-align: center; padding-top:5px;">
                                 	<div class="row">
 								        <div class="col-xs-6" style="padding-right:2px;">
-									        <div class="hole-info red-bg" style="width:100%;">
+									        <div class="hole-info blue-bg" style="width:100%;">
 							                   <strong>Hole</strong>
 							                   <br/>
 							                   <span style="font-size:20px;"><strong>#{{ $hole->hole }}</strong></span>
@@ -89,7 +89,7 @@
 									        </div> 
 									     </div>
 								    </div>
-							         <div class="hole-info blue-bg" >
+<!-- 							         <div class="hole-info blue-bg" >
 							            <div class="row">
 							                <div class="col-xs-4 text-left">
 							                   <strong>Blue</strong>
@@ -98,7 +98,7 @@
 							                    <strong>{{ $hole->blue }} yd</strong>
 							                </div>
 							            </div>
-							        </div>  
+							        </div>   -->
 							        <div class="hole-info white-bg">
 							            <div class="row">
 							                <div class="col-xs-4 text-left">
@@ -109,7 +109,7 @@
 							                </div>
 							            </div>
 							        </div> 
-<!--                                     <div class="hole-info red-bg">
+                                    <div class="hole-info red-bg">
                                         <div class="row">
                                             <div class="col-xs-4 text-left">
                                                <strong>Red</strong>
@@ -118,7 +118,7 @@
                                                 <strong>{{ $hole->red }} yd</strong>
                                             </div>
                                         </div>
-                                    </div>  -->
+                                    </div> 
 							        <div class="hole-info green-bg">
 							            <div class="row">
 							                <div class="col-xs-4 text-left">
@@ -269,19 +269,11 @@
 	}
 
 	// scroll to hole
-	$(".btn-comp").click(function(){
+	$(".btn-comp").click(function(event){
+
+   		event.preventDefault();
 		var hole = $(this).html();
-		var position = $("#anchor" + hole).position().top + 20;
-		$(document).animate({scrollTop: position});
-		
-        // var target = this.hash,
-        // target = $(target);
-        // $('html, body').stop().animate({
-        //     'scrollTop': target.offset().top-85
-        // }, 500, 'swing', function () {
-        //     window.location.hash = target.selector;
-        //     $(document).on("scroll", onScroll);
-        // });
+        $('html, body').animate({ scrollTop: $("#anchor" + hole).position().top + 10 }, 500);
 
 	});
 
@@ -373,6 +365,10 @@
 
       	var completed = <?php echo json_encode($completed) ?>;
 
+      	if(completed.length == 18){
+      		$("#completed-holes-icon").addClass('green-text');
+      	}
+
       	$.each(completed, function(index, item){
 
       		currentHole = parseInt(item["hole"]) + 1;
@@ -432,9 +428,7 @@
 		// alert(currentHole);
 
 		if(currentHole > 0){
-		    var anchor = $("#anchor" + currentHole);
-    		var position = anchor.position().top + $("body").scrollTop() - 3;
-    		$("html body").animate({scrollTop: position});
+        	$('html, body').animate({ scrollTop: $("#anchor" + currentHole).position().top + 10 }, 500);
 		}
 
 		// $("body").scrollTop($("#anchor" + currentHole).offset().top); 
@@ -552,8 +546,10 @@
                 var cmp = $(".knobclass:disabled").length;
                 console.log("Entered scores count: " + cmp);
 
-
                 if(cmp == 18){
+
+                	$("#completed-holes-icon").addClass('green-text');
+
                     swal({
                         title: "Congratulations", 
                         text: "You have completed the tournament! You will be redirected to the standings shortly..", 
@@ -564,9 +560,7 @@
                     },10000);
                 }else{
 
-				    var anchor = $("#anchor" + currentHole);
-		    		var position = anchor.position().top + 20;
-		    		$("html body").animate({scrollTop: position});
+        			$('html, body').animate({ scrollTop: $("#anchor" + currentHole).position().top + 10 }, 500);
 
 	    		}
 

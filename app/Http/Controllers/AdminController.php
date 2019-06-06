@@ -137,6 +137,36 @@ class AdminController extends Controller
         $team_id = Request::input('team');
         $hole = Request::input('hole');
         $value = Request::input('value');
+        $strokes = null;
+
+        $holeFetch = Hole::where('id_course', $tournament->id_course)->where('hole', $hole)->first();
+
+        if(Request::has('value_text')){
+            
+            switch(Request::input('value_text'))
+            {
+                case "-2":
+                    $strokes = $holeFetch->par - 2;
+                break;
+                case "-1":
+                    $strokes = $holeFetch->par - 1;
+                break;
+                case "0":
+                    $strokes = $holeFetch->par;
+                break;
+                case "+1":
+                    $strokes = $holeFetch->par + 1;
+                break;
+                case "+2":
+                    $strokes = $holeFetch->par + 2;
+                break;
+                default:
+                    $strokes = $value;
+                break;
+            }
+        }else{
+            $strokes = $value;
+        }
 
         $score = Score::where('id_team', $team_id)
                         ->where('id_tour', $tournament->id)
@@ -146,22 +176,22 @@ class AdminController extends Controller
         // if score already exists update it. If not create a new record
         if(!empty($score))
         {
-            $score->update(['score' => $value]);
+            $score->update(['score' => $strokes]);
         }
         else
         {
-            $holeFetch = Hole::where('id_course', $tournament->id_course)->where('hole', $hole)->first();
+
             $score = new Score;
             $score->id_tour = $tournament->id;
             $score->id_team = $team_id;
             $score->hole = $hole;
             $score->par = $holeFetch->par;
-            $score->score = $value;
+            $score->score = $strokes;
             $score->save();
 
         }
-        
-        return $this->getAdminView();
+        return
+         $this->getAdminView();
     }
 
     /*
@@ -182,13 +212,12 @@ class AdminController extends Controller
      */
     public function clearTour(Request $request)
     {
-        $id = Request::input('tour');
-        //protect FC tournmanet scores
-        if($id != '1' && $id != '23' && $id != '26'){
-            DB::table('scores')->where('id_tour', $id)->delete();
-            DB::table('notifications')->where('tournament_id', $id)->delete();
-            DB::table('awards')->where('id_tour', $id)->delete();
-        }
+        $tour = Tournament::where('active', 1)->first();
+
+        DB::table('scores')->where('id_tour', $tour->id)->delete();
+        DB::table('notifications')->where('tournament_id', $tour->id)->delete();
+        DB::table('awards')->where('id_tour', $tour->id)->delete();
+
         return $this->getAdminView();
     }
 

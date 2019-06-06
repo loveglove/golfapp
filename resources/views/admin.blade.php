@@ -148,7 +148,13 @@
                         <input type="tel" name="hole" class="form-control" placeholder="Hole #" />
                     </div>
                     <div class="col-xs-6">
-                        <input type="tel" name="value" class="form-control" placeholder="Strokes" />
+                        <input type="tel" name="value" class="form-control" placeholder="Strokes #" />
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-12">
+                        {{ Form::select('value_text', array('-2' => 'eagle', '-1' => 'birdie', '0' => 'par', '+1' => 'bogey', '+2' => 'double'), null, ['class' => 'form-control', 'placeholder' => 'Strokes name...']) }}
                     </div>
                 </div>
                 <br/>
@@ -159,20 +165,7 @@
     </div>
 
 
-    <div class="ibox float-e-margins">
-        <div class="ibox-content">
-            <h3><i class="fa fa-times-circle"></i> Clear Tournament Scores</h3>
-            <div class="form-group">
-            {{ Form::open(array('route' => 'clear_tour', 'class' => 'form')) }}
-                {{ Form::select('tour', $tourList, null, ['class' => 'form-control', 'placeholder' => 'Tournament..']) }}
-                <br/>
-                {{ Form::button('<i class="fa fa-exclamation-triangle"></i> Clear ALL Scores', array('type' => 'submit', 'class' => 'btn btn-primary block full-width m-b dim')) }}
-            </div>      
-            {{ Form::close() }}
-        </div>
-    </div>
-
-   <div class="ibox float-e-margins">
+   	<div class="ibox float-e-margins">
         <div class="ibox-content">
             <h3><i class="fa fa-star"></i> Awards</h3>
             <div class="form-group">
@@ -204,6 +197,17 @@
                 @if ($errors->has('awards'))               
                     <small>{{ $errors->first('awards') }}</small>
                 @endif
+            </div>      
+            {{ Form::close() }}
+        </div>
+    </div>
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <h3><i class="fa fa-times-circle"></i> Clear Tournament Scores</h3>
+            <div class="form-group">
+            {{ Form::open(array('route' => 'clear_tour', 'class' => 'form')) }}
+                {{ Form::button('<i class="fa fa-exclamation-triangle"></i> Clear ALL Scores', array('type' => 'submit', 'class' => 'btn btn-danger block full-width m-b dim')) }}
             </div>      
             {{ Form::close() }}
         </div>

@@ -296,7 +296,7 @@
 
         setTimeout(function(){
             preWindow.close();
-        },4000);
+        },4200);
 
         // create drag listener
         google.maps.event.addListener(mainMarker, 'drag', function() {
@@ -339,7 +339,7 @@
         // open info window
         setTimeout(function(){
             infoWindow.open(map, distMarker);
-        },4200);
+        },4500);
 
 
         // add click listener

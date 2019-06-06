@@ -51,7 +51,6 @@
 <meta name="msapplication-square150x150logo" content="mstile-150x150.png" />
 <meta name="msapplication-wide310x150logo" content="mstile-310x150.png" />
 <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
- 
 
 
 
@@ -139,9 +138,9 @@
                   $page = Request::segment(1);
                   if($page == "course"){
                 ?>
-                  <li class="notify-icon">
+                  <li class="notify-icon" style="margin-left: 6px;">
                       <a onclick="openCompletedHoles();" class="dropdown-toggle">
-                          <i style="font-size: 18px; vertical-align: bottom;" class="fa fa-check-circle"></i>
+                          <i id="completed-holes-icon" style="font-size: 18px; vertical-align: bottom;" class="fa fa-check-circle"></i>
                       </a>
                   </li>
                 <?php } ?>
@@ -150,7 +149,7 @@
                   $page = Request::segment(1);
                   if($page == "course"){
                 ?>
-                  <li class="notify-icon" style="margin-left: 5px;">
+                  <li class="notify-icon" style="margin-left: 10px;">
                       <img src="images/windicon.png" height="22px" class="animated fadeInLeft" /><span id="weather"></span>
                   </li>
                 <?php } ?>
