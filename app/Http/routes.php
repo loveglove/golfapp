@@ -80,6 +80,7 @@ Route::post('update_score',['as' => 'update_score', 'uses' => 'AdminController@u
 Route::post('clear_score',['as' => 'clear_score', 'uses' => 'AdminController@clearScore']);
 Route::post('clear_tour',['as' => 'clear_tour', 'uses' => 'AdminController@clearTour']);
 Route::post('set_award',['as' => 'set_award', 'uses' => 'AdminController@setAwardHoles']);
+Route::post('set_start',['as' => 'set_start', 'uses' => 'AdminController@setStartHole']);
 
 // Team Routes
 Route::get('/team/edit/{id}', 'AdminController@teamEdit');

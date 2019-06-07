@@ -251,10 +251,9 @@
     var userID = "{{ Auth::user()->id }}";
     var userAvatar = "{{ Auth::user()->avatar }}";
 
-	var starthole = "{{ $team->start }}";
+	var starthole = "{{ $team->start or 0 }}";
 	var currentHole = null;
 	var windSpeedSet = false;
-
 
 	// open hole preview modal
 	function openImageModal(imgPath, hole){
@@ -363,10 +362,15 @@
 		});
 		$('.dial').trigger('release');
 
+		// Loop Through Completed
       	var completed = <?php echo json_encode($completed) ?>;
 
       	if(completed.length == 18){
       		$("#completed-holes-icon").addClass('green-text');
+      	}
+
+      	if(!completed.length){
+      		$('html, body').animate({ scrollTop: $("#anchor" + starthole).position().top + 10 }, 500);
       	}
 
       	$.each(completed, function(index, item){
@@ -425,14 +429,9 @@
 
       	});
 
-		// alert(currentHole);
-
 		if(currentHole > 0){
         	$('html, body').animate({ scrollTop: $("#anchor" + currentHole).position().top + 10 }, 500);
 		}
-
-		// $("body").scrollTop($("#anchor" + currentHole).offset().top); 
-        // $("#anchor" + currentHole).animate({ scrollTop: 0 }, "fast");
 
 		console.log("current hole: " + currentHole);
 
@@ -450,7 +449,7 @@
 
 		swal({
 		  title: "Who's on your team?",
-		  text: "Please enter your team members names",
+		  text: "Please enter your team members names (comma separated)",
 		  type: "input",
 		  showCancelButton: false,
 		  closeOnConfirm: false,
@@ -561,7 +560,6 @@
                 }else{
 
         			$('html, body').animate({ scrollTop: $("#anchor" + currentHole).position().top + 10 }, 500);
-
 	    		}
 
 		    },
@@ -1013,16 +1011,20 @@
 	       dataType : "jsonp",
 	       success:function(result){
 
-	       	console.log(result);
+	       		console.log(result);
 
-	           var windspeed = result.list[0].wind.speed;
-	           var winddeg = result.list[0].wind.deg;
+	            var windspeed = result.list[0].wind.speed;
+	            var winddeg = '';
 
-	           console.log("Wind Speed: " + windspeed + " mph");
-	           console.log("Wind Direction: " + winddeg + " deg");
+	           	if(result.list[0].wind.hasOwnProperty("deg")) {
+	           		winddeg = result.list[0].wind.deg;
+				}
 
-	           var dir = degToCompass(winddeg);
-	           
+	            var dir = '';
+	            if(winddeg != ''){
+	           		dir = degToCompass(winddeg);
+	            }
+
 	           $("#weather").html(windspeed+ " mph " + dir);
 
 	       },

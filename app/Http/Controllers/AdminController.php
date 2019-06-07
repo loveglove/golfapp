@@ -362,4 +362,19 @@ class AdminController extends Controller
 
 
 
+    /*
+     * Set starting hole for a team
+     *
+     */
+    public function setStartHole(Request $request)
+    {
+
+        $data = Request::all();   
+        $team = Team::find($data["id"]);
+        $team->start = $data["start"];
+        $team->save();
+        return redirect('/team/edit/'.$data["id"])->withErrors(['starthole' => 'Starting hole set to '.$data["start"]]);
+
+    }
+
 }

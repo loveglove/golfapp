@@ -6,6 +6,11 @@
 @endsection
 
 @section('content')
+<style>
+.btn-light{
+    border:1px solid silver;
+}
+</style>
 <br/>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox float-e-margins">
@@ -49,7 +54,7 @@
                             <td>
                                 {{ Form::open(array('route' => 'activate_tour', 'class' => 'form')) }}
                                 {{ Form::hidden('tour_id', $tournament->id) }}
-                                {{ Form::button('<i class="fa fa-check"></i> ', array('type' => 'submit')) }}
+                                    <button class="btn btn-light btn-sm btn-block" type="submit"><i class="fa fa-check"></i></button>
                                 {{ Form::close() }}
                                 </td>
                         </tr>
@@ -126,7 +131,7 @@
                         <tr>
                             <td>{{ $team->name }}</td>
                             <td>
-                                <a href="/team/edit/{{ $team->id }}"><button><i class="fa fa-edit"></i></button></a>
+                                <a href="/team/edit/{{ $team->id }}" class="btn btn-light btn-sm btn-block" >Edit</a>
                             </td>
                         </tr>
                     @endforeach
