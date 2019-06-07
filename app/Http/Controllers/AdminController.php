@@ -190,8 +190,8 @@ class AdminController extends Controller
             $score->save();
 
         }
-        
-        return $this->getAdminView();
+        return
+         $this->getAdminView();
     }
 
     /*
@@ -324,13 +324,15 @@ class AdminController extends Controller
 
     }
 
+
     /*
      * Set holes for longest drive and closest to the pin
      *
      */
     public function setAwardHoles(Request $request)
     {
-        
+        // remove previous settings
+
         $tournament = Tournament::where('active', 1)->first();
 
         Hole::where('id_course', $tournament->id_course)
@@ -356,9 +358,23 @@ class AdminController extends Controller
 
 
         return back()->withErrors(['awards' => 'Holes '.Request::input('cpm'). ' and '.Request::input('ldm'). ' set for closest and longest for men. Holes '.Request::input('cpw'). ' and '.Request::input('ldw').' set for closest and longest for women']);
-
     }  
 
 
+
+    /*
+     * Set starting hole for a team
+     *
+     */
+    public function setStartHole(Request $request)
+    {
+
+        $data = Request::all();   
+        $team = Team::find($data["id"]);
+        $team->start = $data["start"];
+        $team->save();
+        return redirect('/team/edit/'.$data["id"])->withErrors(['starthole' => 'Starting hole set to '.$data["start"]]);
+
+    }
 
 }

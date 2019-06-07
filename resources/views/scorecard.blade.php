@@ -253,7 +253,7 @@
     var userID = "{{ Auth::user()->id }}";
     var userAvatar = "{{ Auth::user()->avatar }}";
 
-	var starthole = "{{ $team->start }}";
+	var starthole = "{{ $team->start or 0 }}";
 	var currentHole = null;
 	var windSpeedSet = false;
 
@@ -367,6 +367,10 @@
 
       	if(completed.length == 18){
       		$("#completed-holes-icon").addClass('green-text');
+      	}
+
+      	if(!completed.length){
+      		$('html, body').animate({ scrollTop: $("#anchor" + starthole).position().top + 10 }, 500);
       	}
 
       	$.each(completed, function(index, item){
@@ -563,7 +567,9 @@
 		});      
     }
 
-  function checkAwards(hole){
+
+
+    function checkAwards(hole){
 
     	if($(".cpm-icon").data('hole') == hole){
 			swal({
@@ -634,6 +640,7 @@
     	}
 
     }
+
 
 
     function setAward(hole, type){
@@ -1010,14 +1017,18 @@
 
 	       		console.log(result);
 
-	           var windspeed = result.list[0].wind.speed;
-	           var winddeg = result.list[0].wind.deg;
+	            var windspeed = result.list[0].wind.speed;
+	            var winddeg = '';
 
-	           console.log("Wind Speed: " + windspeed + " mph");
-	           console.log("Wind Direction: " + winddeg + " deg");
+	           	if(result.list[0].wind.hasOwnProperty("deg")) {
+	           		winddeg = result.list[0].wind.deg;
+				}
 
-	           var dir = degToCompass(winddeg);
-	           
+	            var dir = '';
+	            if(winddeg != ''){
+	           		dir = degToCompass(winddeg);
+	            }
+
 	           $("#weather").html(windspeed+ " mph " + dir);
 
 	       },

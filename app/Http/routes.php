@@ -21,6 +21,10 @@ Route::get('/privacy', function () {
     return view('privacy');
 });
 
+Route::get('/forgot', function () {
+    return view('auth.forgot');
+});
+
 // Login Routes
 Route::auth();
 Route::get('auth/login', array('as' => 'login', 'uses' => function(){
@@ -33,7 +37,6 @@ Route::get('auth/facebook', 'Auth\AuthController@redirectToProvider');
 Route::get('auth/facebook/callback', 'Auth\AuthController@handleProviderCallback');
 Route::get('/logout', 'Auth\AuthController@getSignOut');
 
-
 // Tournament Routes
 Route::get('/tournament', 'TournamentController@getActiveTour');
 Route::post('create_tournament',['as' => 'create_tournament', 'uses' => 'TournamentController@createTour']);
@@ -42,8 +45,6 @@ Route::post('join_team',['as' => 'join_team', 'uses' => 'TournamentController@jo
 Route::post('join_number',['as' => 'join_number', 'uses' => 'TournamentController@joinNumber']);
 Route::get('/notifications', 'TournamentController@notifications');
 Route::get('/notifications/public', 'PublicController@notifications');
-
-
 
 // Course Routes
 Route::get('/course', 'CourseController@getHoles');
@@ -68,7 +69,6 @@ Route::get('/chirp', 'TournamentController@showChirp');
 // Analytics Routes
 Route::get('/analytics', 'AnalyticsController@show');
 
-
 // Admin Routes
 Route::get('admin',['as' => 'admin', 'uses' => 'AdminController@getAdminView']);
 Route::post('activate_tour',['as' => 'activate_tour', 'uses' => 'AdminController@activateTour']);
@@ -80,8 +80,9 @@ Route::post('update_score',['as' => 'update_score', 'uses' => 'AdminController@u
 Route::post('clear_score',['as' => 'clear_score', 'uses' => 'AdminController@clearScore']);
 Route::post('clear_tour',['as' => 'clear_tour', 'uses' => 'AdminController@clearTour']);
 Route::post('set_award',['as' => 'set_award', 'uses' => 'AdminController@setAwardHoles']);
+Route::post('set_start',['as' => 'set_start', 'uses' => 'AdminController@setStartHole']);
 
-
+// Team Routes
 Route::get('/team/edit/{id}', 'AdminController@teamEdit');
 Route::post('/team/name',['as' => 'update_name', 'uses' => 'AdminController@updateName']);
 Route::post('/team/membernames',['as' => 'update_members', 'uses' => 'AdminController@updateMemberNames']);
