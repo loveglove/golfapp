@@ -253,7 +253,7 @@
     var userID = "{{ Auth::user()->id }}";
     var userAvatar = "{{ Auth::user()->avatar }}";
 
-	var starthole = "{{ $team->start or 0 }}";
+	var starthole = "{{ $team->start or 1 }}";
 	var currentHole = null;
 	var windSpeedSet = false;
 

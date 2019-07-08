@@ -208,6 +208,7 @@
             strokeColor: "#FF0000",
             strokeOpacity: 0.3,
             strokeWeight: 4,
+            geodesic: true,
             map: map
         });
 
