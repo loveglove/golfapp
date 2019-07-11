@@ -507,7 +507,7 @@
 				connectMQTT();
                 maxAttempts++;
             }
-		},2000);
+		},5000);
     };
 
     client.onMessageArrived = function (message) {
@@ -549,7 +549,24 @@
                 console.log("MQTT Connection Success!");
                 client.subscribe('fc/notify/score', { qos: 1 });
                 client.subscribe('fc/notify/chirp', { qos: 1 });
-                getLocation();
+
+			    // Try HTML5 geolocation.
+			    navigator.geolocation.watchPosition(
+			        function(position) {
+			            var lat = position.coords.latitude;
+			            var lon = position.coords.longitude;
+			            publishPosition(lat, lon); 
+			        },
+			        function(error){
+			            console.log("geolocation watch error");
+			        },
+			        {
+			            maximumAge: 10000, 
+			            timeout: 60000, 
+			            enableHighAccuracy: true 
+			        }
+			    );
+
             },
             onFailure: function (message) {
                 console.log("MQTT Connection Failed: " + message.errorMessage);
@@ -558,45 +575,19 @@
                         connectMQTT();
                         maxAttempts++;
                     }
-				},2000);
+				},5000);
             }
         };
         client.connect(options);
     }
    
 
-	function getLocation(){
-
-		if(navigator.geolocation)
-		{
-			navigator.geolocation.watchPosition(
-				function(position) {
-					var myLat = position.coords.latitude;
-					var myLon = position.coords.longitude;
-					publishPosition(myLat, myLon);
-				},
-				function(error){
-					console.log("geolocation watch error");
-				},
-				{
-					maximumAge: 30000, 
-					timeout: 60000, 
-					enableHighAccuracy: true 
-				}
-			);
-		} 
-		else 
-		{
-			alert("Geolocation is not supported by this browser.");
-		}
-	}
-
     function publishPosition(lat, lon){
+    	console.log("publishing my position");
       	message = new Paho.MQTT.Message(lat + ',' + lon + ',' + userAvatar + ',' + teamName);
       	message.destinationName = "fc/position/" + userID;
       	client.send(message);
     }
-
 
     connectMQTT();
 

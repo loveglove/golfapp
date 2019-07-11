@@ -82,7 +82,7 @@
     var distMarker = null;
     var distLine = null;
     var infoWindow = null;
-    var myPos = null;
+    // var myPos = null;
     var curvature = 0.5;
     var Point = null;
     var def_latlng = null;
@@ -120,11 +120,11 @@
                     lng: position.coords.longitude
                 };
                 var pos2 = {
-                    lat: position.coords.latitude + 0.00042,
+                    lat: position.coords.latitude + 0.00047,
                     lng: position.coords.longitude - 0.0004
                 };
                 var pos3 = {
-                    lat: position.coords.latitude + 0.00042,
+                    lat: position.coords.latitude + 0.00047,
                     lng: position.coords.longitude + 0.0004
                 };
                 map.setCenter(pos);
@@ -211,57 +211,6 @@
             geodesic: true,
             map: map
         });
-
-        // <a id="dm_' + dmcnt + '" class="info-window">Remove</a>
-
-        // Point = google.maps.Point;
-
-        // var pos1 = new google.maps.LatLng(mainMarker.position.lat(), mainMarker.position.lng()), // latlng
-        //     pos2 = new google.maps.LatLng(distMarker.position.lat(), distMarker.position.lng())
-        //     projection = map.getProjection(),
-        //     p1 = projection.fromLatLngToPoint(pos1), // xy
-        //     p2 = projection.fromLatLngToPoint(pos2);
-
-        // // Calculate the arc.
-        // // To simplify the math, these points 
-        // // are all relative to p1:
-        // var e = new Point(p2.x - p1.x, p2.y - p1.y), // endpoint (p2 relative to p1)
-        //     m = new Point(e.x / 2, e.y / 2), // midpoint
-        //     o = new Point(e.y, -e.x), // orthogonal
-        //     c = new Point( // curve control point
-        //         m.x + curvature * o.x,
-        //         m.y + curvature * o.y);
-
-        // var pathDef = 'M 0,0 ' +
-        //     'q ' + c.x + ',' + c.y + ' ' + e.x + ',' + e.y;
-
-        // var zoom = map.getZoom(),
-        //     scale = 1 / (Math.pow(2, -zoom));
-
-        // var symbol = {
-        //     path: pathDef,
-        //     scale: scale,
-        //     strokeColor: "#FF0000",
-        //     strokeOpacity: 0.3,
-        //     strokeWeight: 4,
-        //     fillColor: 'none'
-        // };
-
-        // if (!distLine) {
-        //     distLine = new google.maps.Marker({
-        //         position: pos1,
-        //         clickable: false,
-        //         icon: symbol,
-        //         zIndex: 0, // behind the other markers
-        //         map: map
-        //     });
-        // } else {
-        //     distLine.setOptions({
-        //         position: pos1,
-        //         icon: symbol,
-        //     });
-        // }
-
 
     }
 
@@ -436,7 +385,7 @@
             console.log("MQTT Connection Lost: " + responseObject.errorMessage);
             setTimeout(function(){
                 connectMQTT();
-            },2000);
+            },5000);
         };
 
         client.onMessageArrived = function (message) {
@@ -486,43 +435,44 @@
                     console.log("MQTT Connection Success!");
                     client.subscribe('fc/notify/score', { qos: 1 });
                     client.subscribe('fc/notify/chirp', { qos: 1 });
-                    client.subscribe('fc/position/#', { qos: 0 });
+                    client.subscribe('fc/position/#', { qos: 1 });
+
+                   // Try HTML5 geolocation.
+                    navigator.geolocation.watchPosition(
+                        function(position) {
+                            var lat = position.coords.latitude;
+                            var lon = position.coords.longitude;
+                            publishPosition(lat, lon);
+                            // mypos = { lat: position.coords.latitude, lng: position.coords.longitude };
+                        },
+                        function(error){
+                           
+                            if(error.code == error.PERMISSION_DENIED){
+                                alert("You have previously denied permission to your location for this site, as a result you will not be able to use this feature. Clear your browser cache and cookies to re-enable permissions. Make sure to select \"allow\" when promted");
+                            }
+                        },
+                        {
+                            maximumAge: 10000, 
+                            timeout: 30000, 
+                            enableHighAccuracy: true 
+                        }
+                    );
+
                 },
                 onFailure: function (message) {
                     console.log("MQTT Connection Failed: " + message.errorMessage);
                     setTimeout(function(){
                         connectMQTT();
-                    },2000);
+                    },5000);
                 }
             };
             client.connect(options);
         }
-
-        
-        
-       
-        // Try HTML5 geolocation.
-        navigator.geolocation.watchPosition(
-            function(position) {
-                var lat = position.coords.latitude;
-                var lon = position.coords.longitude;
-                publishPosition(lat, lon);
-                mypos = { lat: position.coords.latitude, lng: position.coords.longitude };
-            },
-            function(error){
-               
-                if(error.code == error.PERMISSION_DENIED){
-                    alert("You have previously denied permission to your location for this site, as a result you will not be able to use this feature. Clear your browser cache and cookies to re-enable permissions. Make sure to select \"allow\" when promted");
-                }
-            },
-            {
-                maximumAge: 10000, 
-                timeout: 30000, 
-                enableHighAccuracy: true 
-            }
-        );
+    
+ 
 
         function publishPosition(lat, lon){
+            console.log("publishing my position");
 	      	message = new Paho.MQTT.Message(lat + ',' + lon + ',' + userAvatar + ',' + teamName);
           	message.destinationName = "fc/position/" + userID;
           	client.send(message);

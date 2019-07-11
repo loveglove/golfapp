@@ -14,10 +14,11 @@
 		right: 0;
 		color: white;
 		z-index: 999;
-		font-size: 20px;
+		font-size: 26px;
 		text-align: center;
 		line-height: 26px;
-		padding-top: 15px;
+		padding-top: 17px;
+		padding-right: 4px;
   		-webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   		-moz-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   		-ms-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
@@ -61,10 +62,10 @@
 		                	<div class="row" style="position: relative;">
 		                    	<!-- Mens Awards -->
 		                		@if(!empty($hole->cpm))
-		                			<div class="award cpm-icon animated pulse infinite" data-hole="{{ $hole->hole }}" data-toggle="popover" data-placement="left" data-content="Mens Closest to Pin"><i>CPM</i></div>
+		                			<div class="award cpm-icon animated pulse infinite" data-hole="{{ $hole->hole }}" data-toggle="popover" data-placement="left" data-content="Closest to Pin"><i>CP</i></div>
 		                		@endif
 		                		@if(!empty($hole->ldm))
-									<div class="award ldm-icon animated pulse infinite" data-hole="{{ $hole->hole }}" data-toggle="popover" data-placement="left" data-content="Mens Longest Drive"><i>LDM</i></div>
+									<div class="award ldm-icon animated pulse infinite" data-hole="{{ $hole->hole }}" data-toggle="popover" data-placement="left" data-content="Longest Drive"><i>LD</i></div>
 		                		@endif
 		                		<!-- Womens Awards -->
 		                		@if(!empty($hole->cpw))
@@ -174,11 +175,11 @@
 								  -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 								  -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 								  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-								  -webkit-transition: all 0.25s ease-in-out;
-								  -moz-transition: all 0.25s ease-in-out;
-								  -ms-transition: all 0.25s ease-in-out;
-								  -o-transition: all 0.25s ease-in-out;
-								  transition: all 0.25s ease-in-out;
+								  -webkit-transition: all 0.20s ease-in-out;
+								  -moz-transition: all 0.20s ease-in-out;
+								  -ms-transition: all 0.20s ease-in-out;
+								  -o-transition: all 0.20s ease-in-out;
+								  transition: all 0.20s ease-in-out;
 								}
 
 								.gmd-1:action {
@@ -395,7 +396,7 @@
              $("#value-int" + hole).val(2);
         }
         else if(score == (par + 3)) {
-            $("#value-text" + hole).html("Bollox");
+            $("#value-text" + hole).html("Triple Bogey");
             $("#value-int" + hole).val(3);
         }
         else if(score >= (par + 4)) {
@@ -461,7 +462,7 @@
 
 		swal({
 		  title: "Who's on your team?",
-		  text: "Please enter your team members names",
+		  text: "Please enter your team members names (comma separated)",
 		  type: "input",
 		  showCancelButton: false,
 		  closeOnConfirm: false,
@@ -500,29 +501,20 @@
 
     function confirmSave(score, hole, par){
 
-		// if(parseInt(hole) == currentHole || currentHole == 0){
-
-			if(parseInt(score) != 0){
-				swal({
-					title: "Confirm Score",
-					text: "Lock in your score of<font size='5'><strong>&nbsp" + score + "&nbsp</strong></font>for this hole?",
-					showCancelButton: true,
-					confirmButtonColor: "#62BE5C",
-					confirmButtonText: "Yes",
-					closeOnConfirm: false,
-					imageUrl: "images/golfballdot.png",
-					html: true
-				},function(){
-						saveScore(score, hole, par);
-				});
-			}
-		// } else {
-		// 	swal("Heads up!","Looks like you haven't submitted your score for the previous hole. Please do so before continuing","warning");
-//              $("body").scrollTop($("#anchor" + currentHole).offset().top - 50); 
-//              $("#" + hole).css("color", "white");
-//              $("#value-text" + hole).html("touch and slide to enter score");
-//              $("#value-int" + hole).val("-"); 
-		// }
+		if(parseInt(score) != 0){
+			swal({
+				title: "Confirm Score",
+				text: "Lock in your score of<font size='5'><strong>&nbsp" + score + "&nbsp</strong></font>for this hole?",
+				showCancelButton: true,
+				confirmButtonColor: "#62BE5C",
+				confirmButtonText: "Yes",
+				closeOnConfirm: false,
+				imageUrl: "images/golfballdot.png",
+				html: true
+			},function(){
+					saveScore(score, hole, par);
+			});
+		}
     }
 
     function saveScore(score, hole, par){
@@ -588,7 +580,7 @@
 
     	if($(".cpm-icon").data('hole') == hole){
 			swal({
-				title: "Mens Closest to Pin",
+				title: "Closest to Pin",
 				text: "Was someone on your team closet to the pin?",
 				showCancelButton: true,
 				closeOnConfirm: false,
@@ -605,7 +597,7 @@
 
     	if($(".ldm-icon").data('hole') == hole){
     		swal({
-				title: "Mens Longest Drive",
+				title: "Longest Drive",
 				text: "Did someone on your team have the longest drive?",
 				showCancelButton: true,
 				closeOnConfirm: false,
@@ -798,16 +790,6 @@
     	}
     }
 
-    function publishMSG(icon, text){
-    	var html = '<div class="row"><div class="col-xs-2"><div class="note-icon"><i class="green-text fa fa-lg ' + icon + '"></i></div> </div><div class="col-xs-10">' + text + '</div></div>';
-    	var time = moment().format();
-    	var notification = html + '|' + time;
-      	message = new Paho.MQTT.Message(notification);
-      	message.destinationName = "fc/notify/score";
-      	client.send(message);
-      	saveNotification(html);
-    }
-
     function publishNote(image, htmlString){
     	var html = '<div class="row"><div class="col-xs-5"><img class="img-responsive img-cover" src="' + image + '" /></div><div class="col-xs-7">'+htmlString+'</div></div>';
     	var time = moment().format();
@@ -846,7 +828,7 @@
 					console.log("geolocation watch error");
 				},
 				{
-					maximumAge: 30000, 
+					maximumAge: 10000, 
 					timeout: 60000, 
 					enableHighAccuracy: true 
 				}
@@ -871,7 +853,6 @@
 	  	var km = R * c; // Distance in km
 	  	var yd = Math.round(km/0.0009144);
 	  	$("#pin-val" + hole).html("<strong>" + yd + " yd</strong>");
-		getClub(yd, hole);
 	}
 
 	function deg2rad(deg) {
@@ -881,44 +862,6 @@
    	Number.prototype.between = function (min, max) {
 		return this > min && this < max;
 	};
-
-	function getClub(yd, hole){
-		var club = "";
-		if((yd).between(250, 400)) {
-			club = "DR";
-		} else if((yd).between(200, 250)){
-			club = "3W";
-		} else if((yd).between(190, 200)){
-			club = "2I";
-		} else if((yd).between(180, 190)){
-			club = "3I";
-		}else if((yd).between(170, 180)){
-			club = "4I";
-		}else if((yd).between(160, 170)){
-			club = "5I";
-		}else if((yd).between(150, 160)){
-			club = "6I";
-		}else if((yd).between(140, 150)){
-			club = "7I";
-		}else if((yd).between(130, 140)){
-			club = "8I";
-		}else if((yd).between(100, 130)){
-			club = "9I";
-		}else if((yd).between(50, 100)){
-			club = "PW";
-		}else if((yd).between(30, 50)){
-			club = "SW";
-		}else if((yd).between(20, 30)){
-			club = "LW";
-		}else if((yd).between(1, 20)){
-			club = "PT";
-		} else {
-			club = "To Far";
-			// console.log("OUT OF RANGE");
-		}
-
-		$("#club" + hole).html("<strong>" + club + "</strong>");
-	}
 
 
 // *********************************************
@@ -978,6 +921,24 @@
                 client.subscribe('fc/notify/score', { qos: 1 });
                 client.subscribe('fc/notify/chirp', { qos: 1 });
                 getLocation();
+
+			    // Try HTML5 geolocation.
+			    navigator.geolocation.watchPosition(
+			        function(position) {
+			            var lat = position.coords.latitude;
+			            var lon = position.coords.longitude;
+			            publishPosition(lat, lon); 
+			        },
+			        function(error){
+			            console.log("geolocation watch error");
+			        },
+			        {
+			            maximumAge: 10000, 
+			            timeout: 60000, 
+			            enableHighAccuracy: true 
+			        }
+			    );
+
             },
             onFailure: function (message) {
                 console.log("MQTT Connection Failed: " + message.errorMessage);
@@ -992,24 +953,10 @@
         client.connect(options);
     }
    
-    // Try HTML5 geolocation.
-    navigator.geolocation.watchPosition(
-        function(position) {
-            var lat = position.coords.latitude;
-            var lon = position.coords.longitude;
-            // publishPosition(lat, lon);
-        },
-        function(error){
-            console.log("geolocation watch error");
-        },
-        {
-            maximumAge: 30000, 
-            timeout: 60000, 
-            enableHighAccuracy: true 
-        }
-    );
+
 
     function publishPosition(lat, lon){
+    	console.log("publishing my position");
       	message = new Paho.MQTT.Message(lat + ',' + lon + ',' + userAvatar + ',' + teamName);
       	message.destinationName = "fc/position/" + userID;
       	client.send(message);
