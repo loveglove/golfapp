@@ -157,11 +157,49 @@
 								@endif
 						        </div>
 						    </div>
+						    <style>
+						    	.new-input{
+						    		width:250px;
+						    		height:80px;
+						    		border-radius: 40px;
+						    		border:1px solid silver;
+						    		background-color:white;
+						    		margin-top:20px;
+
+						    	}
+						    	.down-btn{
+						    		color:silver;
+						    		font-size: 28px;
+						    		background: #eaeaea;
+						    		border-radius: 50%;
+						    		height:38px;
+						    		width:38px;
+						    		float:left;
+						    	}
+						    	.up-btn{
+						    		color:silver;
+						    		background: #eaeaea;
+						    		border-radius: 50%;
+						    		height:38px;
+						    		width:38px;
+						    		font-size: 28px;
+						    		float:right;
+						    	}
+						    </style>
 						    <input type ="hidden" id="pinLat{{ $hole->hole }}" value="{{ $hole->pin_lat }}" />
 						    <input type ="hidden" id="pinLon{{ $hole->hole }}" value="{{ $hole->pin_lon }}" />
 		                    <div class="row">
 		                    	<input type ="hidden" id="hdnpar{{ $hole->hole }}" value="{{ $hole->par }}" />
-		                    	<div class="knob-container">
+		                    	<div class="new-input">
+		                    		<div class="down-btn">
+		                    			<i class="fa fa-minus"></i>
+		                    		</div>
+
+		                    		<div class="up-btn">
+		                    			<i class="fa fa-plus"></i>
+		                    		</div>
+		                    	</div>
+<!-- 		                    	<div class="knob-container">
 		                    		<input id="{{ $hole->hole }}" type="text" value="0" class="knobclass dial m-r"
 		                    		data-thickness="0.5" 
 		                    		data-fgColor="#62BE5C" 
@@ -174,7 +212,7 @@
 									data-max="10"
 									data-readOnly="false"
 									/>
-		                    	</div>
+		                    	</div> -->
 		                    	<div style="text-align:center;">
 		                    		<h4 id="value-text{{ $hole->hole }}">-</h4>
 		                    		<input id="value-int{{ $hole->hole }}" type="hidden" />
