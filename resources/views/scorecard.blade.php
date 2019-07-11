@@ -215,7 +215,7 @@
 		                    </div>
 		                    <div class="row">
 		                    	<div class="col-xs-12" style="text-align:center; margin-top:10px;">
-		                    		<button id='btn-cnf-{{ $hole->hole }}' class="btn btn-sm btn-primary btn-confirm" data-hole="{{ $hole->hole }}">
+		                    		<button id='btn-cnf-{{ $hole->hole }}' class="btn btn-sm btn-primary dim btn-confirm" data-hole="{{ $hole->hole }}">
 		                    			<i class="fa fa-check"></i> Confirm Score
 		                    		</button>
 		                    	</div>
@@ -718,7 +718,7 @@
     	$('#'+hole).prop("disabled", true);
     	$('#btn-up-'+hole).prop("disabled", true);
     	$('#btn-dwn-'+hole).prop("disabled", true);
-    	$('#btn-cnf-'+hole).prop("disabled", true).html('<i class="fa fa-lock"></i>').removeClass('btn-primary').addClass('btn-default');
+    	$('#btn-cnf-'+hole).prop("disabled", true).html('<i class="fa fa-lock"></i> Score Locked').removeClass('btn-primary').removeClass('dim').addClass('btn-default');
     }
 
     function notify(score, hole, par){
