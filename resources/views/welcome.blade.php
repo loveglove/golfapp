@@ -93,13 +93,13 @@
                     </div>
                     <br>
                     <h3 class="fc-font" style="font-size:40px;">Fisher Classic</h3>
-                    <p>The 2018 annual HAHFA golf tournament. Login or register to enter.
+                    <p>The 2019 annual Fisher Classic golf tournament. Login or register to enter.
                     </p>
                     <a href="auth/facebook" class="form-group"><button type="submit" class="btn btn-primary block full-width m-b dim"><i class="fa fa-facebook"></i>  Login with Facebook</button></a>
                     <br>
                     <a href="auth/login" class="form-group"><button type="submit" class="btn btn-info block full-width m-b dim"><i class="fa fa-envelope"></i>  Login with E-mail</button></a>
 
-                    <p class="m-t"> <small>Developed by Matt Glover &copy; 2018</small> </p>
+                    <p class="m-t"> <small>Developed by Matt Glover &copy; 2019</small> </p>
                     <a href="{{ asset('pdf/HAHFA-how-to-use.pdf') }}" target="_blank"><i class="fa fa-info-circle"></i> <span class="nav-label">User Guide</span></a>
                 </div>
             </div>
