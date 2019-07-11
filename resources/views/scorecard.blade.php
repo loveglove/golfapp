@@ -158,64 +158,64 @@
 						        </div>
 						    </div>
 						    <style>
-						    	.new-input{
-						    		width:250px;
+						    	.form-lg{
 						    		height:80px;
-						    		border-radius: 40px;
-						    		border:1px solid silver;
-						    		background-color:white;
-						    		margin-top:20px;
+						    		font-size: 36px;
+						    		min-width:80px;
+						    	}
+								.btn-round{
+									height:80px;
+									border-radius: 40px;
+									min-width:80px;
+								}
+								.gmd-1 {
+								  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+								  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+								  -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+								  -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+								  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+								  -webkit-transition: all 0.25s ease-in-out;
+								  -moz-transition: all 0.25s ease-in-out;
+								  -ms-transition: all 0.25s ease-in-out;
+								  -o-transition: all 0.25s ease-in-out;
+								  transition: all 0.25s ease-in-out;
+								}
 
-						    	}
-						    	.down-btn{
-						    		color:silver;
-						    		font-size: 28px;
-						    		background: #eaeaea;
-						    		border-radius: 50%;
-						    		height:38px;
-						    		width:38px;
-						    		float:left;
-						    	}
-						    	.up-btn{
-						    		color:silver;
-						    		background: #eaeaea;
-						    		border-radius: 50%;
-						    		height:38px;
-						    		width:38px;
-						    		font-size: 28px;
-						    		float:right;
-						    	}
+								.gmd-1:action {
+								  -webkit-box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.20);
+								  -moz-box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.20);
+								  -ms-box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.20);
+								  -o-box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.20);
+								  box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.20);
+								}
 						    </style>
 						    <input type ="hidden" id="pinLat{{ $hole->hole }}" value="{{ $hole->pin_lat }}" />
 						    <input type ="hidden" id="pinLon{{ $hole->hole }}" value="{{ $hole->pin_lon }}" />
 		                    <div class="row">
 		                    	<input type ="hidden" id="hdnpar{{ $hole->hole }}" value="{{ $hole->par }}" />
-		                    	<div class="new-input">
-		                    		<div class="down-btn">
-		                    			<i class="fa fa-minus"></i>
-		                    		</div>
-
-		                    		<div class="up-btn">
-		                    			<i class="fa fa-plus"></i>
-		                    		</div>
-		                    	</div>
-<!-- 		                    	<div class="knob-container">
-		                    		<input id="{{ $hole->hole }}" type="text" value="0" class="knobclass dial m-r"
-		                    		data-thickness="0.5" 
-		                    		data-fgColor="#62BE5C" 
-		                    		data-width="180" 
-		                    		data-height="140" 
-		                    		data-angleOffset=-125 
-		                    		data-angleArc=250
-		                    		data-step="1"
-									data-min="0"
-									data-max="10"
-									data-readOnly="false"
-									/>
-		                    	</div> -->
-		                    	<div style="text-align:center;">
+		                    	<br>
+								<div class="col-xs-10 col-xs-offset-1">
+									<div class="input-group number-spinner ">
+										<span class="input-group-btn">
+											<button class="btn btn-default btn-round gmd-1" data-dir="dwn"><span class="glyphicon glyphicon-minus"></span></button>
+										</span>
+										<input type="tel" id="{{ $hole->hole }}" class="form-control form-lg text-center" value="1">
+										<span class="input-group-btn">
+											<button class="btn btn-default btn-round gmd-1" data-dir="up"><span class="glyphicon glyphicon-plus"></span></button>
+										</span>
+									</div>
+								</div>
+		                    </div>
+		                    <div class="row">
+		                    	<br>
+		                    	<div class="col-xs-12 m-t-5" style="text-align:center;">
 		                    		<h4 id="value-text{{ $hole->hole }}">-</h4>
 		                    		<input id="value-int{{ $hole->hole }}" type="hidden" />
+		                    	</div>
+		                    </div>
+		                    <div class="row">
+		                    	<div class="col-xs-12 m-t-5" style="text-align:center;">
+		                    		<button class="btn btn-sm btn-primary"><i class="fa fa-lock"></i></button>
 		                    	</div>
 		                    </div>
                         </div>		
@@ -283,7 +283,8 @@
 	  
 @section('scripts')
 <!-- JSKnob -->
-<script src="{{ asset('/theme/js/plugins/jsKnob/jquery.knob.js') }}"></script>
+<!-- <script src="{{ asset('/theme/js/plugins/jsKnob/jquery.knob.js') }}"></script> -->
+<script src="{{ asset('/input-spinner/src/bootstrap-input-spinner.js') }}"></script>
 <script>
 
 	var teamName = "{{ htmlspecialchars($team->name) }}";
@@ -317,89 +318,169 @@
 
 	});
 
+
+	$(document).on('click', '.number-spinner button', function () {    
+		
+		var btn = $(this);
+		var oldValue = btn.closest('.number-spinner').find('input').val().trim();
+		var hole = btn.closest('.number-spinner').find('input').attr('id');
+		var score = 0;
+		
+		if (btn.data('dir') == 'up') {
+			score = parseInt(oldValue) + 1;
+		} else {
+			if (oldValue > 1) {
+				score = parseInt(oldValue) - 1;
+			} else {
+				score = 1;
+			}
+		}
+		btn.closest('.number-spinner').find('input').val(score);
+		setScoreText(hole, score);
+	});
+
+
+	function setScoreText(hole, score){
+
+		var par = parseInt($("#hdnpar" + hole).val());
+
+		if(score == 0){
+            $("#value-int" + hole).val("");
+      	}
+		else if(score == 1) {
+            $("#value-text" + hole).html("Hole In One");
+        	$("#value-int" + hole).val(-4);
+    	}
+      	else if(score == (par - 3) && !((score - 3) == 1)) {
+            $("#value-text" + hole).html("Albatross");
+        	$("#value-int" + hole).val(-3);
+    	}
+        else if(score == (par - 2) && !((par - 2) == 1)) {
+            $("#value-text" + hole).html("Eagle");
+             $("#value-int" + hole).val(-2);
+        }
+        else if(score == (par - 1)) {
+            $("#value-text" + hole).html("Birdie");
+            $("#value-int" + hole).val(-1);
+        }
+        else if(score == par) {
+            $("#value-text" + hole).html("Par");
+            $("#value-int" + hole).val(0);
+        }
+        else if(score == (par + 1)){
+            $("#value-text" + hole).html("Bogey");
+            $("#value-int" + hole).val(1);
+        }
+        else if(score == (par + 2)){
+             $("#value-text" + hole).html("Double Bogey");
+             $("#value-int" + hole).val(2);
+        }
+        else if(score == (par + 3)) {
+            $("#value-text" + hole).html("Bollox");
+            $("#value-int" + hole).val(3);
+        }
+        else if(score >= (par + 4)) {
+            $("#value-text" + hole).html("Bollox!!!");
+            $("#value-int" + hole).val(4);
+        }
+	}
+
+
     $(document).ready(function() {
 
     	$('[data-toggle="popover"]').popover();
 
-      	$(".dial").knob({
-    		'release' : function (val) { 
-    			var hole = this.$.attr('id');
-    			var par = $("#hdnpar" + hole).val();
-                setTimeout(function(){
-                    confirmSave(val, hole, par);
-                }, 200);
-    		}
-		});
 
-		$('.dial').trigger('configure', {
-		    'draw': function (v) {
-				var hole = this.$.attr('id');
-				var par = parseInt($("#hdnpar" + hole).val());
-	          	v = parseInt(document.getElementById(hole).value);
+
+		// $("input[type='number']").InputSpinner({
+		//   	decrementButton: "<strong>-</strong>",
+		//   	incrementButton: "<strong>+</strong>",
+		//   	// groupClass: "input-group-spinner",
+		//   	// buttonsClass: "btn-outline-secondary",
+		//   	buttonsWidth: "2.5em",
+		//   	textAlign: "center",
+		// });
+
+
+  //     	$(".dial").knob({
+  //   		'release' : function (val) { 
+  //   			var hole = this.$.attr('id');
+  //   			var par = $("#hdnpar" + hole).val();
+  //               setTimeout(function(){
+  //                   confirmSave(val, hole, par);
+  //               }, 200);
+  //   		}
+		// });
+
+		// $('.dial').trigger('configure', {
+		//     'draw': function (v) {
+		// 		var hole = this.$.attr('id');
+		// 		var par = parseInt($("#hdnpar" + hole).val());
+	 //          	v = parseInt(document.getElementById(hole).value);
 	          	
-	          	if(v == 0){
-		            this.o.fgColor='#62BE5C';
-		            $("#" + hole).css("color", "white");
-		            $("#value-text" + hole).html("touch and slide to enter score");
-		            $("#value-int" + hole).val("");
-	          	}
-				else if(v == 1) {
-	          		this.o.fgColor='#33cccc';
-		            $("#" + hole).css("color", "#33cccc");
-		            $("#value-text" + hole).html("Hole In One");
-	            	$("#value-int" + hole).val(-4);
-	        	}
-	          	else if(v == (par - 3) && !((par - 3) == 1)) {
-	          		this.o.fgColor='#33cccc';
-		            $("#" + hole).css("color", "#33cccc");
-		            $("#value-text" + hole).html("Albatross");
-	            	$("#value-int" + hole).val(-3);
-	        	}
-		        else if(v == (par - 2) && !((par - 2) == 1)) {
-		            this.o.fgColor='#62BE5C';
-		            $("#" + hole).css("color", "#62BE5C");
-		            $("#value-text" + hole).html("Eagle");
-		             $("#value-int" + hole).val(-2);
-		        }
-		        else if(v == (par - 1)) {
-		            this.o.fgColor='#62BE5C';
-		            $("#" + hole).css("color", "#62BE5C");
-		            $("#value-text" + hole).html("Birdie");
-		            $("#value-int" + hole).val(-1);
-		        }
-		        else if(v == par) {
-		            this.o.fgColor='#89C558';
-		            $("#" + hole).css("color", "#89C558");
-		            $("#value-text" + hole).html("Par");
-		            $("#value-int" + hole).val(0);
-		        }
-		        else if(v == (par + 1)){
-		            this.o.fgColor='#B9CC54';
-		            $("#" + hole).css("color", "#B9CC54");
-		            $("#value-text" + hole).html("Bogey");
-		            $("#value-int" + hole).val(1);
-		        }
-		        else if(v == (par + 2)){
-		            this.o.fgColor='#D4B64F';
-		            $("#" + hole).css("color", "#D4B64F");
-		             $("#value-text" + hole).html("Double Bogey");
-		             $("#value-int" + hole).val(2);
-		        }
-		        else if(v == (par + 3)) {
-		            this.o.fgColor='#DB824A';
-		            $("#" + hole).css("color", "#DB824A");
-		            $("#value-text" + hole).html("Bollox");
-		            $("#value-int" + hole).val(3);
-		        }
-		        else if(v >= (par + 4)) {
-		            this.o.fgColor='#E34444';
-		            $("#" + hole).css("color", "#E34444");
-		            $("#value-text" + hole).html("Bollox!!!");
-		            $("#value-int" + hole).val(4);
-		        }
-		    }
-		});
-		$('.dial').trigger('release');
+	 //          	if(v == 0){
+		//             this.o.fgColor='#62BE5C';
+		//             $("#" + hole).css("color", "white");
+		//             $("#value-text" + hole).html("touch and slide to enter score");
+		//             $("#value-int" + hole).val("");
+	 //          	}
+		// 		else if(v == 1) {
+	 //          		this.o.fgColor='#33cccc';
+		//             $("#" + hole).css("color", "#33cccc");
+		//             $("#value-text" + hole).html("Hole In One");
+	 //            	$("#value-int" + hole).val(-4);
+	 //        	}
+	 //          	else if(v == (par - 3) && !((par - 3) == 1)) {
+	 //          		this.o.fgColor='#33cccc';
+		//             $("#" + hole).css("color", "#33cccc");
+		//             $("#value-text" + hole).html("Albatross");
+	 //            	$("#value-int" + hole).val(-3);
+	 //        	}
+		//         else if(v == (par - 2) && !((par - 2) == 1)) {
+		//             this.o.fgColor='#62BE5C';
+		//             $("#" + hole).css("color", "#62BE5C");
+		//             $("#value-text" + hole).html("Eagle");
+		//              $("#value-int" + hole).val(-2);
+		//         }
+		//         else if(v == (par - 1)) {
+		//             this.o.fgColor='#62BE5C';
+		//             $("#" + hole).css("color", "#62BE5C");
+		//             $("#value-text" + hole).html("Birdie");
+		//             $("#value-int" + hole).val(-1);
+		//         }
+		//         else if(v == par) {
+		//             this.o.fgColor='#89C558';
+		//             $("#" + hole).css("color", "#89C558");
+		//             $("#value-text" + hole).html("Par");
+		//             $("#value-int" + hole).val(0);
+		//         }
+		//         else if(v == (par + 1)){
+		//             this.o.fgColor='#B9CC54';
+		//             $("#" + hole).css("color", "#B9CC54");
+		//             $("#value-text" + hole).html("Bogey");
+		//             $("#value-int" + hole).val(1);
+		//         }
+		//         else if(v == (par + 2)){
+		//             this.o.fgColor='#D4B64F';
+		//             $("#" + hole).css("color", "#D4B64F");
+		//              $("#value-text" + hole).html("Double Bogey");
+		//              $("#value-int" + hole).val(2);
+		//         }
+		//         else if(v == (par + 3)) {
+		//             this.o.fgColor='#DB824A';
+		//             $("#" + hole).css("color", "#DB824A");
+		//             $("#value-text" + hole).html("Bollox");
+		//             $("#value-int" + hole).val(3);
+		//         }
+		//         else if(v >= (par + 4)) {
+		//             this.o.fgColor='#E34444';
+		//             $("#" + hole).css("color", "#E34444");
+		//             $("#value-text" + hole).html("Bollox!!!");
+		//             $("#value-int" + hole).val(4);
+		//         }
+		//     }
+		// });
+		// $('.dial').trigger('release');
 
       	var completed = <?php echo json_encode($completed) ?>;
 
