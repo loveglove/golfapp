@@ -7,6 +7,7 @@ use App\Tournament;
 use App\Matchup;
 use App\Score;
 use App\Hole;
+use App\Award;
 use Request;
 use Auth;
 use DB;
@@ -360,6 +361,29 @@ class AdminController extends Controller
         return back()->withErrors(['awards' => 'Holes '.Request::input('cpm'). ' and '.Request::input('ldm'). ' set for closest and longest for men. Holes '.Request::input('cpw'). ' and '.Request::input('ldw').' set for closest and longest for women']);
     }  
 
+
+    /*
+     * Insert an award name
+     *
+     */
+    public function insertAward(Request $request, $type)
+    {
+        $tournament = Tournament::where('active', 1)->first();
+        $data = Request::all();   
+        $hole = Hole::where($type, 1)->first();
+
+        Award::create([
+            "id_tour" => $tournament->id,
+            "id_course" => $tournament->id_course,
+            "id_team" => $data["id"],
+            "type" => $type,
+            "hole" => $hole->hole,
+            "name" => $data["name"]
+        ]);
+
+        return redirect('/team/edit/'.$data["id"])->withErrors(['insertaward' => 'Award entered for '.$type.' as '.$data["name"]]);
+
+    }
 
 
     /*

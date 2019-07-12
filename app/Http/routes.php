@@ -81,6 +81,7 @@ Route::post('clear_score',['as' => 'clear_score', 'uses' => 'AdminController@cle
 Route::post('clear_tour',['as' => 'clear_tour', 'uses' => 'AdminController@clearTour']);
 Route::post('set_award',['as' => 'set_award', 'uses' => 'AdminController@setAwardHoles']);
 Route::post('set_start',['as' => 'set_start', 'uses' => 'AdminController@setStartHole']);
+Route::post('insert_award/{type}',['as' => 'insert_award', 'uses' => 'AdminController@insertAward']);
 
 // Team Routes
 Route::get('/team/edit/{id}', 'AdminController@teamEdit');

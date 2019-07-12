@@ -51,9 +51,9 @@
 
 </style>
 
-  <div class="wrapper wrapper-content animated fadeInDown">
+  <div class="wrapper wrapper-content animated fadeIn" style="padding:0px;">
   		<br/>
-        <div class="row main-row">
+        <div class="row main-row" style="padding:0px;">
             <div id="contain" class="col-sm-12 col-md-6 col-lg-4">
 				@foreach ($course as $hole)
 					<a id="anchor{{  $hole->hole }}"></a>
@@ -62,17 +62,17 @@
 		                	<div class="row" style="position: relative;">
 		                    	<!-- Mens Awards -->
 		                		@if(!empty($hole->cpm))
-		                			<div class="award cpm-icon animated pulse infinite" data-hole="{{ $hole->hole }}" data-toggle="popover" data-placement="left" data-content="Closest to Pin"><i>CP</i></div>
+		                			<div class="award cpm-icon animated pulse infinite" data-hole="{{ $hole->hole }}" data-toggle="popover" data-placement="left" data-content="Closest to Pin hole"><i>CP</i></div>
 		                		@endif
 		                		@if(!empty($hole->ldm))
-									<div class="award ldm-icon animated pulse infinite" data-hole="{{ $hole->hole }}" data-toggle="popover" data-placement="left" data-content="Longest Drive"><i>LD</i></div>
+									<div class="award ldm-icon animated pulse infinite" data-hole="{{ $hole->hole }}" data-toggle="popover" data-placement="left" data-content="Longest Drive hole"><i>LD</i></div>
 		                		@endif
 		                		<!-- Womens Awards -->
 		                		@if(!empty($hole->cpw))
-		                			<div class="award cpw-icon animated pulse infinite" data-hole="{{ $hole->hole }}" data-toggle="popover" data-placement="left" data-content="Womens Closest to Pin"><i>CPW</i></div>
+		                			<div class="award cpw-icon animated pulse infinite" data-hole="{{ $hole->hole }}" data-toggle="popover" data-placement="left" data-content="Womens Closest to Pin hole"><i>CPW</i></div>
 		                		@endif
 		                		@if(!empty($hole->ldw))
-									<div class="award ldw-icon animated pulse infinite" data-hole="{{ $hole->hole }}" data-toggle="popover" data-placement="left" data-content="Womens Longest Drive"><i>LDW</i></div>
+									<div class="award ldw-icon animated pulse infinite" data-hole="{{ $hole->hole }}" data-toggle="popover" data-placement="left" data-content="Womens Longest Drive hole"><i>LDW</i></div>
 		                		@endif
                                 <div class="col-xs-6" style="text-align: center; padding-top: 5px;">
                                 	<div class="row">
@@ -121,7 +121,7 @@
                                             </div>
                                         </div>
                                     </div>  -->
-							        <div class="hole-info green-bg">
+							        <div class="hole-info green-bg" data-toggle="popover" data-placement="top" data-content="Current distance to center of the green">
 							            <div class="row">
 							                <div class="col-xs-4 text-left">
 							                   <strong>Pin</strong>
@@ -131,7 +131,7 @@
 							                </div>
 							            </div>
 							        </div>     
-									<div class="hole-info silver-bg" style="background:#333;">
+									<div class="hole-info silver-bg" style="background:#333;" data-toggle="popover" data-placement="bottom" data-content="Best score for this hole entered so far">
 							            <div class="row">
 							                <div class="col-xs-8 text-left">
 							                   Best
@@ -167,7 +167,7 @@
 								.btn-round{
 									height:80px;
 									border-radius: 40px;
-									min-width:80px;
+									width:80px;
 								}
 								.gmd-1 {
 								  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -286,8 +286,6 @@
 	  
 @section('scripts')
 <!-- JSKnob -->
-<!-- <script src="{{ asset('/theme/js/plugins/jsKnob/jquery.knob.js') }}"></script> -->
-<script src="{{ asset('/input-spinner/src/bootstrap-input-spinner.js') }}"></script>
 <script>
 
 	var teamName = "{{ htmlspecialchars($team->name) }}";
@@ -317,7 +315,7 @@
 
    		event.preventDefault();
 		var hole = $(this).html();
-        $('html, body').animate({ scrollTop: $("#anchor" + hole).position().top + 10 }, 500);
+		scrollToHole(hole);
 
 	});
 
@@ -418,7 +416,7 @@
       	}
 
       	if(!completed.length){
-      		$('html, body').animate({ scrollTop: $("#anchor" + starthole).position().top + 10 }, 500);
+      		scrollToHole(starthole);
       	}
 
       	// Check completed holes and set values
@@ -443,7 +441,7 @@
       	});
 
 		if(currentHole > 0){
-			$('html, body').animate({ scrollTop: $("#anchor" + currentHole).position().top + 10 }, 500);
+			scrollToHole(currentHole);
     	}
 
 		console.log("current hole: " + currentHole);
@@ -456,6 +454,10 @@
       	
 	});
 
+
+	function scrollToHole(hole){
+		$('html, body').animate({ scrollTop: $("#anchor" + hole).position().top - 10 }, 500);
+	}
 
 
 	function setTeamNames(){
@@ -615,7 +617,7 @@
     	if($(".cpw-icon").data('hole') == hole){
 			swal({
 				title: "Womens Closest to Pin",
-				text: "Was someone on your team closet to the pin?",
+				text: "Was someone on your team closest to the pin?",
 				showCancelButton: true,
 				closeOnConfirm: false,
 				confirmButtonColor: "#62BE5C",
@@ -922,6 +924,12 @@
                 client.subscribe('fc/notify/chirp', { qos: 1 });
                 getLocation();
 
+                // setInterval(function(){ 
+                // 	var lat = $("#pinLat" + currentHole).val();
+                // 	var lon = $("#pinLon" + currentHole).val(); 
+                // 	// publishPosition(lat, lon);
+                // }, 5000);
+
 			    // Try HTML5 geolocation.
 			    navigator.geolocation.watchPosition(
 			        function(position) {
@@ -956,7 +964,7 @@
 
 
     function publishPosition(lat, lon){
-    	console.log("publishing my position");
+    	console.log("publishing my position: " + lat + ", " + lon);
       	message = new Paho.MQTT.Message(lat + ',' + lon + ',' + userAvatar + ',' + teamName);
       	message.destinationName = "fc/position/" + userID;
       	client.send(message);

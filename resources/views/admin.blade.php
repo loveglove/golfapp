@@ -12,7 +12,9 @@
 }
 </style>
 <br/>
-<div class="wrapper wrapper-content animated fadeInRight">
+<div class="wrapper wrapper-content animated fadeInRight ">
+    <div class="row">
+        <div class="col-lg-6">
     <div class="ibox float-e-margins">
         <div class="ibox-content">
             <h3><i class="fa fa-flag"></i> Tournament </h3>
@@ -220,7 +222,8 @@
 
     <br/>
     <br/>
-
+</div>
+</div>
 
 </div>
 

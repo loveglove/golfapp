@@ -45,7 +45,7 @@ class StandingsController extends Controller
         $type = null;
 
         if($URLpath == "/lastyear"){
-            $tournament = Tournament::find(23);
+            $tournament = Tournament::find(31);
             $type = $tournament->type;
         }else{
             $tournament = Tournament::where('active', 1)->first();

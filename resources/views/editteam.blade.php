@@ -39,7 +39,6 @@
                         </div>
                         <div class="col-xs-4" style="float:right;">
                             <!-- Clear Score -->
-                    <!-- Clear Score -->
                                 {{ Form::open(array('route' => 'eject_member', 'class' => 'form')) }}
                                 {{ Form::hidden('team_id', $team->id) }}
                                 {{ Form::hidden('user_id', $member["id"]) }}
@@ -94,6 +93,45 @@
 
     <div class="ibox float-e-margins">
         <div class="ibox-content">
+            <h3><i class="fa fa-flag"></i> Insert an Award </h3>
+            <br>
+            <form class="form" method="POST" action="/insert_award/cpm" >
+                <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
+                <input name="id" type="hidden" value="{{ $team->id }}"/>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <input type="text" name="name" class="form-control" placeholder="Member name" />
+                    </div>
+                    <div class="col-xs-4">
+                        <button class="btn btn-primary btn-block" type="submit">Set CPM</button>
+                    </div>
+                </div>
+            </form>
+            <br>
+            <form class="form" method="POST" action="/insert_award/ldm" >
+                <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
+                <input name="id" type="hidden" value="{{ $team->id }}"/>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <input type="text" name="name" class="form-control" placeholder="Member name" />
+                    </div>
+                    <div class="col-xs-4">
+                        <button class="btn btn-primary btn-block" type="submit">Set LDM</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                    @if ($errors->has('insertaward'))               
+                        <small>{{ $errors->first('insertaward') }}</small>
+                    @endif
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
             <h3><i class="fa fa-times-circle"></i> Clear Team Score </h3>
             <br>
             <div class="row">
@@ -101,7 +139,7 @@
                 <!-- Clear Score -->
                 {{ Form::open(array('route' => 'clear_team', 'class' => 'form')) }}
                 {{ Form::hidden('id', $team->id) }}
-                    <button class="btn btn-warning" type="submit"><i class="fa fa-times-circle"></i> Clear Score</button>
+                    <button class="btn btn-warning" type="submit"><i class="fa fa-times-circle"></i> Clear Team Score</button>
                      @if ($errors->has('clear'))               
                         <p>{{ $errors->first('clear') }}</p>
                     @endif
