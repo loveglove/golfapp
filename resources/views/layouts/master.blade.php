@@ -126,7 +126,7 @@
         </div>
             <ul class="nav navbar-top-links navbar-right" style="display: inline-block;">
 
-                <li class="notify-icon">
+                <li class="notify-icon" style="margin-left: 6px;">
                     <a onclick="openNotifications();" class="dropdown-toggle count-info">
                         <i class="fa fa-bell"></i>  <span id="notify-count" class="label label-primary"></span>
                     </a>
@@ -138,17 +138,16 @@
                 ?>
                   <li class="notify-icon" style="margin-left: 6px;">
                       <a onclick="openCompletedHoles();" class="dropdown-toggle">
-                          <i id="completed-holes-icon" style="font-size: 18px; vertical-align: bottom;" class="fa fa-check-circle"></i>
+                          <i id="completed-holes-icon" style="font-size: 18px; vertical-align: bottom;" class="fa fa-check-square"></i>
                       </a>
                   </li>
-                <?php } ?>
 
-                <?php 
-                  $page = Request::segment(1);
-                  if($page == "course"){
-                ?>
-                  <li class="notify-icon" style="margin-left: 10px;">
+                  <li class="notify-icon" style="margin-left: 10px;" data-toggle="popover" data-placement="bottom" data-content="Wind Speed">
                       <img src="images/windicon.png" height="22px" class="animated fadeInLeft" /><span id="weather"></span>
+                  </li>
+
+                  <li class="notify-icon" style="margin-left: 10px;" data-toggle="popover" data-placement="bottom" data-content="Wind Direction">
+                      <i id="wind-dir-icon" style="font-size: 18px; color:#999; vertical-align: bottom;" class="fa fa-arrow-circle-up"></i>
                   </li>
                 <?php } ?>
 

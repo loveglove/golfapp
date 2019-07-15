@@ -25,6 +25,8 @@ Route::get('/forgot', function () {
     return view('auth.forgot');
 });
 
+
+
 // Login Routes
 Route::auth();
 Route::get('auth/login', array('as' => 'login', 'uses' => function(){
@@ -100,3 +102,8 @@ Route::get('error', array('as' => 'error', 'uses' => function(){
 
 
 Route::get('/home', 'HomeController@index');
+
+//Test
+Route::get('/compass', function () {
+    return view('compass');
+});

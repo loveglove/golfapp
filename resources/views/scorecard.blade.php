@@ -48,7 +48,9 @@
 		margin-right: 5px;
 		margin-bottom: 5px;
 	}
-
+	#wind-dir-icon{
+		/*transform: rotateZ(157deg);*/
+	}
 </style>
 
   <div class="wrapper wrapper-content animated fadeIn" style="padding:0px;">
@@ -296,6 +298,7 @@
 	var starthole = "{{ $team->start or 1 }}";
 	var currentHole = null;
 	var windSpeedSet = false;
+	var windSpeedDeg = 0;
 
 
 	// open hole preview modal
@@ -962,9 +965,8 @@
     }
    
 
-
     function publishPosition(lat, lon){
-    	console.log("publishing my position: " + lat + ", " + lon);
+    	console.log("publishing my position");
       	message = new Paho.MQTT.Message(lat + ',' + lon + ',' + userAvatar + ',' + teamName);
       	message.destinationName = "fc/position/" + userID;
       	client.send(message);
@@ -997,6 +999,7 @@
 
 	            var dir = '';
 	            if(winddeg != ''){
+	            	windSpeedDeg = parseInt(winddeg);
 	           		dir = degToCompass(winddeg);
 	            }
 
@@ -1018,5 +1021,38 @@
 	}
 
 
-</script>
+    // Get event data
+    function deviceOrientationListener(event) {
+      var alpha    = event.alpha; //z axis rotation [0,360)
+      var beta     = event.beta; //x axis rotation [-180, 180]
+      var gamma    = event.gamma; //y axis rotation [-90, 90]
+      //Check if absolute values have been sent
+      if (typeof event.webkitCompassHeading !== "undefined") {
+        alpha = event.webkitCompassHeading; //iOS non-standard
+        var heading = alpha
+        $("#wind-dir-icon").css('transform','rotateZ('+( parseInt(heading.toFixed([0])) + windSpeedDeg )+'deg)');
+      }
+      else {
+      	// hide the dir icon if this is the case
+      	$("#wind-dir-icon").hide();
+        // alert("Your device is reporting relative alpha values, so this compass won't point north :(");
+        // var heading = 360 - alpha; //heading [0, 360)
+        // $("#wind-dir-icon").css('transform','rotateZ('+( parseInt(heading.toFixed([0])) + windSpeedDeg )+'deg)');
+      }
+    }
+ 
+    // Check if device can provide absolute orientation data
+    if (window.DeviceOrientationAbsoluteEvent) {
+      window.addEventListener("DeviceOrientationAbsoluteEvent", deviceOrientationListener);
+    } // If not, check if the device sends any orientation data
+    else if(window.DeviceOrientationEvent){
+      window.addEventListener("deviceorientation", deviceOrientationListener);
+    } // Send an alert if the device isn't compatible
+    else {
+      alert("Sorry, your current direction is not detectable on this device");
+      $("#wind-dir-icon").hide();
+    }
+
+    
+   </script>
 @endsection
