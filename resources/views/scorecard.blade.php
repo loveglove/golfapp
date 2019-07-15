@@ -48,9 +48,7 @@
 		margin-right: 5px;
 		margin-bottom: 5px;
 	}
-	#wind-dir-icon{
-		/*transform: rotateZ(157deg);*/
-	}
+
 </style>
 
   <div class="wrapper wrapper-content animated fadeIn" style="padding:0px;">
@@ -93,7 +91,7 @@
 									        </div> 
 									     </div>
 								    </div>
-							         <div class="hole-info blue-bg" >
+							         <div class="hole-info blue-bg" data-toggle="popover" data-placement="top" data-content="Tee-Block Yardage" >
 							            <div class="row">
 							                <div class="col-xs-4 text-left">
 							                   <strong>Blue</strong>
@@ -103,7 +101,7 @@
 							                </div>
 							            </div>
 							        </div>  
-							        <div class="hole-info white-bg">
+							        <div class="hole-info white-bg" data-toggle="popover" data-placement="bottom" data-content="Tee-Block Yardage">
 							            <div class="row">
 							                <div class="col-xs-4 text-left">
 							                   <strong>White</strong>
@@ -934,21 +932,21 @@
                 // }, 5000);
 
 			    // Try HTML5 geolocation.
-			    navigator.geolocation.watchPosition(
-			        function(position) {
-			            var lat = position.coords.latitude;
-			            var lon = position.coords.longitude;
-			            publishPosition(lat, lon); 
-			        },
-			        function(error){
-			            console.log("geolocation watch error");
-			        },
-			        {
-			            maximumAge: 10000, 
-			            timeout: 60000, 
-			            enableHighAccuracy: true 
-			        }
-			    );
+			    // navigator.geolocation.watchPosition(
+			    //     function(position) {
+			    //         var lat = position.coords.latitude;
+			    //         var lon = position.coords.longitude;
+			    //         publishPosition(lat, lon); 
+			    //     },
+			    //     function(error){
+			    //         console.log("geolocation watch error");
+			    //     },
+			    //     {
+			    //         maximumAge: 10000, 
+			    //         timeout: 60000, 
+			    //         enableHighAccuracy: true 
+			    //     }
+			    // );
 
             },
             onFailure: function (message) {
@@ -1004,6 +1002,7 @@
 	            }
 
 	           $("#weather").html(windspeed+ " mph " + dir);
+	           $("#wind-dir-icon").show();
 
 	       },
 	       error: function(xhr, status, error) {
@@ -1033,11 +1032,7 @@
         $("#wind-dir-icon").css('transform','rotateZ('+( parseInt(heading.toFixed([0])) + windSpeedDeg )+'deg)');
       }
       else {
-      	// hide the dir icon if this is the case
       	$("#wind-dir-icon").hide();
-        // alert("Your device is reporting relative alpha values, so this compass won't point north :(");
-        // var heading = 360 - alpha; //heading [0, 360)
-        // $("#wind-dir-icon").css('transform','rotateZ('+( parseInt(heading.toFixed([0])) + windSpeedDeg )+'deg)');
       }
     }
  
@@ -1049,8 +1044,9 @@
       window.addEventListener("deviceorientation", deviceOrientationListener);
     } // Send an alert if the device isn't compatible
     else {
+    $("#wind-dir-icon").hide();
       alert("Sorry, your current direction is not detectable on this device");
-      $("#wind-dir-icon").hide();
+
     }
 
     

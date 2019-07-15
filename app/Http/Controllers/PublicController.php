@@ -42,8 +42,9 @@ class PublicController extends Controller
         $tournament = Tournament::where('active', 1)->first();
         return view('leaderboard', [
             'standings' => $this->standings->getLeaderboard($tournament->id),
-            'closest' => Award::where('id_tour', $tournament->id)->where('type', 'closest')->latest()->first(),
-            'longest' => Award::where('id_tour', $tournament->id)->where('type', 'longest')->latest()->first(),
+            'closest' => Award::where('id_tour', $tournament->id)->where('type', 'cpm')->latest()->first(),
+            'longest' => Award::where('id_tour', $tournament->id)->where('type', 'ldm')->latest()->first(),
+
         ]);
     }
 

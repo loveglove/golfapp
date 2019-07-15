@@ -146,8 +146,8 @@
                       <img src="images/windicon.png" height="22px" class="animated fadeInLeft" /><span id="weather"></span>
                   </li>
 
-                  <li class="notify-icon" style="margin-left: 10px;" data-toggle="popover" data-placement="bottom" data-content="Wind Direction">
-                      <i id="wind-dir-icon" style="font-size: 18px; color:#999; vertical-align: bottom;" class="fa fa-arrow-circle-up"></i>
+                  <li class="notify-icon" style="margin-left: 6px;" data-toggle="popover" data-placement="bottom" data-content="Wind Direction">
+                      <i id="wind-dir-icon" style="font-size: 18px; color:#999; vertical-align: bottom; display:none;" class="fa fa-arrow-circle-up"></i>
                   </li>
                 <?php } ?>
 
@@ -200,7 +200,7 @@
             </strong>
         </div>
         <div style="font-size: 10px;">
-            Matt Glover &copy; 2018
+            Matt Glover &copy; 2019
         </div>
       </div>
     
