@@ -75,6 +75,8 @@
 
 <body class="" ontouchstart="" style="background:#efefef">
 
+   <div id="page-wrapper" class="gray-bg">
+    <div class="row">
         <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
 
           <div class="navbar-header">
@@ -133,9 +135,8 @@
       </div>
     
     </div>
+    </div>
     <!-- end of page wrapper -->
-  </div>
-<!-- end of wrapper -->
 
     <?php $page = Request::segment(1); ?>
 

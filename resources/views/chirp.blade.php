@@ -5,7 +5,7 @@
 
 </style>
 
-<div class="wrapper wrapper-content animated fadeInRight">
+<div class="wrapper wrapper-content animated fadeInDown" style="margin-left: 5px !important;">
 	<br/>
 
     <div class="row">

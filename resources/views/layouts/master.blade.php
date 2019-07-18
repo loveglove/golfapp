@@ -115,9 +115,11 @@
     </nav>
   </div>
   <!-- ******** TOP NAV ******** -->
-    <div id="page-wrapper" class="gray-bg">
+   <div id="page-wrapper" class="gray-bg" style="padding:0px;">
+
+      <div style="padding-left:15px;">
       <div class="row border-bottom" style="position:fixed; z-index:999; width:100%;">
-        <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+        <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom:0;">
         <div class="navbar-header">
             <a class="navbar-minimalize minimalize-styl-2 btn btn-green nav-btn" id="menu-button" href="#">
               <i class="fa fa-bars"></i> 
@@ -126,7 +128,7 @@
         </div>
             <ul class="nav navbar-top-links navbar-right" style="display: inline-block;">
 
-                <li class="notify-icon" style="margin-left: 6px;">
+                <li class="" style="margin-left: 6px;">
                     <a onclick="openNotifications();" class="dropdown-toggle count-info">
                         <i class="fa fa-bell"></i>  <span id="notify-count" class="label label-primary"></span>
                     </a>
@@ -151,20 +153,16 @@
                   </li>
                 <?php } ?>
 
-
             </ul>
-            <?php 
-              $page = Request::segment(1);
-              if($page != "course"){
-            ?>
             <h3 class="m-r-sm fc-font fc-header animated flipInY" style="display:inline-block; float:right;">Fisher Classic</h3>
-             <?php } ?>
         </nav>
       </div>
-      
+      </div>
       <br/>
-      <br/>       
+      <br/>
+      <div>   
       @yield('content')
+      </div>
       <br/>
       <br/>
 
@@ -192,11 +190,11 @@
       <div class="footer">
         <div class="pull-right">
             <strong>
-              @if(!empty(Auth::user()->team()->name))
-                {{ Auth::user()->team()->name }}
-              @else
-                {{ Auth::user()->name }}
-              @endif
+               @if(!empty(Auth::user()->team()->name))
+                  {{ Auth::user()->team()->name }}
+               @else
+                  {{ Auth::user()->name }}
+               @endif
             </strong>
         </div>
         <div style="font-size: 10px;">
@@ -209,9 +207,9 @@
   </div>
 <!-- end of wrapper -->
 
-    <?php $page = Request::segment(1); ?>
-    <?php $userID = Auth::user()->id; ?>
-    <?php $userAvatar = Auth::user()->avatar; ?>
+ <?php $page = Request::segment(1); ?>
+ <?php $userID = Auth::user()->id; ?>
+ <?php $userAvatar = Auth::user()->avatar; ?>
 
 
 <!-- Main scripts -->
@@ -260,7 +258,7 @@
                $('.team-score h1').toggleClass("animated tada", function(){
                   $(this).remove();
                });
-            },500);
+            },1000);
          });      
 
         $(document).ready(function(){

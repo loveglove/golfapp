@@ -84,14 +84,12 @@
 
 </style>
 
-<div class="wrapper wrapper-content animated fadeInRight">
+<div class="wrapper wrapper-content animated fadeInDown">
 	<br/>
   	<div class="row">
-<!--   		  	<div class="col-xs-12 animated fadeInDown" style="text-align: center;">
-  				<h3>{{ $tournament->name }}</h3>
-  			</div> -->
-
+  		<div>
   		@if($tournament->id == 31)
+
   			<div class="col-xs-7 animated fadeInDown">
   				<h3>{{ $tournament->name }}</h3>
   			</div>
@@ -120,7 +118,7 @@
                     @foreach ($standings as $standing)
 		                <div class="row standings-row" onclick="getScoreCard('{{ $standing->id_team }}');"> 
 		                	<div class="row">
-			                    <div class="col-xs-2 rank-col">
+			                    <div class="col-xs-2 rank-col" style="padding-left: 22px;">
 			                    	@if($standing->rank == 1)
 			                    		{{ $standing->rank }}<sup class="rank-sup">st</sup>
 			                    	@elseif($standing->rank == 2)
@@ -153,7 +151,7 @@
 			                </div>
 		                    <input type="hidden" id="hidden_set{{ $standing->id_team }}" value="0" />
 
-		                    <div class="row" id="score{{ $standing->id_team }}" style="display:none; text-align:center;">
+		                    <div class="row" id="score{{ $standing->id_team }}" style="display:none; text-align:center; margin-left: 2px; margin-right:2px;">
 		                    	<br>
 		                    	<div class="col-xs-12"><strong>Members:</strong>
 		                			<div id="sc_members_{{ $standing->id_team }}">
@@ -383,7 +381,7 @@
 	    </div>
 	</div>
 
-	<div class="row">
+	<div class="row" style="margin:0px;">
   		<div class="col-md-6 col-lg-8">
   			<h3> Mens Awards </h3>
 	  		<div class="ibox float-e-margins">

@@ -51,7 +51,7 @@
 
 </style>
 
-  <div class="wrapper wrapper-content animated fadeIn" style="padding:0px;">
+  <div class="wrapper wrapper-content animated fadeInDown" style="padding:0px; padding-top: 20px;">
   		<br/>
         <div class="row main-row" style="padding:0px;">
             <div id="contain" class="col-sm-12 col-md-6 col-lg-4">
@@ -195,6 +195,7 @@
 		                    <div class="row">
 		                    	<input type ="hidden" id="hdnpar{{ $hole->hole }}" value="{{ $hole->par }}" />
 		                    	<br>
+		                    	<br>
 								<div class="col-xs-10 col-xs-offset-1">
 									<div class="input-group number-spinner ">
 										<span class="input-group-btn">
@@ -234,31 +235,29 @@
 	                 	<button type="button" class="close" data-dismiss="modal">&times;</button>
 	                 	<h4 class="modal-title">Completed Holes</h4>
 	               	</div>     
-	               	<div class="modal-body dropdown-alerts">
-	               		<b>Front 9</b>
+	               	<div class="modal-body dropdown-alerts" style="padding:17px;">
+	               		<div style="width:100%; text-align: center; margin-bottom:10px;"><b>Front 9</b>&nbsp&nbsp<i class="fa fa-flag"></i></div>
+	               		<button id="complete-1" class="btn btn-sm btn-default dim btn-comp">1</button>
+	               		<button id="complete-2" class="btn btn-sm btn-default dim btn-comp">2</button> 
+	               		<button id="complete-3" class="btn btn-sm btn-default dim btn-comp">3</button> 
+	               		<button id="complete-4" class="btn btn-sm btn-default dim btn-comp">4</button>
+						<button id="complete-5" class="btn btn-sm btn-default dim btn-comp">5</button>
+						<button id="complete-6" class="btn btn-sm btn-default dim btn-comp">6</button>
+						<button id="complete-7" class="btn btn-sm btn-default dim btn-comp">7</button>
+						<button id="complete-8" class="btn btn-sm btn-default dim btn-comp">8</button>
+						<button id="complete-9" class="btn btn-sm btn-default dim btn-comp">9</button>
 	               		<br>
-	               		<button id="complete-1" class="btn btn-sm btn-outline-primary btn-comp">1</button>
-	               		<button id="complete-2" class="btn btn-sm btn-outline-primary btn-comp">2</button> 
-	               		<button id="complete-3" class="btn btn-sm btn-outline-primary btn-comp">3</button> 
-	               		<button id="complete-4" class="btn btn-sm btn-outline-primary btn-comp">4</button>
-						<button id="complete-5" class="btn btn-sm btn-outline-primary btn-comp">5</button>
-						<button id="complete-6" class="btn btn-sm btn-outline-primary btn-comp">6</button>
-						<button id="complete-7" class="btn btn-sm btn-outline-primary btn-comp">7</button>
-						<button id="complete-8" class="btn btn-sm btn-outline-primary btn-comp">8</button>
-						<button id="complete-9" class="btn btn-sm btn-outline-primary btn-comp">9</button>
-	               		<br>
-	               		<br>
-	               		<b>Back 9</b>	
-	               		<br>
-	               		<button id="complete-10" class="btn btn-sm btn-outline-primary btn-comp">10</button>
-	               		<button id="complete-11" class="btn btn-sm btn-outline-primary btn-comp">11</button> 
-	               		<button id="complete-12" class="btn btn-sm btn-outline-primary btn-comp">12</button> 
-	               		<button id="complete-13" class="btn btn-sm btn-outline-primary btn-comp">13</button>
-						<button id="complete-14" class="btn btn-sm btn-outline-primary btn-comp">14</button>
-						<button id="complete-15" class="btn btn-sm btn-outline-primary btn-comp">15</button>
-						<button id="complete-16" class="btn btn-sm btn-outline-primary btn-comp">16</button>
-						<button id="complete-17" class="btn btn-sm btn-outline-primary btn-comp">17</button>
-						<button id="complete-18" class="btn btn-sm btn-outline-primary btn-comp">18</button>                 	
+	               		<hr>
+	               		<div style="width:100%; text-align: center; margin-bottom:10px;"><b>Back 9</b>&nbsp&nbsp<i class="fa fa-flag"></i></div>
+	               		<button id="complete-10" class="btn btn-sm btn-default dim btn-comp">10</button>
+	               		<button id="complete-11" class="btn btn-sm btn-default dim btn-comp">11</button> 
+	               		<button id="complete-12" class="btn btn-sm btn-default dim btn-comp">12</button> 
+	               		<button id="complete-13" class="btn btn-sm btn-default dim btn-comp">13</button>
+						<button id="complete-14" class="btn btn-sm btn-default dim btn-comp">14</button>
+						<button id="complete-15" class="btn btn-sm btn-default dim btn-comp">15</button>
+						<button id="complete-16" class="btn btn-sm btn-default dim btn-comp">16</button>
+						<button id="complete-17" class="btn btn-sm btn-default dim btn-comp">17</button>
+						<button id="complete-18" class="btn btn-sm btn-default dim btn-comp">18</button>                 	
 	               	</div>
 	            </div>
          	</div>
@@ -408,6 +407,8 @@
 
     $(document).ready(function() {
 
+    	$(".fc-header").hide();
+
     	$('[data-toggle="popover"]').popover();
 
       	var completed = <?php echo json_encode($completed) ?>;
@@ -429,15 +430,12 @@
             }
       		
       		$("#" + item["hole"]).val(item["score"]);
-      		
-      		var hole = item["hole"];
-			var score = parseInt(item["score"]);
 
-			setScoreAndText(hole, score);
+			setScoreAndText(item["hole"], parseInt(item["score"]));
 
-			disableControl(hole);
+			disableControl(item["hole"]);
 
-			$("#complete-" + item["hole"]).removeClass("btn-outline-primary").addClass("btn-primary");
+			$("#complete-" + item["hole"]).removeClass("btn-default").addClass("btn-primary");
 
       	});
 
@@ -457,7 +455,7 @@
 
 
 	function scrollToHole(hole){
-		$('html, body').animate({ scrollTop: $("#anchor" + hole).position().top - 10 }, 500);
+		$('html, body').animate({ scrollTop: $("#anchor" + hole).position().top + 0 }, 500);
 	}
 
 
@@ -566,7 +564,7 @@
                     },6000);
                 }else{
 
-				    $('html, body').animate({ scrollTop: $("#anchor" + currentHole).position().top + 10 }, 500);
+				    scrollToHole(currentHole);
 	    		}
 
 		    },
@@ -710,13 +708,16 @@
 
 
     function disableControl(hole){
+
     	$('#'+hole).prop("disabled", true);
     	$('#btn-up-'+hole).prop("disabled", true);
     	$('#btn-dwn-'+hole).prop("disabled", true);
     	$('#btn-cnf-'+hole).prop("disabled", true).html('<i class="fa fa-lock"></i> Score Locked').removeClass('btn-primary').removeClass('dim').addClass('btn-default');
+
     }
 
     function notify(score, hole, par){
+
     	var hole_i = parseInt(hole);
     	var current = parseInt($("#value-int" + hole_i).val());
     	var back_1 = parseInt($("#value-int" + (hole_i - 1)).val());
@@ -818,14 +819,12 @@
 					var myLon = position.coords.longitude;
 					var pinLat = $("#pinLat" + hole).val();
 					var pinLon = $("#pinLon" + hole).val();
-					// var tempLat = "43.39028106";
-					// var tempLon = "-79.81139839";
+
 					calculateDistance(myLat, myLon, pinLat, pinLon, hole);
 
 					if(!windSpeedSet){
 						getWindSpeed(myLat, myLon);
 					}
-					
 				},
 				function(error){
 					console.log("geolocation watch error");
@@ -925,29 +924,6 @@
                 client.subscribe('fc/notify/chirp', { qos: 1 });
                 getLocation();
 
-                // setInterval(function(){ 
-                // 	var lat = $("#pinLat" + currentHole).val();
-                // 	var lon = $("#pinLon" + currentHole).val(); 
-                // 	// publishPosition(lat, lon);
-                // }, 5000);
-
-			    // Try HTML5 geolocation.
-			    // navigator.geolocation.watchPosition(
-			    //     function(position) {
-			    //         var lat = position.coords.latitude;
-			    //         var lon = position.coords.longitude;
-			    //         publishPosition(lat, lon); 
-			    //     },
-			    //     function(error){
-			    //         console.log("geolocation watch error");
-			    //     },
-			    //     {
-			    //         maximumAge: 10000, 
-			    //         timeout: 60000, 
-			    //         enableHighAccuracy: true 
-			    //     }
-			    // );
-
             },
             onFailure: function (message) {
                 console.log("MQTT Connection Failed: " + message.errorMessage);
@@ -976,15 +952,13 @@
 
 
 
-
-
 	function getWindSpeed(lat, lon){
 
 	   	$.ajax({
-	       type:"GET",
-	       url:"https://api.openweathermap.org/data/2.5/find?lat="+lat+"&lon="+lon+"&cnt=1&units=imperial&appid=40bee0568ac76ea2ea1051870a596c4d",
-	       dataType : "jsonp",
-	       success:function(result){
+	       	type:"GET",
+	       	url:"https://api.openweathermap.org/data/2.5/find?lat="+lat+"&lon="+lon+"&cnt=1&units=imperial&appid=40bee0568ac76ea2ea1051870a596c4d",
+	       	dataType : "jsonp",
+	       	success:function(result){
 
 	       		console.log(result);
 
@@ -1001,13 +975,13 @@
 	           		dir = degToCompass(winddeg);
 	            }
 
-	           $("#weather").html(windspeed+ " mph " + dir);
+	           $("#weather").html(windspeed+ " mph&nbsp&nbsp" + dir);
 	           $("#wind-dir-icon").show();
 
-	       },
-	       error: function(xhr, status, error) {
+	       	},
+	       	error: function(xhr, status, error) {
 	           console.log(status);
-	       }
+	       	}
 	    });
 
 	    windSpeedSet = true;
@@ -1022,31 +996,30 @@
 
     // Get event data
     function deviceOrientationListener(event) {
-      var alpha    = event.alpha; //z axis rotation [0,360)
-      var beta     = event.beta; //x axis rotation [-180, 180]
-      var gamma    = event.gamma; //y axis rotation [-90, 90]
-      //Check if absolute values have been sent
-      if (typeof event.webkitCompassHeading !== "undefined") {
-        alpha = event.webkitCompassHeading; //iOS non-standard
-        var heading = alpha
-        $("#wind-dir-icon").css('transform','rotateZ('+( parseInt(heading.toFixed([0])) + windSpeedDeg )+'deg)');
-      }
-      else {
-      	$("#wind-dir-icon").hide();
-      }
+      	var alpha    = event.alpha; //z axis rotation [0,360)
+      	var beta     = event.beta; //x axis rotation [-180, 180]
+      	var gamma    = event.gamma; //y axis rotation [-90, 90]
+      	//Check if absolute values have been sent
+      	if (typeof event.webkitCompassHeading !== "undefined") {
+        	alpha = event.webkitCompassHeading; //iOS non-standard
+        	var heading = alpha
+        	$("#wind-dir-icon").css('transform','rotateZ('+( parseInt(heading.toFixed([0])) + windSpeedDeg )+'deg)');
+      	}
+      	else {
+      		$("#wind-dir-icon").hide();
+      	}
     }
  
     // Check if device can provide absolute orientation data
     if (window.DeviceOrientationAbsoluteEvent) {
-      window.addEventListener("DeviceOrientationAbsoluteEvent", deviceOrientationListener);
+      	window.addEventListener("DeviceOrientationAbsoluteEvent", deviceOrientationListener);
     } // If not, check if the device sends any orientation data
     else if(window.DeviceOrientationEvent){
-      window.addEventListener("deviceorientation", deviceOrientationListener);
+      	window.addEventListener("deviceorientation", deviceOrientationListener);
     } // Send an alert if the device isn't compatible
     else {
     $("#wind-dir-icon").hide();
-      alert("Sorry, your current direction is not detectable on this device");
-
+      	alert("Sorry, your current direction is not detectable on this device");
     }
 
     

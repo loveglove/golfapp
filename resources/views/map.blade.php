@@ -17,7 +17,9 @@
     position: absolute;
     height: calc(100% - 70px);
     width: 100%;
-    margin-left: -10px !important;
+    margin-left: 5px !important;
+    bottom:38px;
+/*    margin-bottom: 30px !important;*/
 }
 
 /*img{
@@ -38,6 +40,7 @@
     border-radius: 50%;
     border:2px solid white;
     z-index: 9999;
+    background:white;
 }
 .arrow-down {
   width: 0; 
@@ -51,11 +54,21 @@
   z-index: -1;
 }
 
+.map-btn{
+    position: absolute;
+    left:10px;
+    bottom:210px;
+    z-index: 9999;
+    height:40px;
+}
+
 </style>
 
   <div class="wrapper wrapper-content">
   		<div class="row">
-  			<div id="map"></div>
+            <button class="map-btn btn btn-default" onclick="toggleUserMarkers()"><i class="fa fa-users um-icon"></i></button>
+  			<div id="map">       
+            </div>
   		</div> 
   </div>
 
@@ -86,6 +99,7 @@
     var curvature = 0.5;
     var Point = null;
     var def_latlng = null;
+    var toggleUM = false;
 
     function initMap() {
 
@@ -187,6 +201,22 @@
                 
             }
         // }
+    }
+
+
+    function toggleUserMarkers(){
+        if(toggleUM){
+            $.each(playermarkers, function(index, value){
+                value.setVisible(true);
+                $(".um-icon").css("color", "#555555");
+            });
+        }else{
+            $.each(playermarkers, function(index, value){
+                value.setVisible(false);
+                $(".um-icon").css("color", "#BBBBBB");
+            });  
+        }
+        toggleUM = !toggleUM;
     }
 
     function drawDistance(){

@@ -31,13 +31,16 @@
 		font-size: 15px;
 	}
 
+	.m-t-10{
+		margin-top: 10px;
+	}
 </style>
 
 
-<div class="wrapper wrapper-content animated fadeInRight">
+<div class="wrapper wrapper-content animated fadeInDown" style="padding:0px;">
  
-
-	<div class="row" style="margin-top: 20px;">
+	<!-- tour average -->
+	<div class="row" style="margin-top: 50px;">
 		<div class="col-xs-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
@@ -46,7 +49,7 @@
 	   						<span style="font-size:18px; font-weight: 300; float:left; padding-top:10px;">Average Team Score Currently:</span>
 	   					</div>
 	   					<div class="col-xs-6">
-	   						<span style="font-size:48px; float:right;">
+	   						<span style="font-size:48px; float:right; margin-right: 15px;">
 		                    	@if($avgscore < 0)
 		                    		<i class="fa fa-level-down green-text"></i>&nbsp{{ $avgscore }}
 		                    	@elseif($avgscore > 0)
@@ -61,7 +64,102 @@
             </div>
         </div>
     </div>
+    <!-- end average -->
 
+
+
+    <!-- summary -->
+	<div class="row count-fields">
+		<div class="col-xs-12">
+			<div class="ibox float-e-margins">
+        		<div class="ibox-content">
+        			<div class="row">
+
+			  		@if(!empty($statistics['holeinones']))
+			  			<div class="col-xs-6 m-t-10">
+			  				<div class="col-xs-9">
+								<label class="label label-custom" style="background-color:#33cccc;">{{ $statistics['holeinones'] }}</label> Hole In Ones 
+							</div>
+							<div class="col-xs-3">
+								<span class="pie">{{ $statistics['holeinones'] }},{{ count($myscores) }}</span>
+							</div>
+						</div>
+					@endif
+
+					@if(!empty($statistics['albatrosses']))
+						<div class="col-xs-6 m-t-10">
+							<div class="col-xs-9">
+								<label class="label label-custom" style="background-color:#33cccc;">{{ $statistics['albatrosses'] }}</label> Albatrosses
+							</div> 
+							<div class="col-xs-3">
+								<span class="pie">{{ $statistics['albatrosses'] }},{{ count($myscores) }}</span>
+							</div>
+						</div>
+					@endif
+
+					@if(!empty($statistics['eagles']))
+						<div class="col-xs-6 m-t-10">
+							<div class="col-xs-9">
+								<label class="label label-custom" style="background-color:#33cccc;">{{ $statistics['eagles'] }}</label> Eagles
+							</div>
+							<div class="col-xs-3">
+							 	<span class="pie">{{ $statistics['eagles'] }},{{ count($myscores) }}</span>
+							</div>
+						</div>
+					@endif
+
+					@if(!empty($statistics['birdies']))
+						<div class="col-xs-6 m-t-10">
+							<div class="col-xs-9">
+								<label class="label label-custom" style="background-color:#54bc75;">{{ $statistics['birdies'] }}</label> Birdies 
+							</div>
+							<div class="col-xs-3">
+								<span class="pie">{{ $statistics['birdies'] }},{{ count($myscores) }}</span>
+							</div>
+						</div>
+					@endif
+
+					@if(!empty($statistics['pars']))
+						<div class="col-xs-6 m-t-10">
+							<div class="col-xs-9">
+								<label class="label label-custom" style="background-color:#89C558;">{{ $statistics['pars'] }}</label> Pars
+							</div>  
+							<div class="col-xs-3">
+								<span class="pie">{{ $statistics['pars'] }},{{ count($myscores) }}</span>
+							</div>
+						</div>
+					@endif
+
+					@if(!empty($statistics['bogeys']))
+						<div class="col-xs-6 m-t-10">
+							<div class="col-xs-9">
+								<label class="label label-custom" style="background-color:#B9CC54;">{{ $statistics['bogeys'] }}</label> Bogeys 
+							</div>
+							<div class="col-xs-3">
+								<span class="pie">{{ $statistics['bogeys'] }},{{ count($myscores) }}</span>
+							</div>
+						</div>
+					@endif
+
+					@if(!empty($statistics['doublebogeys']))
+						<div class="col-xs-6 m-t-10">
+							<div class="col-xs-9">
+								<label class="label label-custom" style="background-color:#D4B64F;">{{ $statistics['doublebogeys'] }}</label> Doubles 
+							</div>
+							<div class="col-xs-3">
+								<span class="pie">{{ $statistics['doublebogeys'] }},{{ count($myscores) }}</span>
+							</div>
+						</div>
+					@endif
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end summary -->
+
+	<!-- Polar Chart -->
 	<div class="row">
 		<div class="col-xs-12">
             <div class="ibox float-e-margins">
@@ -79,92 +177,10 @@
             </div>
         </div>
     </div>
-
-
-	<div class="row count-fields">
-
-  		@if(!empty($statistics['holeinones']))
-  			<div class="col-xs-6">
-  				<div class="col-xs-9">
-					<label class="label label-custom" style="background-color:#33cccc;">{{ $statistics['holeinones'] }}</label> Hole In Ones 
-				</div>
-				<div class="col-xs-3">
-					<span class="pie">{{ $statistics['holeinones'] }},{{ count($myscores) }}</span>
-				</div>
-			</div>
-		@endif
-
-		@if(!empty($statistics['albatrosses']))
-			<div class="col-xs-6">
-				<div class="col-xs-9">
-					<label class="label label-custom" style="background-color:#33cccc;">{{ $statistics['albatrosses'] }}</label> Albatrosses
-				</div> 
-				<div class="col-xs-3">
-					<span class="pie">{{ $statistics['albatrosses'] }},{{ count($myscores) }}</span>
-				</div>
-			</div>
-		@endif
-
-		@if(!empty($statistics['eagles']))
-			<div class="col-xs-6">
-				<div class="col-xs-9">
-					<label class="label label-custom" style="background-color:#33cccc;">{{ $statistics['eagles'] }}</label> Eagles
-				</div>
-				<div class="col-xs-3">
-				 	<span class="pie">{{ $statistics['eagles'] }},{{ count($myscores) }}</span>
-				</div>
-			</div>
-		@endif
-
-		@if(!empty($statistics['birdies']))
-			<div class="col-xs-6">
-				<div class="col-xs-9">
-					<label class="label label-custom" style="background-color:#54bc75;">{{ $statistics['birdies'] }}</label> Birdies 
-				</div>
-				<div class="col-xs-3">
-					<span class="pie">{{ $statistics['birdies'] }},{{ count($myscores) }}</span>
-				</div>
-			</div>
-		@endif
-
-		@if(!empty($statistics['pars']))
-			<div class="col-xs-6">
-				<div class="col-xs-9">
-					<label class="label label-custom" style="background-color:#89C558;">{{ $statistics['pars'] }}</label> Pars
-				</div>  
-				<div class="col-xs-3">
-					<span class="pie">{{ $statistics['pars'] }},{{ count($myscores) }}</span>
-				</div>
-			</div>
-		@endif
-
-		@if(!empty($statistics['bogeys']))
-			<div class="col-xs-6">
-				<div class="col-xs-9">
-					<label class="label label-custom" style="background-color:#B9CC54;">{{ $statistics['bogeys'] }}</label> Bogeys 
-				</div>
-				<div class="col-xs-3">
-					<span class="pie">{{ $statistics['bogeys'] }},{{ count($myscores) }}</span>
-				</div>
-			</div>
-		@endif
-
-		@if(!empty($statistics['doublebogeys']))
-			<div class="col-xs-6">
-				<div class="col-xs-9">
-					<label class="label label-custom" style="background-color:#D4B64F;">{{ $statistics['doublebogeys'] }}</label> Doubles 
-				</div>
-				<div class="col-xs-3">
-					<span class="pie">{{ $statistics['doublebogeys'] }},{{ count($myscores) }}</span>
-				</div>
-			</div>
-		@endif
-
-	</div>
-
+    <!-- end polar chart -->
 
 </div>
-
+<!-- end wrapper -->
 
 @endsection
 
@@ -238,7 +254,6 @@
 
 	    var ctx = document.getElementById("over-under").getContext("2d");
 	    var myNewChart = new Chart(ctx).Radar(radarData, radarOptions);
-
 
 	});
 

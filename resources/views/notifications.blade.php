@@ -19,18 +19,18 @@
     }
 </style>
 
-<div class="wrapper wrapper-content animated fadeInRight">
+<div class="wrapper wrapper-content animated fadeInDown">
 	<br/>
     <div class="row">
 
-        <div class="ibox float-e-margins">
+        <div class="ibox float-e-margins" style="margin-left: 5px;">
             <div class="ibox-content">
                 @if(!$notifications->isEmpty())
                     @foreach ($notifications as $note)
                         <div class="note-container">
                             {!! $note->text !!}
                             <div class="row">
-                                <span class="pull-right text-muted small slate-text extra-pad"><br>
+                                <span class="pull-right text-muted small slate-text extra-pad" style="margin-right: 10px;"><br>
                                     {{ $note->created_at->diffForHumans() }}
                                 </span>
                             </div>

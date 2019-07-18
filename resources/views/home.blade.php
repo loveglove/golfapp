@@ -2,7 +2,7 @@
 
 @section('content')
 
-             <div class="middle-box text-center animated fadeIn">
+             <div class="middle-box text-center animated fadeInDown" style="margin:25px;">
                 <div class="title"> 
                     <img class="avatar" src="{{Auth::user()->avatar }}" height="70" width="70" />&nbspWelcome
                 </div>
@@ -29,7 +29,7 @@
                                 </span>
                             @endif
                             <br/>
-                            {{Form::button('<i class="fa fa-user"></i> Create Team', array('type' => 'submit', 'class' => 'btn btn-primary block full-width m-b dim'))}}
+                            {{Form::button('<i class="fa fa-user"></i> Create A Team', array('type' => 'submit', 'class' => 'btn btn-primary block full-width m-b dim'))}}
                         </div>      
                     {!! Form::close() !!}
 
@@ -45,7 +45,7 @@
                                 </span>
                             @endif
                             <br/>
-                            {{Form::button('<i class="fa fa-users"></i> Join Team', array('type' => 'submit', 'class' => 'btn btn-primary block full-width m-b dim'))}}
+                            {{Form::button('<i class="fa fa-users"></i> Join A Team', array('type' => 'submit', 'class' => 'btn btn-primary block full-width m-b dim'))}}
                         </div>      
                     {!! Form::close() !!}
 
@@ -79,7 +79,7 @@
     <script>
 
         $(document).ready(function(){
-            $(".nav-btn, .count-info").hide();
+            $(".nav-btn, .count-info, .notify-icon").hide();
         });
         
     </script>

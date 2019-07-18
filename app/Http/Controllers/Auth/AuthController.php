@@ -55,12 +55,14 @@ class AuthController extends Controller
      */
     protected function create(array $user_data)
     {
+    	$avatar = "https://avatars.dicebear.com/v2/jdenticon/".md5($user_data['email']).".svg";
+    	// $avatar = "https://www.gravatar.com/avatar/".md5($user_data['email'])."?d=wavatar";
 
         $user = User::create([
             'name' => $user_data['name'],
             'email' => $user_data['email'],
             'password' => bcrypt($user_data['password']),
-            'avatar' => "https://www.gravatar.com/avatar/".md5($user_data['email'])."?d=wavatar"
+            'avatar' => $avatar
         ]);
 
         return $user;
@@ -106,17 +108,21 @@ class AuthController extends Controller
     private function findOrCreateUser($facebookUser)
     {
         $authUser = User::where('facebook_id', $facebookUser->id)->first();
+        
         // $avatar = $facebookUser->avatar;
-        $avatar = "https://www.gravatar.com/avatar/".md5($facebookUser->email)."?d=wavatar";
+        // $avatar = "https://www.gravatar.com/avatar/".md5($facebookUser->email)."?d=wavatar";
+        $avatar = "https://avatars.dicebear.com/v2/jdenticon/".md5($facebookUser->email).".svg";
  
+ 		// if user already exists
         if($authUser){
-            if(empty($authUser->avatar)){
-                $authUser->avatar = $avatar;
-                $authUser->save();
-            }
+            // if(empty($authUser->avatar)){    --- set avatar everytime not just if empty
+            $authUser->avatar = $avatar;
+            $authUser->save();
+            // }
             return $authUser;
         }
 
+        // user does not exist, create them
         return User::create([
             'name' => $facebookUser->name,
             'email' => $facebookUser->email,
