@@ -411,6 +411,10 @@
 
     	$('[data-toggle="popover"]').popover();
 
+        $('[data-toggle="popover"]').on('click', function(){
+            $('[data-toggle="popover"]').not(this).popover('hide');
+        });
+
       	var completed = <?php echo json_encode($completed) ?>;
 
       	if(completed.length == 18){
@@ -533,7 +537,7 @@
 		    		type: "success"
 		    	});
 
-		    	$("#complete-" + hole).removeClass("btn-outline-primary").addClass("btn-primary");
+		    	$("#complete-" + hole).removeClass("btn-default").addClass("btn-primary");
 
 		    	checkAwards(hole);
 
@@ -749,13 +753,14 @@
     		} else {
 				if(current == -2){
 					// console.log("eagle shot");
-					publishNote("{{ asset('images/golfdance.gif') }}", '<strong>EAGLE SHOT</strong><br/>'+ teamName +' just eagled <b>Hole #'+ hole + '</b><br/><i>Beauty Hole </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
+					publishNote("{{ asset('images/slopclap.gif') }}", '<strong>EAGLE SHOT</strong><br/>'+ teamName +' just eagled <b>Hole #'+ hole + '</b><br/><i>Beauty Hole </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
+                    publishNote('images/FTB.jpg','<strong>COACOWTB</strong><br/>Time to crack open a <b>Crispy Boy</b> and take it to pound town brochachos! <i>- '+teamName+'</i>' );
     			}
     			if(current == -1){
 					// console.log("birdy shot");
 					// publishMSG('fa-twitter', teamName + " just <b>birdied</b> hole #" + hole +);
-					publishNote('images/FTB.jpg','<strong>COACOWTB</strong><br/>Time to crack open a <b>Crispy Boy</b> and take it to pound town brochachos! <i>- '+teamName+'</i>' );
-					// publishNote("{{ asset('images/slowclap.gif') }}",'<strong>NICE BIRDIE</strong><br/>'+ teamName +' just birdied <b>Hole #'+ hole + '</b><br/><i>Great Hole </i><span style="color:aqua;"><i class="fa fa-twitter"></i></span>' );
+					// publishNote('images/FTB.jpg','<strong>COACOWTB</strong><br/>Time to crack open a <b>Crispy Boy</b> and take it to pound town brochachos! <i>- '+teamName+'</i>' );
+					publishNote("{{ asset('images/nodedit.gif') }}",'<strong>NICE BIRDIE</strong><br/>'+ teamName +' just birdied <b>Hole #'+ hole + '</b><br/><i>Great Hole </i><span style="color:aqua;"><i class="fa fa-twitter"></i></span>' );
     			}		
     		}
 
@@ -782,7 +787,7 @@
     			publishNote("{{ asset('images/tigerwoods.jpg') }}", '<strong>ROUGH DAY</strong><br/>'+ teamName +' are struggling to stay in the game. <br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i><i class="fa fa-times"></i></span>');
     		}else if (back_1 > 0 && back_2 > 0){
     			// console.log("brutal go at it");
-    			publishNote("{{ asset('images/baywatch.jpg') }}", '<strong>BEACH BUMS</strong><br/>'+ teamName +' are spending more time in the sand then David Hasselfoff<br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i></span>');
+    			publishNote("{{ asset('images/baywatch.jpg') }}", '<strong>SANDLOT</strong><br/>'+ teamName +' are spending more time in the sand then David Hasselfoff<br/><i>OverPar Streak </i><span class="redicon"><i class="fa fa-times"></i></span>');
     		} else {
     			// No streak
     			if(current >= 3){

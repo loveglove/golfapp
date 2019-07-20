@@ -46,10 +46,10 @@
                 <div class="ibox-content">
 	                <div class="row">
 	   					<div class="col-xs-6">
-	   						<span style="font-size:18px; font-weight: 300; float:left; padding-top:10px;">Average Team Score Currently:</span>
+	   						<span style="font-size:18px; font-weight: 300; float:left; padding-top:10px;">Average Team Score:</span>
 	   					</div>
 	   					<div class="col-xs-6">
-	   						<span style="font-size:48px; float:right; margin-right: 15px;">
+	   						<span style="font-size:46px; float:right; margin-right: 15px;">
 		                    	@if($avgscore < 0)
 		                    		<i class="fa fa-level-down green-text"></i>&nbsp{{ $avgscore }}
 		                    	@elseif($avgscore > 0)

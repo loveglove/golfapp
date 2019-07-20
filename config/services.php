@@ -42,11 +42,11 @@ return [
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
-        'redirect' => 'https://'.$_SERVER[HTTP_HOST].'/auth/facebook/callback',
+        'redirect' => env('FACEBOOK_REDIRECT'),
      ],
     'google' => [
-        'client_id' =>  env('GOOGLE_APP_ID'),
-        'client_secret' => env('GOOGLE_APP_SECRET'),
+        'client_id' =>  env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT'),
     ]
 

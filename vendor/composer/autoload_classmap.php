@@ -12,6 +12,7 @@ return array(
     'CreateNotificationsTable' => $baseDir . '/database/migrations/2017_08_16_033838_create_notifications_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateScoresTable' => $baseDir . '/database/migrations/2016_06_17_193030_create_scores_table.php',
+    'CreateSocialProviders' => $baseDir . '/database/migrations/2019_07_19_221243_create_social_providers.php',
     'CreateTeamsTable' => $baseDir . '/database/migrations/2016_06_17_202136_create_teams_table.php',
     'CreateTournament' => $baseDir . '/database/migrations/2016_07_13_161505_create_tournament.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2016_05_10_015315_create_users_table.php',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\SocialProvider;
 use Auth;
 use Socialite;
 use Validator;
@@ -74,9 +75,9 @@ class AuthController extends Controller
      *
      * @return Response
      */
-    public function redirectToProvider()
+    public function redirectToProvider($provider)
     {
-        return Socialite::driver('facebook')->redirect();
+        return Socialite::driver($provider)->redirect();
     }
  
     /**
@@ -84,19 +85,17 @@ class AuthController extends Controller
      *
      * @return Response
      */
-    public function handleProviderCallback()
+    public function handleProviderCallback($provider)
     {
-        try {
-            $user = Socialite::driver('facebook')->user();
-        } catch (Exception $e) {
-            return redirect('auth/facebook');
-        }
-        // dd($user);
-        $authUser = $this->findOrCreateUser($user);
- 
+
+        $user = Socialite::driver($provider)->user();
+        // create or find the user
+        $authUser = $this->findOrCreateUser($user, $provider);
+        // log the user in
         Auth::login($authUser, true);
- 
+        // redirect to variable at top
         return redirect()->action('TournamentController@getActiveTour');
+
     }
  
     /**
@@ -105,30 +104,55 @@ class AuthController extends Controller
      * @param $facebookUser
      * @return User
      */
-    private function findOrCreateUser($facebookUser)
+    private function findOrCreateUser($user, $provider)
     {
-        $authUser = User::where('facebook_id', $facebookUser->id)->first();
+
+        $avatar = "https://avatars.dicebear.com/v2/jdenticon/".md5($user->email).".svg";
+        //find user 
+        $sp = SocialProvider::where('provider_id', $user->id)->where('provider', $provider)->first();
         
-        // $avatar = $facebookUser->avatar;
-        // $avatar = "https://www.gravatar.com/avatar/".md5($facebookUser->email)."?d=wavatar";
-        $avatar = "https://avatars.dicebear.com/v2/jdenticon/".md5($facebookUser->email).".svg";
- 
- 		// if user already exists
-        if($authUser){
-            // if(empty($authUser->avatar)){    --- set avatar everytime not just if empty
-            $authUser->avatar = $avatar;
-            $authUser->save();
-            // }
-            return $authUser;
+        //if found return the user, if not create it and return it
+        if($sp) {
+            $u = User::where('id', $sp->user_id)->first();
+            $u->avatar = $avatar;
+            $u->save();
+            return $u;
         }
 
-        // user does not exist, create them
-        return User::create([
-            'name' => $facebookUser->name,
-            'email' => $facebookUser->email,
-            'facebook_id' => $facebookUser->id,
-            'avatar' => $avatar
-        ]);
+        $user_existing = User::where('email', $user->email)->first();
+        if($user_existing){
+            // if email exists already, add new social provider
+
+            $sp_new = SocialProvider::create([
+                'user_id' => $user_existing->id,
+                'provider' => $provider,
+                'provider_id' => $user->id,
+                'avatar'   => $avatar,
+            ]);
+
+            $user_existing->avatar = $avatar;
+            $user_existing->save();
+            return $user_existing;
+
+        }else{
+            // if email doesnt exist yet, create new user and social provider
+            $user_new = User::create([
+                'name'     => $user->name,
+                'email'    => $user->email,  
+            ]);
+
+            $sp_new = SocialProvider::create([
+                'user_id' => $user_new->id,
+                'provider' => $provider,
+                'provider_id' => $user->id,
+                'avatar'   => $avatar,
+            ]);
+
+            $user_new->avatar = $avatar;
+            $user_new->save();
+            return $user_new;
+        }
+
     }
 
 

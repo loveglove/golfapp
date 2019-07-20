@@ -35,8 +35,9 @@ Route::get('auth/login', array('as' => 'login', 'uses' => function(){
 Route::get('/register', array('as' => 'register', 'uses' => function(){
     return view('auth.register');
 }));
-Route::get('auth/facebook', 'Auth\AuthController@redirectToProvider');
-Route::get('auth/facebook/callback', 'Auth\AuthController@handleProviderCallback');
+
+Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider');
+Route::get('auth/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
 Route::get('/logout', 'Auth\AuthController@getSignOut');
 
 // Tournament Routes
