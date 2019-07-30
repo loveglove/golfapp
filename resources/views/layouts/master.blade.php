@@ -138,17 +138,17 @@
                   $page = Request::segment(1);
                   if($page == "course"){
                 ?>
-                  <li class="notify-icon" style="margin-left: 6px;">
+                  <li class="notify-icon" style="margin-left: 2px;">
                       <a onclick="openCompletedHoles();" class="dropdown-toggle">
                           <i id="completed-holes-icon" style="font-size: 18px; vertical-align: bottom;" class="fa fa-check-square"></i>
                       </a>
                   </li>
 
-                  <li class="notify-icon" style="margin-left: 10px;" data-toggle="popover" data-placement="bottom" data-content="Wind Speed">
-                      <img src="images/windicon.png" height="22px" class="animated fadeInLeft" /><span id="weather"></span>
+                  <li class="notify-icon ws-icon" style="margin-left: 4px;" data-toggle="popover" data-placement="bottom" data-content="Wind Speed">
+                      <img src="images/windicon.png" height="20px" class="animated fadeInLeft" /><span id="weather"></span>
                   </li>
 
-                  <li class="notify-icon" style="margin-left: 6px;" data-toggle="popover" data-placement="bottom" data-content="Wind Direction">
+                  <li class="notify-icon wd-icon" style="margin-left: 4px;" data-toggle="popover" data-placement="bottom" data-content="Wind Direction">
                       <i id="wind-dir-icon" style="font-size: 18px; color:#999; vertical-align: bottom; display:none;" class="fa fa-arrow-circle-up"></i>
                   </li>
                 <?php } ?>

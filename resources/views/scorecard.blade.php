@@ -741,19 +741,19 @@
 			}
     		// check if there's a streak
     		else if(back_1 < 0 && back_2 < 0 && back_3 < 0 && back_4 < 0){
-    			publishNote("{{ asset('images/heating.jpg') }}", '<strong>THERE HEATING UP!</strong><br/>'+ teamName +' are on fire. Catch up before they take it all!<br/><i>UnderPar Streak </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
+    			publishNote("{{ asset('images/heating.jpg') }}", '<strong>THERE HEATING UP!</strong><br/>'+ teamName +' are on fire. Catch up before they take it all!<br/><i>UnderPar Streak </i><span class="redicon"><i class="fa fa-fire"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
 
     			// publishMSG('fa-smile-o', teamName + " are in there <b>Happy</b> place");
     		}else if (back_1 < 0 && back_2 < 0 && back_3 < 0){
     			// console.log("heavy streak");
-    			publishNote("{{ asset('images/heating.jpg') }}", '<strong>THERE HEATING UP!</strong><br/>'+ teamName +' are on fire. Catch up before they take it all!<br/><i>UnderPar Streak </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
+    			publishNote("{{ asset('images/golfdance.gif') }}", '<strong>ON ONE!</strong><br/>'+ teamName +' have been below par for seveal holes!<br/><i>UnderPar Streak </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
     		}else if (back_1 < 0 && back_2 < 0){
     			// console.log("hot streak");
-    			publishNote("{{ asset('images/happy.jpg') }}", '<strong>JUST TAP IT IN</strong><br/>'+ teamName +' have found their <b>Happy Place</b>.<br/><i>UnderPar Streak </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
+    			publishNote("{{ asset('images/happy.jpg') }}", '<strong>JUST TAP IT IN</strong><br/>'+ teamName +' have found their <b>Happy Place</b>.<br/><i>UnderPar Streak </i><span class="yel"><i class="fa fa-star"></i></span>');
     		} else {
 				if(current == -2){
 					// console.log("eagle shot");
-					publishNote("{{ asset('images/slopclap.gif') }}", '<strong>EAGLE SHOT</strong><br/>'+ teamName +' just eagled <b>Hole #'+ hole + '</b><br/><i>Beauty Hole </i><span class="yel"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>');
+					publishNote("{{ asset('images/slowclap.gif') }}", '<strong>EAGLE SHOT</strong><br/>'+ teamName +' just eagled <b>Hole #'+ hole + '</b><br/><i>Beauty Hole </i><span class="yel"><i class="fa fa-twitter"></i><i class="fa fa-twitter"></i><i class="fa fa-star"></i></span>');
                     publishNote('images/FTB.jpg','<strong>COACOWTB</strong><br/>Time to crack open a <b>Crispy Boy</b> and take it to pound town brochachos! <i>- '+teamName+'</i>' );
     			}
     			if(current == -1){
@@ -792,7 +792,7 @@
     			// No streak
     			if(current >= 3){
     				// console.log("just blew that hole");
-    				publishNote("{{ asset('images/happygilmore.gif') }}", '<strong>SEEEEE YA!</strong><br/>'+ teamName +' just blew <b>Hole #' + hole + '</b>.<br/><i>Terrible Hole </i><span class="redicon"><i class="fa fa-times"></i></span>');
+    				publishNote("{{ asset('images/happygilmore.gif') }}", '<strong>SEEEE YA!</strong><br/>'+ teamName +' just blew <b>Hole #' + hole + '</b>.<br/><i>Terrible Hole </i><span class="redicon"><i class="fa fa-times"></i></span>');
     				// publishMSG('fa-frown-o', teamName + " just blew it on<br/><b>Hole:</b> #" + hole);
     			}		
     		}
@@ -968,6 +968,7 @@
 	       		console.log(result);
 
 	            var windspeed = result.list[0].wind.speed;
+	   			var windspeedText = windSpeedText(parseInt(windspeed));
 	            var winddeg = '';
 
 	           	if(result.list[0].wind.hasOwnProperty("deg")) {
@@ -980,7 +981,7 @@
 	           		dir = degToCompass(winddeg);
 	            }
 
-	           $("#weather").html(windspeed+ " mph&nbsp&nbsp" + dir);
+	           $("#weather").html(windspeedText+ "&nbsp" + parseInt(windspeed) + "<small>mph</small>&nbsp&nbsp" + dir);
 	           $("#wind-dir-icon").show();
 
 	       	},
@@ -998,6 +999,24 @@
 	    return arr[(val % 16)];
 	}
 
+	function windSpeedText(value){
+		if (value > 18){
+			return "High:";
+		}
+		if (value > 12 && value < 18){
+			return "Strong:";
+		}
+		if (value > 7 && value < 12){
+			return "Moderate:";
+		}
+		if (value > 3 && value < 7){
+			return "Light:";
+		}
+		if (value < 3){
+			return "Calm:";
+		}
+	}
+
 
     // Get event data
     function deviceOrientationListener(event) {
@@ -1008,7 +1027,7 @@
       	if (typeof event.webkitCompassHeading !== "undefined") {
         	alpha = event.webkitCompassHeading; //iOS non-standard
         	var heading = alpha
-        	$("#wind-dir-icon").css('transform','rotateZ('+( parseInt(heading.toFixed([0])) + windSpeedDeg )+'deg)');
+        	$("#wind-dir-icon").css('transform','rotateZ('+( parseInt(heading.toFixed([0])) + 180 + windSpeedDeg )+'deg)');
       	}
       	else {
       		$("#wind-dir-icon").hide();
