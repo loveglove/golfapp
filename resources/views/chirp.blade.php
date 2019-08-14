@@ -163,7 +163,7 @@
 // *********************************************
 
 
-    var client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "fc_client_" + userID);
+    var client = new Paho.MQTT.Client("test.mosquitto.org", Number(8081), "fc_client_" + userID);
     var maxAttempts = 0;
 
     client.onConnectionLost = function (responseObject) {

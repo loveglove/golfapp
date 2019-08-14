@@ -409,7 +409,7 @@
 
 
          // mqtt2.apengage.io set as secondary domain with SSL certs for websockets secure connection. 
-        var client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "fc_client_" + userID);
+        var client = new Paho.MQTT.Client("test.mosquitto.org", Number(8081), "fc_client_" + userID);
 
         client.onConnectionLost = function (responseObject) {
             console.log("MQTT Connection Lost: " + responseObject.errorMessage);

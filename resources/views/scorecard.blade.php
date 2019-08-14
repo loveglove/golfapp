@@ -875,7 +875,7 @@
 // ******************* MQTT ********************
 // *********************************************
 
-    var client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "fc_client_" + userID);
+    var client = new Paho.MQTT.Client("test.mosquitto.org", Number(8081), "fc_client_" + userID);
     var maxAttempts = 0;
 
     client.onConnectionLost = function (responseObject) {
@@ -979,10 +979,13 @@
 	            if(winddeg != ''){
 	            	windSpeedDeg = parseInt(winddeg);
 	           		dir = degToCompass(winddeg);
+	           		$("#wind-dir-icon").show();
+	            }else{
+	            	$("#wind-dir-icon").hide();
 	            }
 
 	           $("#weather").html(windspeedText+ "&nbsp" + parseInt(windspeed) + "<small>mph</small>&nbsp&nbsp" + dir);
-	           $("#wind-dir-icon").show();
+
 
 	       	},
 	       	error: function(xhr, status, error) {
@@ -1003,16 +1006,16 @@
 		if (value > 18){
 			return "High:";
 		}
-		if (value > 12 && value < 18){
+		if (value > 12 && value <= 18){
 			return "Strong:";
 		}
-		if (value > 7 && value < 12){
+		if (value > 7 && value <= 12){
 			return "Moderate:";
 		}
-		if (value > 3 && value < 7){
+		if (value > 3 && value <= 7){
 			return "Light:";
 		}
-		if (value < 3){
+		if (value <= 3){
 			return "Calm:";
 		}
 	}
@@ -1042,7 +1045,7 @@
       	window.addEventListener("deviceorientation", deviceOrientationListener);
     } // Send an alert if the device isn't compatible
     else {
-    $("#wind-dir-icon").hide();
+    	$("#wind-dir-icon").hide();
       	alert("Sorry, your current direction is not detectable on this device");
     }
 
