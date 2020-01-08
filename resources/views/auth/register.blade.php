@@ -69,6 +69,14 @@
                             </div>
                         </div>
                     </form>
+                    <div class="form-group row mb-0">
+                        <div class="col-xs-12">
+                            <a href="auth/facebook" class="form-group"><button type="submit" class="btn btn-facebook block full-width m-b dim"><i class="fa fa-facebook"></i>  Login with Facebook</button></a>
+                        </div>
+                        <div class="col-xs-12">
+                            <a href="auth/google" class="form-group"><button type="submit" class="btn btn-google block full-width m-b dim"><i class="fa fa-google"></i>  Login with Google</button></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
